@@ -47,7 +47,9 @@
         <div class="brand-sub">PocketLore Studios</div>
       </div>
     </a>
-
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+      ☰
+    </button>
     <nav class="nav" aria-label="Primary navigation">
       <a href="#features">Features</a>
       <a href="#status">Status</a>
@@ -401,6 +403,24 @@
     </div>
   </div>
 </footer>
+<script>
+  const menuToggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('.nav');
+  const navLinks = document.querySelectorAll('.nav a');
 
+  if (menuToggle && nav) {
+    menuToggle.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('nav-open');
+      menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('nav-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>
 </body>
 </html>
