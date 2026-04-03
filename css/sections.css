@@ -173,6 +173,13 @@
     font-size: 1.08rem;
 }
 
+.status-grid img,
+.status-grid video{
+    max-height: 420px;
+    width: 100%;
+    object-fit: contain;
+}
+
 .roadmap {
     display: grid;
     gap: var(--space-8);
