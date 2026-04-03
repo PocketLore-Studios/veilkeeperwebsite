@@ -386,7 +386,27 @@ h1,
     margin-bottom: 6px;
     font-weight: 700;
 }
+.status-update {
+    margin-bottom: 2rem;
+}
 
+.status-update-image {
+    display: block;
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+    border-radius: 12px;
+    margin-bottom: 0.75rem;
+}
+
+.status-update-caption {
+    max-width: 560px;
+    line-height: 1.6;
+}
+
+.status-copy {
+    margin-bottom: 1.5rem;
+}
 .progress {
     height: 10px;
     overflow: hidden;
