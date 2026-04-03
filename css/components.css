@@ -247,3 +247,10 @@
 .footer-links a {
     text-decoration: none;
 }
+
+.footer-brand-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+}
