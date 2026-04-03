@@ -30,7 +30,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
 
@@ -85,11 +89,13 @@
           <div hidden>
             <a class="button button--primary" href="https://store.steampowered.com/" target="_blank" rel="noopener noreferrer">
               Wishlist on Steam
-          </a>
+            </a>
           </div>
+
           <a class="button button--discord" href="https://discord.gg/5zu23e46s6" target="_blank" rel="noopener noreferrer">
             Join Discord
           </a>
+
           <a class="button button--secondary" href="#roadmap">
             View roadmap
           </a>
@@ -102,6 +108,7 @@
       </div>
     </div>
   </section>
+
   <section id="features" class="section">
     <div class="container">
       <div class="section-heading">
@@ -148,88 +155,101 @@
   </section>
 
   <section id="status" class="section">
-    <div class="container status-grid">
-      <div>
-        <div class="section-heading">
-          <h2>Development Status</h2>
-          </div>
-        <div class="status-update">
-          <img
-            src="assets/update.png"
-            alt="Early Veilkeeper tactical cursor prototype showing a grid highlight in a Godot debug scene."
-            class="status-update-image"
-            loading="lazy"
-          >
+    <div class="container">
+      <div class="section-heading">
+        <h2>Development Status</h2>
+        <p>
+          The latest public-facing update from current development.
+        </p>
+      </div>
+
+      <article class="status-update surface">
+        <img
+                src="assets/update.png"
+                alt="Early Veilkeeper tactical cursor prototype showing a grid highlight in a Godot debug scene."
+                class="status-update-image"
+                loading="lazy"
+        >
+
+        <div class="status-update-body">
+          <p class="status-update-kicker">Latest update</p>
           <p class="status-update-caption">
-            <strong>Devlog 02 — Tactical Cursor</strong><br />
-            Grid highlight now supports mouse, keyboard, and controller.<br />
+            <strong>Devlog 02 — Tactical Cursor</strong><br>
+            Grid highlight now supports mouse, keyboard, and controller.<br>
             Units next.
           </p>
         </div>
-        <div class="status-copy">
-          <h2>Current layer</h2>
-          <p>
-            Veilkeeper is being built in layers. Each layer must stand on its own
-            before the next one is allowed to lean on it.
-          </p>
-        </div>
+      </article>
+    </div>
+  </section>
 
-        <div class="status-card surface">
-          <div class="status-list">
+  <section id="current-layer" class="section section--tight">
+    <div class="container">
+      <div class="status-grid">
+        <div class="status-main">
+          <div class="status-copy">
+            <h2>Current layer</h2>
+            <p>
+              Veilkeeper is being built in layers. Each layer must stand on its own
+              before the next one is allowed to lean on it.
+            </p>
+          </div>
 
-            <div class="status-row">
-              <div>
-                <div class="status-name">Combat core</div>
-                <div class="text-muted">
-                  Grid combat, unit roles, and baseline turn flow
+          <div class="status-card surface">
+            <div class="status-list">
+              <div class="status-row">
+                <div>
+                  <div class="status-name">Combat core</div>
+                  <div class="text-muted">
+                    Grid combat, unit roles, and baseline turn flow
+                  </div>
                 </div>
+                <div class="status-tag tag--current">In Implementation</div>
               </div>
-              <div class="status-tag tag--current">In Implementation</div>
-            </div>
 
-            <div class="status-row">
-              <div>
-                <div class="status-name">Army attrition loop</div>
-                <div class="text-muted">
-                  Relay pressure, losses, and expedition tension
+              <div class="status-row">
+                <div>
+                  <div class="status-name">Army attrition loop</div>
+                  <div class="text-muted">
+                    Relay pressure, losses, and expedition tension
+                  </div>
                 </div>
+                <div class="status-tag tag--iterating">In Design</div>
               </div>
-              <div class="status-tag tag--iterating">In Design</div>
-            </div>
 
-            <div class="status-row">
-              <div>
-                <div class="status-name">Home shard systems</div>
-                <div class="text-muted">
-                  Persistent base growth and hero housing
+              <div class="status-row">
+                <div>
+                  <div class="status-name">Home shard systems</div>
+                  <div class="text-muted">
+                    Persistent base growth and hero housing
+                  </div>
                 </div>
+                <div class="status-tag tag--planned">Planned Layer</div>
               </div>
-              <div class="status-tag tag--planned">Planned Layer</div>
-            </div>
 
-            <div class="status-row">
-              <div>
-                <div class="status-name">Stream integration</div>
-                <div class="text-muted">
-                  Viewer characters, events, and shared shards
+              <div class="status-row">
+                <div>
+                  <div class="status-name">Stream integration</div>
+                  <div class="text-muted">
+                    Viewer characters, events, and shared shards
+                  </div>
                 </div>
+                <div class="status-tag tag--planned">Future Layer</div>
               </div>
-              <div class="status-tag tag--planned">Future Layer</div>
             </div>
-
           </div>
         </div>
-      </div>
 
-      <aside class="status-card surface">
-        <h3>What this means</h3>
-        <ul class="mini-list">
-          <li>The tactics must be fun before anything else exists.</li>
-          <li>The shard only grows once combat proves itself.</li>
-          <li>Community features layer on top — never replace gameplay.</li>
-          <li>Each phase reinforces the one before it.</li>
-        </ul>
-      </aside>
+        <aside class="status-card surface status-aside">
+          <h3>What this means</h3>
+          <ul class="mini-list">
+            <li>The tactics must be fun before anything else exists.</li>
+            <li>The shard only grows once combat proves itself.</li>
+            <li>Community features layer on top — never replace gameplay.</li>
+            <li>Each phase reinforces the one before it.</li>
+          </ul>
+        </aside>
+      </div>
     </div>
   </section>
 

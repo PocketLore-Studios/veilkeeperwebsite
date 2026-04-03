@@ -1,0 +1,184 @@
+:root {
+    /* Core colors */
+    --bg: #090612;
+    --bg-2: #120c1f;
+    --text: #f7f2ff;
+    --muted: #cfc3eb;
+
+    --veil: #9e6dff;
+    --veil-2: #c58cff;
+    --ember: #f4c07c;
+
+    --ok: #7ee3c1;
+    --planned: #f0c27b;
+    --future: #d79dff;
+
+    /* Text variants */
+    --text-soft: rgba(255, 255, 255, 0.82);
+    --text-faint: rgba(255, 255, 255, 0.55);
+    --text-bright: rgba(255, 255, 255, 0.9);
+
+    /* Borders */
+    --line: rgba(182, 151, 255, 0.16);
+    --border-subtle: rgba(255, 255, 255, 0.05);
+    --border-soft: rgba(255, 255, 255, 0.06);
+    --border-medium: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.10);
+    --border-heavy: rgba(255, 255, 255, 0.14);
+
+    /* Glass / overlays */
+    --glass-topbar: rgba(8, 6, 15, 0.74);
+    --glass-pill: rgba(8, 6, 15, 0.48);
+    --glass-button: rgba(8, 6, 15, 0.42);
+
+    --surface-overlay-soft: rgba(255, 255, 255, 0.03);
+    --surface-overlay: rgba(255, 255, 255, 0.05);
+    --surface-overlay-strong: rgba(255, 255, 255, 0.06);
+
+    /* Status chip tokens */
+    --status-current-text: #eafffb;
+    --status-current-bg: rgba(126, 227, 193, 0.12);
+    --status-current-border: rgba(126, 227, 193, 0.22);
+
+    --status-iterating-text: #fff3e0;
+    --status-iterating-bg: rgba(240, 194, 123, 0.12);
+    --status-iterating-border: rgba(240, 194, 123, 0.22);
+
+    --status-planned-text: #f3e8ff;
+    --status-planned-bg: rgba(215, 157, 255, 0.12);
+    --status-planned-border: rgba(215, 157, 255, 0.22);
+
+    /* Shadows */
+    --shadow-surface: 0 24px 60px rgba(0, 0, 0, 0.42);
+    --shadow-brand: 0 0 24px rgba(158, 109, 255, 0.34);
+    --shadow-brand-soft: 0 0 24px rgba(158, 109, 255, 0.28);
+    --shadow-button-primary: 0 14px 34px rgba(128, 76, 255, 0.3);
+    --shadow-button-discord: 0 14px 34px rgba(95, 113, 255, 0.24);
+    --shadow-hero-logo: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.45));
+
+    /* Radius */
+    --radius-xs: 10px;
+    --radius-sm: 12px;
+    --radius-md: 14px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-pill: 999px;
+
+    /* Spacing */
+    --space-1: 3px;
+    --space-2: 6px;
+    --space-3: 8px;
+    --space-4: 10px;
+    --space-5: 12px;
+    --space-6: 14px;
+    --space-7: 16px;
+    --space-8: 18px;
+    --space-9: 20px;
+    --space-10: 22px;
+    --space-11: 24px;
+    --space-12: 28px;
+    --space-13: 30px;
+    --space-14: 34px;
+    --space-15: 52px;
+    --space-16: 60px;
+    --space-17: 72px;
+    --space-18: 78px;
+
+    /* Layout */
+    --max-width: 1160px;
+
+    /* Typography */
+    --font-size-label: 0.78rem;
+    --font-size-meta: 0.82rem;
+    --font-size-body-sm: 0.92rem;
+    --font-size-body-md: 0.95rem;
+    --font-size-body-lg: 1.04rem;
+    --font-size-card-title: 1.05rem;
+    --font-size-panel-title: 1.12rem;
+
+    /* Motion */
+    --transition-fast: 0.15s ease;
+
+    /* Gradients */
+    --surface-bg: linear-gradient(
+            180deg,
+            rgba(23, 16, 38, 0.96) 0%,
+            rgba(13, 10, 24, 0.95) 100%
+    );
+
+    --hero-overlay-top: linear-gradient(
+            180deg,
+            rgba(7, 5, 12, 0.18) 0%,
+            rgba(7, 5, 12, 0.38) 35%,
+            rgba(7, 5, 12, 0.92) 100%
+    );
+
+    --hero-overlay-side: linear-gradient(
+            90deg,
+            rgba(8, 6, 15, 0.88) 0%,
+            rgba(8, 6, 15, 0.28) 45%,
+            rgba(8, 6, 15, 0.78) 100%
+    );
+
+    --button-primary-bg: linear-gradient(135deg, #8b5dff 0%, #c587ff 100%);
+    --button-discord-bg: linear-gradient(135deg, #5f71ff 0%, #8897ff 100%);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+    color: var(--text);
+    line-height: 1.6;
+    background:
+            radial-gradient(circle at 50% 0%, rgba(158, 109, 255, 0.16), transparent 28%),
+            radial-gradient(circle at 10% 20%, rgba(244, 192, 124, 0.06), transparent 20%),
+            linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 100%);
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+}
+
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--ember);
+    outline-offset: 3px;
+    border-radius: var(--radius-xs);
+}
+
+h1,
+.section-heading h2,
+.status-copy h2,
+.brand-title,
+.phase-title,
+.panel h3,
+.card h3,
+.status-aside h3 {
+    font-family: 'Cinzel', serif;
+}
+
+h1 {
+    margin: 0 0 var(--space-5);
+    font-size: clamp(2rem, 5vw, 4.15rem);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+}
+
+.text-muted {
+    color: var(--muted);
+}
