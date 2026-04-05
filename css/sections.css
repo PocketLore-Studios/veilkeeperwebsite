@@ -358,7 +358,7 @@
 
 .devlog-post-media img {
     width: 100%;
-    max-width: 520px;
+    max-width: 480px;
     display: block;
     margin: 0 auto;
     border-radius: var(--radius-lg);
