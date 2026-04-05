@@ -73,6 +73,12 @@
     color: #fff;
 }
 
+.nav .nav-break {
+    margin-left: var(--space-4);
+    padding-left: var(--space-6);
+    border-left: 1px solid var(--border-soft);
+}
+
 .button {
     display: inline-flex;
     align-items: center;
