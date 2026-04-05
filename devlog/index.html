@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Development Log | Veilkeeper</title>
+    <meta
+            name="description"
+            content="Follow the progress of Veilkeeper as core systems come online."
+    >
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://veilkeepergame.com/devlog/">
+
+    <meta property="og:title" content="Development Log | Veilkeeper">
+    <meta
+            property="og:description"
+            content="Follow the progress of Veilkeeper as core systems come online."
+    >
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://veilkeepergame.com/devlog/">
+    <meta property="og:image" content="https://veilkeepergame.com/assets/veilkeeper-promo-art.png">
+    <meta property="og:site_name" content="Veilkeeper">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Development Log | Veilkeeper">
+    <meta name="twitter:description" content="Follow the progress of Veilkeeper as core systems come online.">
+    <meta name="twitter:image" content="https://veilkeepergame.com/assets/veilkeeper-promo-art.png">
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/sections.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="container topbar-inner">
+        <a class="brand" href="/" aria-label="Veilkeeper home">
+            <img src="/assets/Vielkeeper_small_without_text_logo.png" alt="Veilkeeper logo">
+            <div class="brand-text">
+                <div class="brand-title">Veilkeeper</div>
+                <div class="brand-sub">PocketLore Studios</div>
+            </div>
+        </a>
+
+        <button
+                class="menu-toggle"
+                aria-label="Open menu"
+                aria-expanded="false"
+                aria-controls="site-nav"
+        >
+            ☰
+        </button>
+
+        <nav class="nav" id="site-nav" aria-label="Primary navigation">
+            <a href="/#features">Features</a>
+            <a href="/#status">Status</a>
+            <a href="/devlog/index.html" aria-current="page">Devlog</a>
+            <a href="/#roadmap">Roadmap</a>
+            <a href="/#about">About</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="section">
+        <div class="container">
+            <div class="section-heading text-center">
+                <h1>Development Log</h1>
+                <p>Follow the progress of Veilkeeper as core systems come online.</p>
+            </div>
+
+            <div class="devlog-list">
+                <article class="devlog-entry surface">
+                    <div class="devlog-meta">Devlog 03 — April 2026</div>
+                    <h3>Unit Selection &amp; Movement</h3>
+
+                    <img
+                            src="/assets/Unit_movement.gif"
+                            alt="Unit selection and grid movement prototype"
+                    >
+
+                    <p>
+                        Units can now be selected and moved across the grid. This establishes
+                        the foundation for turn flow, pathing, and future combat interactions.
+                    </p>
+                </article>
+
+                <article class="devlog-entry surface">
+                    <div class="devlog-meta">Devlog 02 — April 2026</div>
+                    <h3>Tactical Cursor</h3>
+
+                    <img
+                            src="/assets/update.png"
+                            alt="Early Veilkeeper tactical cursor prototype showing a grid highlight in a Godot debug scene."
+                    >
+
+                    <p>
+                        Grid highlight now supports mouse, keyboard, and controller. This locks in
+                        a core interaction layer that future unit control will build on.
+                    </p>
+                </article>
+
+                <article class="devlog-entry surface">
+                    <div class="devlog-meta">Devlog 01 — March 2026</div>
+                    <h3>Combat Foundations</h3>
+
+                    <p>
+                        The combat core baseline took shape with the grid, tactical framing, and the
+                        first pass at the systems Veilkeeper will build outward from.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container footer-inner">
+        <div class="footer-brand">
+            <a
+                    href="https://pocketlorestudios.com"
+                    class="footer-brand-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+            >
+                <img src="/assets/pocketlorestudios-logo.png" alt="PocketLore Studios logo">
+                <span>PocketLore Studios</span>
+            </a>
+        </div>
+
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/#features">Features</a>
+            <a href="/#status">Status</a>
+            <a href="/devlog/">Devlog</a>
+            <a href="/#roadmap">Roadmap</a>
+            <a href="/#about">About</a>
+        </div>
+    </div>
+</footer>
+
+<script src="/js/menu.js"></script>
+</body>
+</html>
