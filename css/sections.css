@@ -272,6 +272,11 @@
     text-align: center;
 }
 
+.section-heading.text-center{
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .devlog-list {
     display: grid;
     gap: var(--space-11);
