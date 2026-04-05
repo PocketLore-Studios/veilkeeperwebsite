@@ -409,3 +409,78 @@
 .devlog-nav-spacer {
     min-width: 140px;
 }
+
+.site-footer {
+    margin-top: 80px;
+    padding: 40px 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-follow {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 10px;
+}
+
+.footer-socials img {
+    width: 22px;
+    height: 22px;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+}
+
+.footer-socials a:hover img {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.footer-socials a {
+    display: inline-flex;
+    padding: 10px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.footer-socials svg {
+    width: 22px;
+    height: 22px;
+    color: rgba(255,255,255,0.7);
+    transition: all 0.2s ease;
+}
+
+.footer-socials a:hover svg {
+    color: #caa96b; /* your gold */
+    filter: drop-shadow(0 0 6px rgba(170,120,255,.45))
+    drop-shadow(0 0 14px rgba(170,120,255,.25));
+    transform: translateY(-2px);
+}
+
+.back-to-top {
+    font-size: 0.85rem;
+    opacity: 0.6;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.back-to-top:hover {
+    opacity: 1;
+}
