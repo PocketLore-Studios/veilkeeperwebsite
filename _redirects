@@ -1,1 +1,2 @@
-/devlog/devlog-*  /devlog/post.html  200
+/devlog/ /devlog/index.html 200
+/devlog/* /devlog/post.html 200
