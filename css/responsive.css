@@ -95,6 +95,13 @@
     .status-tag {
         white-space: normal;
     }
+
+    .status-update-image {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        margin: 0 0 var(--space-7);
+    }
 }
 
 @media (max-width: 640px) {
