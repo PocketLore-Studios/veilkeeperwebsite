@@ -1,7 +1,7 @@
 async function fetchDevlogs() {
     const response = await fetch('/devlog/devlogs.json', {
         headers: {
-            'Accept': 'application/json'
+            Accept: 'application/json'
         }
     });
 
@@ -38,7 +38,7 @@ function createElement(tag, className, textContent) {
         element.className = className;
     }
 
-    if (textContent) {
+    if (typeof textContent === 'string') {
         element.textContent = textContent;
     }
 
@@ -58,19 +58,14 @@ function createLatestDevlogCard(entry) {
 
     const kicker = createElement('p', 'status-update-kicker', 'Latest update');
 
-    const title = createElement(
-        'p',
-        'status-update-caption'
-    );
+    const title = createElement('p', 'status-update-caption');
 
     const strong = document.createElement('strong');
     strong.textContent = `${entry.label} — ${entry.title}`;
 
-    const summary = document.createTextNode(` ${entry.summary}`);
-
     title.appendChild(strong);
     title.appendChild(document.createElement('br'));
-    title.appendChild(summary);
+    title.appendChild(document.createTextNode(entry.summary));
 
     const link = document.createElement('a');
     link.href = '/devlog/';
@@ -128,7 +123,7 @@ function createArchiveCard(entry) {
     const summary = createElement('p', '', entry.summary);
     article.appendChild(summary);
 
-    if (entry.postUrl) {
+    if (entry.hasFullPost === true && entry.postUrl) {
         const readMore = document.createElement('a');
         readMore.href = entry.postUrl;
         readMore.className = 'devlog-read-more';
