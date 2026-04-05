@@ -46,7 +46,7 @@
     "date": "2026-03-28",
     "title": "Cursor & Grid Interaction",
     "summary": "Grid highlighting now supports mouse, keyboard, and controller. Input handling is in place, and the board is starting to feel responsive.",
-    "image": "/assets/devlog/devlog-02.png",
+    "image": "/assets/devlog-02.png",
     "alt": "Veilkeeper grid cursor highlighting tiles",
     "hasFullPost": true,
     "sections": [
@@ -87,7 +87,7 @@
     "date": "2026-03-20",
     "title": "Foundations",
     "summary": "Veilkeeper’s tactical layer is taking shape. The current focus is building a clean combat foundation that can support the larger game over time.",
-    "image": "/assets/devlog/devlog-01.png",
+    "image": "/assets/devlog-01.png",
     "alt": "Early Veilkeeper tactical grid prototype",
     "hasFullPost": true,
     "sections": [
