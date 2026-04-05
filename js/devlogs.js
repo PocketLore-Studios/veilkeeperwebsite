@@ -46,7 +46,7 @@ function createElement(tag, className, textContent) {
 }
 
 function getPostUrl(entry) {
-    return `/devlog/post.html?slug=${entry.slug}`;
+    return `/devlog/post.html?slug=${encodeURIComponent(entry.slug)}`;
 }
 
 function getSlugFromLocation() {
@@ -180,8 +180,8 @@ function createPostNavigation(devlogs, currentEntry) {
 
     const nav = createElement('div', 'devlog-post-nav');
 
-    const olderEntry = currentIndex < fullPosts.length - 1 ? fullPosts[currentIndex + 1] : null;
     const newerEntry = currentIndex > 0 ? fullPosts[currentIndex - 1] : null;
+    const olderEntry = currentIndex < fullPosts.length - 1 ? fullPosts[currentIndex + 1] : null;
 
     if (olderEntry) {
         const previousLink = document.createElement('a');
