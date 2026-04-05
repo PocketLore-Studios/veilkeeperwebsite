@@ -433,7 +433,13 @@
 
 .footer-follow {
     font-size: 0.9rem;
-    opacity: 0.7;
+    opacity: 0.65;
+}
+
+.footer-follow-row{
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .footer-socials {
@@ -455,7 +461,7 @@
 
 .footer-socials a {
     display: inline-flex;
-    padding: 10px;
+    padding: 6px;
     border-radius: 50%;
     transition: all 0.2s ease;
 }
