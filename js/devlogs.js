@@ -170,7 +170,49 @@ function renderContentSection(container, section) {
     }
 }
 
-function renderDevlogPost(entry) {
+function createPostNavigation(devlogs, currentEntry) {
+    const fullPosts = devlogs.filter(devlog => devlog.hasFullPost === true);
+    const currentIndex = fullPosts.findIndex(devlog => devlog.slug === currentEntry.slug);
+
+    if (currentIndex === -1) {
+        return null;
+    }
+
+    const nav = createElement('div', 'devlog-post-nav');
+
+    const olderEntry = currentIndex < fullPosts.length - 1 ? fullPosts[currentIndex + 1] : null;
+    const newerEntry = currentIndex > 0 ? fullPosts[currentIndex - 1] : null;
+
+    if (olderEntry) {
+        const previousLink = document.createElement('a');
+        previousLink.href = getPostUrl(olderEntry);
+        previousLink.className = 'devlog-read-more';
+        previousLink.textContent = '← Previous devlog';
+        nav.appendChild(previousLink);
+    } else {
+        nav.appendChild(createElement('span', 'devlog-nav-spacer', ''));
+    }
+
+    const archiveLink = document.createElement('a');
+    archiveLink.href = '/devlog/';
+    archiveLink.className = 'devlog-read-more';
+    archiveLink.textContent = 'All devlogs';
+    nav.appendChild(archiveLink);
+
+    if (newerEntry) {
+        const nextLink = document.createElement('a');
+        nextLink.href = getPostUrl(newerEntry);
+        nextLink.className = 'devlog-read-more';
+        nextLink.textContent = 'Next devlog →';
+        nav.appendChild(nextLink);
+    } else {
+        nav.appendChild(createElement('span', 'devlog-nav-spacer', ''));
+    }
+
+    return nav;
+}
+
+function renderDevlogPost(entry, devlogs) {
     const container = document.getElementById('devlog-post');
 
     if (!container) {
@@ -217,15 +259,11 @@ function renderDevlogPost(entry) {
 
     article.appendChild(content);
 
-    const nav = createElement('div', 'devlog-post-nav');
+    const nav = createPostNavigation(devlogs, entry);
 
-    const backLink = document.createElement('a');
-    backLink.href = '/devlog/';
-    backLink.className = 'devlog-read-more';
-    backLink.textContent = '← Back to development log';
-
-    nav.appendChild(backLink);
-    article.appendChild(nav);
+    if (nav) {
+        article.appendChild(nav);
+    }
 
     container.appendChild(article);
 
@@ -303,7 +341,7 @@ async function renderSingleDevlogPost() {
             return;
         }
 
-        renderDevlogPost(entry);
+        renderDevlogPost(entry, devlogs);
     } catch (error) {
         console.error(error);
         container.textContent = 'Unable to load this devlog right now.';

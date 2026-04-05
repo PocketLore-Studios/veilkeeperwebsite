@@ -399,4 +399,13 @@
 .devlog-post-nav {
     max-width: 640px;
     margin: var(--space-11) auto 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+}
+
+.devlog-nav-spacer {
+    min-width: 140px;
 }

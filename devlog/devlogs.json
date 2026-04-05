@@ -41,25 +41,86 @@
     ]
   },
   {
+  {
     "slug": "devlog-02",
     "label": "Devlog 02",
-    "title": "Tactical Cursor",
-    "date": "2026-04-03",
-    "image": "/assets/update.png",
-    "alt": "Early Veilkeeper tactical cursor prototype showing a grid highlight in a Godot debug scene.",
-    "summary": "Grid highlight now supports mouse, keyboard, and controller. This locks in a core interaction layer that future unit control will build on.",
-    "hasFullPost": false,
-    "sections": []
+    "date": "2026-03-28",
+    "title": "Cursor & Grid Interaction",
+    "summary": "Grid highlighting now supports mouse, keyboard, and controller. Input handling is in place, and the board is starting to feel responsive.",
+    "image": "/assets/devlog/devlog-02.png",
+    "alt": "Veilkeeper grid cursor highlighting tiles",
+    "hasFullPost": true,
+    "sections": [
+      {
+        "type": "paragraph",
+        "text": "Work on Veilkeeper’s tactical cursor and grid interaction is now in place. The board can be navigated using mouse, keyboard, and controller, bringing the prototype closer to feeling like a playable tactics game."
+      },
+      {
+        "type": "paragraph",
+        "text": "This update focuses on responsiveness and readability. The cursor highlights grid spaces clearly, and input handling is designed to feel consistent regardless of control method. Establishing this early helps ensure that later mechanics build on something intuitive."
+      },
+      {
+        "type": "paragraph",
+        "text": "Even though the systems are still simple, this stage is important. The cursor is the player’s primary way of interacting with the battlefield, and getting that feeling right makes every future system easier to work with."
+      },
+      {
+        "type": "heading",
+        "text": "Current progress in this stage:"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Cursor movement across the grid",
+          "Mouse, keyboard, and controller support",
+          "Grid highlighting",
+          "Improved board readability"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "Next up is attaching this interaction to actual units. Selection and movement will build on this foundation and move the prototype closer to a full tactical combat loop."
+      }
+    ]
   },
   {
     "slug": "devlog-01",
     "label": "Devlog 01",
-    "title": "Combat Foundations",
-    "date": "2026-03-28",
-    "image": "",
-    "alt": "",
-    "summary": "The combat core baseline took shape with the grid, tactical framing, and the first pass at the systems Veilkeeper will build outward from.",
-    "hasFullPost": false,
-    "sections": []
+    "date": "2026-03-20",
+    "title": "Foundations",
+    "summary": "Veilkeeper’s tactical layer is taking shape. The current focus is building a clean combat foundation that can support the larger game over time.",
+    "image": "/assets/devlog/devlog-01.png",
+    "alt": "Early Veilkeeper tactical grid prototype",
+    "hasFullPost": true,
+    "sections": [
+      {
+        "type": "paragraph",
+        "text": "Development on Veilkeeper is starting with the core tactical layer. The goal is to build the game from the combat foundation outward, making sure each new system has something solid to sit on."
+      },
+      {
+        "type": "paragraph",
+        "text": "Right now, the focus is on establishing the grid, input handling, and the basic structure of turn-based interactions. This stage is less about visuals and more about making sure the game feels responsive and predictable."
+      },
+      {
+        "type": "paragraph",
+        "text": "The early prototype is centered around clarity. Movement, positioning, and board state should always be easy to understand at a glance. Even small improvements here make a big difference later when abilities, enemies, and systems begin stacking on top."
+      },
+      {
+        "type": "heading",
+        "text": "Current progress in this stage:"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Initial tactical grid setup",
+          "Basic board interaction",
+          "Early input handling",
+          "Foundation for turn-based flow"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "The next step is improving cursor control and interaction across different input methods. Once the board can be navigated cleanly, the focus will shift toward selecting units and moving them across the grid."
+      }
+    ]
   }
 ]
