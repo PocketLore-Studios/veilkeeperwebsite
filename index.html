@@ -37,6 +37,7 @@
   <link rel="stylesheet" href="css/responsive.css">
 
   <script src="js/menu.js" defer></script>
+  <script src="js/devlogs.js" defer></script>
 </head>
 <body>
 
@@ -167,24 +168,9 @@
           The latest public-facing update from current development.
         </p>
       </div>
-
-      <article class="status-update surface">
-        <img
-                src="assets/grid_highlight_movement_with_units.gif"
-                alt="Early Veilkeeper tactical cursor prototype showing a grid highlight in a Godot debug scene with units on the board."
-                class="status-update-image"
-                loading="lazy"
-        >
-
-        <div class="status-update-body">
-          <p class="status-update-kicker">Latest update</p>
-          <p class="status-update-caption">
-            <strong>Devlog 02 — Cursor & Units</strong><br>
-            Grid highlight now supports mouse, keyboard, and controller.<br>
-            Units on the board. Interaction next.
-          </p>
+        <div id="latest-devlog" aria-live="polite">
+          <p>Loading latest update...</p>
         </div>
-      </article>
     </div>
   </section>
 

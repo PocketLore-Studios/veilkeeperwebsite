@@ -35,6 +35,9 @@
     <link rel="stylesheet" href="/css/components.css">
     <link rel="stylesheet" href="/css/sections.css">
     <link rel="stylesheet" href="/css/responsive.css">
+
+    <script src="/js/menu.js" defer></script>
+    <script src="/js/devlogs.js" defer></script>
 </head>
 <body>
 
@@ -75,46 +78,8 @@
                 <p>Follow the progress of Veilkeeper as core systems come online.</p>
             </div>
 
-            <div class="devlog-list">
-                <article class="devlog-entry surface">
-                    <div class="devlog-meta">Devlog 03 — April 2026</div>
-                    <h3>Unit Selection &amp; Movement</h3>
-
-                    <img
-                            src="/assets/Unit_movement.gif"
-                            alt="Unit selection and grid movement prototype"
-                    >
-
-                    <p>
-                        Units can now be selected and moved across the grid. This establishes
-                        the foundation for turn flow, pathing, and future combat interactions.
-                    </p>
-                </article>
-
-                <article class="devlog-entry surface">
-                    <div class="devlog-meta">Devlog 02 — April 2026</div>
-                    <h3>Tactical Cursor</h3>
-
-                    <img
-                            src="/assets/update.png"
-                            alt="Early Veilkeeper tactical cursor prototype showing a grid highlight in a Godot debug scene."
-                    >
-
-                    <p>
-                        Grid highlight now supports mouse, keyboard, and controller. This locks in
-                        a core interaction layer that future unit control will build on.
-                    </p>
-                </article>
-
-                <article class="devlog-entry surface">
-                    <div class="devlog-meta">Devlog 01 — March 2026</div>
-                    <h3>Combat Foundations</h3>
-
-                    <p>
-                        The combat core baseline took shape with the grid, tactical framing, and the
-                        first pass at the systems Veilkeeper will build outward from.
-                    </p>
-                </article>
+            <div id="devlog-archive" class="devlog-list" aria-live="polite">
+                <p>Loading devlogs...</p>
             </div>
         </div>
     </section>
@@ -144,7 +109,5 @@
         </div>
     </div>
 </footer>
-
-<script src="/js/menu.js"></script>
 </body>
 </html>
