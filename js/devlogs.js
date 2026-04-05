@@ -46,7 +46,7 @@ function createElement(tag, className, textContent) {
 }
 
 function getPostUrl(entry) {
-    return `/devlog/${entry.slug}`;
+    return `/devlog/posts/${entry.slug}`;
 }
 
 function getSlugFromLocation() {
