@@ -46,31 +46,12 @@ function createElement(tag, className, textContent) {
 }
 
 function getPostUrl(entry) {
-    return `/devlog/posts/${entry.slug}`;
+    return `/devlog/post.html?slug=${entry.slug}`;
 }
 
 function getSlugFromLocation() {
     const params = new URLSearchParams(window.location.search);
-    const querySlug = params.get('slug');
-
-    if (querySlug) {
-        return querySlug;
-    }
-
-    const path = window.location.pathname.replace(/\/+$/, '');
-    const parts = path.split('/').filter(Boolean);
-
-    // /devlog/posts/devlog-03
-    if (parts.length >= 3 && parts[0] === 'devlog' && parts[1] === 'posts') {
-        return parts[2];
-    }
-
-    // fallback: /devlog/devlog-03
-    if (parts.length >= 2 && parts[0] === 'devlog') {
-        return parts[1];
-    }
-
-    return null;
+    return params.get('slug');
 }
 
 function createLatestDevlogCard(entry) {
