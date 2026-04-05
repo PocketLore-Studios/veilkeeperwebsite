@@ -1,35 +1,65 @@
 [
   {
     "slug": "devlog-03",
+    "label": "Devlog 03",
     "title": "Unit Selection & Movement",
     "date": "2026-04-05",
-    "label": "Devlog 03",
     "image": "/assets/Unit_movement.gif",
     "alt": "Unit selection and grid movement prototype",
     "summary": "Units can now be selected and moved across the grid. This establishes the foundation for turn flow, pathing, and future combat interactions.",
-    "postUrl": "/devlog/posts/devlog-03.html",
-    "hasFullPost": false
+    "hasFullPost": true,
+    "sections": [
+      {
+        "type": "paragraph",
+        "text": "Big early milestone for Veilkeeper: units can now be selected and moved across the grid."
+      },
+      {
+        "type": "paragraph",
+        "text": "This builds on the cursor and input work from the last update, and it is the first point where the prototype really starts to feel like a tactics game instead of just a board with a highlight."
+      },
+      {
+        "type": "heading",
+        "text": "Current progress"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Unit selection",
+          "Grid-based movement",
+          "Mouse, keyboard, and controller support",
+          "Clearer battlefield flow"
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "Next up"
+      },
+      {
+        "type": "paragraph",
+        "text": "Interaction on top of movement as I keep building toward the first full combat exchange."
+      }
+    ]
   },
   {
     "slug": "devlog-02",
-    "title": "Cursor & Units",
-    "date": "2026-04-03",
     "label": "Devlog 02",
+    "title": "Tactical Cursor",
+    "date": "2026-04-03",
     "image": "/assets/update.png",
     "alt": "Early Veilkeeper tactical cursor prototype showing a grid highlight in a Godot debug scene.",
-    "summary": "Grid highlight now supports mouse, keyboard, and controller. Units on the board. Interaction next.",
-    "postUrl": "/devlog/posts/devlog-02.html",
-    "hasFullPost": false
+    "summary": "Grid highlight now supports mouse, keyboard, and controller. This locks in a core interaction layer that future unit control will build on.",
+    "hasFullPost": false,
+    "sections": []
   },
   {
     "slug": "devlog-01",
+    "label": "Devlog 01",
     "title": "Combat Foundations",
     "date": "2026-03-28",
-    "label": "Devlog 01",
     "image": "",
     "alt": "",
     "summary": "The combat core baseline took shape with the grid, tactical framing, and the first pass at the systems Veilkeeper will build outward from.",
-    "postUrl": "/devlog/posts/devlog-01.html",
-    "hasFullPost": false
+    "hasFullPost": false,
+    "sections": []
   }
 ]
