@@ -4,7 +4,7 @@
     "label": "Devlog 03",
     "title": "Unit Selection & Movement",
     "date": "2026-04-05",
-    "image": "/assets/Unit_movement.gif",
+    "image": "/assets/devlog/devlog-03.gif",
     "alt": "Unit selection and grid movement prototype",
     "summary": "Units can now be selected and moved across the grid. This establishes the foundation for turn flow, pathing, and future combat interactions.",
     "hasFullPost": true,
@@ -46,7 +46,7 @@
     "date": "2026-03-28",
     "title": "Cursor & Grid Interaction",
     "summary": "Grid highlighting now supports mouse, keyboard, and controller. Input handling is in place, and the board is starting to feel responsive.",
-    "image": "/assets/grid_highlight_movement_with_units.gif",
+    "image": "/assets/devlog/devlog-02.gif",
     "alt": "Veilkeeper grid cursor highlighting tiles",
     "hasFullPost": true,
     "sections": [
@@ -87,7 +87,7 @@
     "date": "2026-03-20",
     "title": "Foundations",
     "summary": "Veilkeeper’s tactical layer is taking shape. The current focus is building a clean combat foundation that can support the larger game over time.",
-    "image": "/assets/update.png",
+    "image": "/assets/devlog/devlog-01.png",
     "alt": "Early Veilkeeper tactical grid prototype",
     "hasFullPost": true,
     "sections": [

@@ -61,7 +61,7 @@ function createLatestDevlogCard(entry) {
     image.className = 'status-update-image';
     image.loading = 'lazy';
     image.alt = entry.alt || '';
-    image.src = entry.image || '/assets/update.png';
+    image.src = entry.image || '/assets/devlog-01.png';
 
     const body = createElement('div', 'status-update-body');
 
