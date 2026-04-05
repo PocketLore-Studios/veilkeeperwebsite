@@ -60,7 +60,13 @@ function getSlugFromLocation() {
     const path = window.location.pathname.replace(/\/+$/, '');
     const parts = path.split('/').filter(Boolean);
 
-    if (parts.length >= 2 && parts[0] === 'devlog' && parts[1] !== 'index.html' && parts[1] !== 'post.html') {
+    // /devlog/posts/devlog-03
+    if (parts.length >= 3 && parts[0] === 'devlog' && parts[1] === 'posts') {
+        return parts[2];
+    }
+
+    // fallback: /devlog/devlog-03
+    if (parts.length >= 2 && parts[0] === 'devlog') {
         return parts[1];
     }
 
