@@ -274,16 +274,20 @@
 }
 
 .devlog-entry {
+    max-width: 520px;
+    margin: 0 auto;
     padding: var(--space-11);
 }
 
 .devlog-meta {
     margin-bottom: var(--space-7);
     color: var(--muted);
+    text-align: center;
     font-size: var(--font-size-body-sm);
 }
 
 .devlog-entry h3 {
+    text-align: center;
     margin: 0 0 var(--space-8);
 }
 
