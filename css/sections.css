@@ -292,7 +292,7 @@
     max-width: 360px;
     display: block;
     border-radius: var(--radius-lg);
-    margin-bottom: var(--space-8);
+    margin: 18px auto 20px;
 }
 
 .devlog-entry p {
