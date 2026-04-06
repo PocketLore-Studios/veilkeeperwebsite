@@ -1,5 +1,47 @@
 [
   {
+    "slug": "devlog-04",
+    "label": "Devlog 04",
+    "title": "Attacks & Unit Death",
+    "date": "2026-04-05",
+    "image": "/assets/devlog/devlog-04.gif",
+    "alt": "Units attacking and being defeated in combat prototype",
+    "summary": "Units can now attack and be defeated. The first full combat interaction is now working.",
+    "hasFullPost": true,
+    "sections": [
+      {
+        "type": "paragraph",
+        "text": "Units can now attack and be defeated on the battlefield. This marks the first complete combat interaction in Veilkeeper’s tactical layer."
+      },
+      {
+        "type": "paragraph",
+        "text": "With selection and movement already in place, this update adds targeting and damage resolution. Units can now engage enemies, reduce health, and remove defeated units from the board."
+      },
+      {
+        "type": "paragraph",
+        "text": "This is the first point where the prototype starts to resemble an actual combat loop instead of isolated systems. Movement, positioning, and interaction now work together."
+      },
+      {
+        "type": "heading",
+        "text": "Current progress"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Unit targeting",
+          "Attack resolution",
+          "Health reduction",
+          "Unit defeat / removal",
+          "First full combat interaction"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "Next up is improving feedback and readability as the combat loop continues to take shape."
+      }
+    ]
+  },
+  {
     "slug": "devlog-03",
     "label": "Devlog 03",
     "title": "Unit Selection & Movement",
