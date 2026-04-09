@@ -1,5 +1,11 @@
 [
   {
+    "id": 5,
+    "title": "Devlog 05 -- 3v3 Combat & Turn Clarity",
+    "summary": "The first full 3v3 combat scenario is now playable with improved turn readability and unit state clarity.",
+    "full": "Combat has expanded to a full 3v3 scenario, bringing Veilkeeper’s tactical layer closer to a complete gameplay loop. Multiple units can now engage across both sides, making positioning and turn order more meaningful.\n\nThis update also improves readability during combat. Units now visually dim after they’ve acted, making it clearer which units are still available. Enemy turns are also easier to follow, helping distinguish player actions from AI resolution.\n\nThese changes make the battlefield easier to read while reinforcing the core flow of select → move → attack → resolve → next unit.\n\nCurrent progress:\n\n• 3v3 combat scenario\n• Multiple unit interactions\n• Clearer enemy turn flow\n• Units dim after acting\n• Improved combat readability\n• Full turn cycle visibility\n\nNext up is continuing to refine feedback and adding stronger visual indicators for targeting and combat results."
+  },
+  {
     "slug": "devlog-04",
     "label": "Devlog 04",
     "title": "Attacks & Unit Death",
