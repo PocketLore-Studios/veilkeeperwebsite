@@ -1,5 +1,47 @@
 [
   {
+    "slug": "devlog-05",
+    "label": "Devlog 05",
+    "title": "Turn Readability & Unit States",
+    "date": "2026-04-09",
+    "image": "/assets/devlog/devlog-05.gif",
+    "alt": "Units dim after acting with clearer turn flow in combat",
+    "summary": "Combat readability improves with clearer turn flow and units dimming after acting.",
+    "hasFullPost": true,
+    "sections": [
+      {
+        "type": "paragraph",
+        "text": "Combat readability continues to improve as the tactical loop takes shape. Units now visually dim after they’ve acted, making it easier to see which units are still available during a turn."
+      },
+      {
+        "type": "paragraph",
+        "text": "This also helps clarify enemy turns. With multiple units acting in sequence, the battlefield is easier to follow and the flow of combat is more understandable at a glance."
+      },
+      {
+        "type": "paragraph",
+        "text": "These changes don’t add new mechanics, but they make the existing systems much clearer. As more interactions are added, readability will become increasingly important."
+      },
+      {
+        "type": "heading",
+        "text": "Current progress"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Units dim after acting",
+          "Clearer turn readability",
+          "Improved enemy turn flow",
+          "Better battlefield clarity",
+          "More readable multi-unit combat"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "Next up is continuing to improve combat feedback and adding stronger indicators for targeting and damage resolution."
+      }
+    ]
+  },
+  {
     "slug": "devlog-04",
     "label": "Devlog 04",
     "title": "Attacks & Unit Death",
