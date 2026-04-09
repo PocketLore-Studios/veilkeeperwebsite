@@ -1,9 +1,45 @@
 [
   {
-    "id": 5,
-    "title": "Devlog 05 -- 3v3 Combat & Turn Clarity",
-    "summary": "The first full 3v3 combat scenario is now playable with improved turn readability and unit state clarity.",
-    "full": "Combat has expanded to a full 3v3 scenario, bringing Veilkeeper’s tactical layer closer to a complete gameplay loop. Multiple units can now engage across both sides, making positioning and turn order more meaningful.\n\nThis update also improves readability during combat. Units now visually dim after they’ve acted, making it clearer which units are still available. Enemy turns are also easier to follow, helping distinguish player actions from AI resolution.\n\nThese changes make the battlefield easier to read while reinforcing the core flow of select → move → attack → resolve → next unit.\n\nCurrent progress:\n\n• 3v3 combat scenario\n• Multiple unit interactions\n• Clearer enemy turn flow\n• Units dim after acting\n• Improved combat readability\n• Full turn cycle visibility\n\nNext up is continuing to refine feedback and adding stronger visual indicators for targeting and combat results."
+    "slug": "devlog-05",
+    "label": "Devlog 05",
+    "title": "Turn Readability & Unit States",
+    "date": "2026-04-09",
+    "image": "/assets/devlog/devlog-05.gif",
+    "alt": "Units dim after acting with clearer turn flow in combat",
+    "summary": "Combat readability improves with clearer turn flow and units dimming after acting.",
+    "hasFullPost": true,
+    "sections": [
+      {
+        "type": "paragraph",
+        "text": "Combat readability continues to improve as the tactical loop takes shape. Units now visually dim after they’ve acted, making it easier to see which units are still available during a turn."
+      },
+      {
+        "type": "paragraph",
+        "text": "This also helps clarify enemy turns. With multiple units acting in sequence, the battlefield is easier to follow and the flow of combat is more understandable at a glance."
+      },
+      {
+        "type": "paragraph",
+        "text": "These changes don’t add new mechanics, but they make the existing systems much clearer. As more interactions are added, readability will become increasingly important."
+      },
+      {
+        "type": "heading",
+        "text": "Current progress"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Units dim after acting",
+          "Clearer turn readability",
+          "Improved enemy turn flow",
+          "Better battlefield clarity",
+          "More readable multi-unit combat"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "Next up is continuing to improve combat feedback and adding stronger indicators for targeting and damage resolution."
+      }
+    ]
   },
   {
     "slug": "devlog-04",
