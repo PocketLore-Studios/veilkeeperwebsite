@@ -262,3 +262,8 @@
     gap: 10px;
     white-space: nowrap;
 }
+
+a[href^="mailto"] {
+    font-weight: 600;
+    text-decoration: underline;
+}

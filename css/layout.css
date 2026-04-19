@@ -18,6 +18,10 @@
     align-items: stretch;
 }
 
+.panel + .panel {
+    margin-top: 1.5rem;
+}
+
 .surface {
     background: var(--surface-bg);
     border: 1px solid var(--line);
