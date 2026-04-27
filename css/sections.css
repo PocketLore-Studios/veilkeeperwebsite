@@ -490,3 +490,16 @@
 .back-to-top:hover {
     opacity: 1;
 }
+
+.footer-divider {
+    margin: 0 0.75rem;
+    opacity: 0.5;
+}
+
+.footer-security {
+    opacity: 0.8;
+}
+
+.footer-security:hover {
+    opacity: 1;
+}

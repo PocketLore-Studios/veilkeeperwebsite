@@ -1,0 +1,6 @@
+Contact: mailto:security@veilkeepergame.com
+Expires: 2027-01-01T17:00:00Z
+Canonical: https://veilkeepergame.com/.well-known/security.txt
+Policy: https://veilkeepergame.com/security
+Hiring: https://pocketlorestudios.com
+Preferred-Languages: en
