@@ -4,7 +4,7 @@
     "label": "Devlog 07",
     "title": "Devlog #07 — First Playable Loop",
     "date": "2026-06-21",
-    "image": "/assets/devlog/devlog-07-1.png",
+    "image": "/assets/devlog/devlog-07.png",
     "alt": "The Veilkeeper main menu and victory screen, marking the first complete playable loop from game start to battle completion.",
     "summary": "Veilkeeper now has its first complete gameplay loop, allowing the game to be played from the main menu through battle, victory, and back to the start.",
     "hasFullPost": true,
