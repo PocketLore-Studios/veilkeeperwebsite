@@ -11,7 +11,7 @@
     "sections": [
       {
         "type": "paragraph",
-        "text": "One of my goals for the PlayNYC demo is making sure new players can understand Veilkeeper without needing a tutorial or prior knowledge. That starts before the battle even begins."
+        "text": "One of my goals for the  demo is making sure new players can understand Veilkeeper without needing a tutorial or prior knowledge. That starts before the battle even begins."
       },
       {
         "type": "paragraph",
@@ -27,7 +27,7 @@
       },
       {
         "type": "paragraph",
-        "text": "As development continues toward Alpha and the PlayNYC demo, I'm spending more time refining the player's first impression. Every improvement to the interface helps Veilkeeper feel a little more like a complete game and a little less like a prototype."
+        "text": "As development continues toward Alpha, I'm spending more time refining the player's first impression. Every improvement to the interface helps Veilkeeper feel a little more like a complete game and a little less like a prototype."
       },
       {
         "type": "heading",
@@ -39,7 +39,7 @@
           "Added unit information cards to the squad draft screen",
           "Each card displays portrait, role, strengths, weaknesses, and tactical overview",
           "Improved first-time player onboarding before combat begins",
-          "Continued polishing the PlayNYC demo experience"
+          "Continued polishing the demo experience"
         ]
       }
     ]
