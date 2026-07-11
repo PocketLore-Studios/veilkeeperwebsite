@@ -8,7 +8,7 @@ const devlog = defineCollection({
         title: z.string(),
         date: z.coerce.date(),
         image: z.string(),
-        alt: z.string().default(''),
+        alt: z.string().min(1),
         summary: z.string()
     })
 });

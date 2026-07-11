@@ -2,6 +2,9 @@
 dist/
 .astro/
 
+# editor backup files
+*~
+
 # dependencies
 node_modules/
 

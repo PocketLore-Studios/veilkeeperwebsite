@@ -47,6 +47,9 @@ smoke:
     test -f dist/.well-known/security.txt
     test -f dist/favicon.png
     test -f dist/css/base.css
+    test -f dist/404.html
+    test -f dist/sitemap-index.xml
+    test -f dist/robots.txt
     @count=$(ls -d dist/devlog/*/ | wc -l); \
         src=$(ls src/content/devlog/*.md | wc -l); \
         [ "$count" -eq "$src" ] || { echo "expected $src devlog pages, found $count"; exit 1; }
