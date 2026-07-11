@@ -1,0 +1,57 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getSortedDevlogs, formatDate, getPostUrl } from '../../lib/devlog';
+
+export async function getStaticPaths() {
+    const devlogs = await getSortedDevlogs();
+
+    return devlogs.map((entry, index) => ({
+        params: { slug: entry.id },
+        props: {
+            entry,
+            // devlogs is newest-first: previous index = newer post
+            newer: index > 0 ? devlogs[index - 1] : null,
+            older: index < devlogs.length - 1 ? devlogs[index + 1] : null
+        }
+    }));
+}
+
+const { entry, newer, older } = Astro.props;
+const { Content } = await render(entry);
+---
+<BaseLayout
+        title={`${entry.data.label} — ${entry.data.title} | Veilkeeper`}
+        description={entry.data.summary}
+        ogImage={entry.data.image}
+        ogType="article"
+>
+    <section class="section">
+        <div class="container">
+            <article class="devlog-post surface">
+                <header class="devlog-post-header">
+                    <div class="devlog-meta">{entry.data.label} — {formatDate(entry.data.date)}</div>
+                    <h1 class="devlog-post-title">{entry.data.title}</h1>
+                </header>
+
+                <figure class="devlog-post-media">
+                    <img src={entry.data.image} alt={entry.data.alt} loading="lazy">
+                </figure>
+
+                <div class="devlog-post-content">
+                    <Content />
+                </div>
+
+                <div class="devlog-post-nav">
+                    {older
+                        ? <a href={getPostUrl(older)} class="devlog-read-more">← Previous devlog</a>
+                        : <span class="devlog-nav-spacer"></span>}
+                    <a href="/devlog/" class="devlog-read-more">All devlogs</a>
+                    {newer
+                        ? <a href={getPostUrl(newer)} class="devlog-read-more">Next devlog →</a>
+                        : <span class="devlog-nav-spacer"></span>}
+                </div>
+            </article>
+        </div>
+    </section>
+</BaseLayout>

@@ -1,0 +1,65 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+    title: string;
+    description: string;
+    ogImage?: string;
+    ogType?: string;
+}
+
+const {
+    title,
+    description,
+    ogImage = '/assets/hero/veilkeeper_logo_with_text_preview_image.png',
+    ogType = 'website'
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImageUrl = new URL(ogImage, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{title}</title>
+    <meta name="description" content={description}>
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href={canonical}>
+
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
+    <meta property="og:type" content={ogType}>
+    <meta property="og:url" content={canonical}>
+    <meta property="og:image" content={ogImageUrl}>
+    <meta property="og:site_name" content="Veilkeeper">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content={title}>
+    <meta name="twitter:description" content={description}>
+    <meta name="twitter:image" content={ogImageUrl}>
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" type="application/rss+xml" title="Veilkeeper Development Log" href="/rss.xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/sections.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+
+<Header />
+
+<main id="top">
+    <slot />
+</main>
+
+<Footer />
+</body>
+</html>
