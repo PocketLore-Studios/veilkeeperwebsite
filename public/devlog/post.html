@@ -1,0 +1,15 @@
+<!doctype html>
+<!-- Legacy URL shim: /devlog/post.html?slug=X now lives at /devlog/X/ -->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Devlog | Veilkeeper</title>
+    <meta name="robots" content="noindex">
+    <script>
+        var slug = new URLSearchParams(location.search).get('slug');
+        location.replace(slug ? '/devlog/' + encodeURIComponent(slug) + '/' : '/devlog/');
+    </script>
+    <noscript><meta http-equiv="refresh" content="0; url=/devlog/"></noscript>
+</head>
+<body></body>
+</html>

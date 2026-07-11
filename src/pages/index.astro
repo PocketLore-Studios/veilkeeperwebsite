@@ -1,50 +1,14 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Veilkeeper | Tactical RPG by PocketLore Studios</title>
-  <meta
-          name="description"
-          content="Veilkeeper is a tactical RPG where your army shrinks the deeper you push. Build your shard, extend relay lines, and survive the cost of the rift."
-  >
-  <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://veilkeepergame.com/">
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getSortedDevlogs } from '../lib/devlog';
 
-  <meta property="og:title" content="Veilkeeper | Tactical RPG by PocketLore Studios">
-  <meta
-          property="og:description"
-          content="Your army shrinks the deeper you push. Veilkeeper is a tactical RPG about dangerous expeditions, relay networks, and a living home shard."
-  >
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://veilkeepergame.com/">
-  <meta property="og:image" content="https://veilkeepergame.com/assets/hero/veilkeeper_logo_with_text_preview_image.png">
-  <meta property="og:site_name" content="Veilkeeper">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Veilkeeper | Tactical RPG by PocketLore Studios">
-  <meta name="twitter:description" content="Your army shrinks the deeper you push.">
-  <meta name="twitter:image" content="https://veilkeepergame.com/assets/hero/veilkeeper_logo_with_text_preview_image.png">
-
-  <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/sections.css">
-  <link rel="stylesheet" href="css/responsive.css">
-
-  <script src="/js/includes.js" defer></script>
-  <script src="js/menu.js" defer></script>
-  <script src="js/devlogs.js" defer></script>
-</head>
-<body>
-
-<div id="site-header"></div>
-
-<main id="top">
+const devlogs = await getSortedDevlogs();
+const latest = devlogs[0];
+---
+<BaseLayout
+        title="Veilkeeper | Tactical RPG by PocketLore Studios"
+        description="Veilkeeper is a tactical RPG where your army shrinks the deeper you push. Build your shard, extend relay lines, and survive the cost of the rift."
+>
   <section class="hero">
     <div class="container">
       <div class="hero-content">
@@ -52,7 +16,7 @@
 
         <img
                 class="hero-logo"
-                src="assets/logos/Veilkeeper_main_logo.webp"
+                src="/assets/logos/Veilkeeper_main_logo.webp"
                 alt="Veilkeeper"
                 fetchpriority="high"
         >
@@ -144,9 +108,34 @@
           The latest public-facing update from current development.
         </p>
       </div>
-        <div id="latest-devlog" aria-live="polite">
-          <p>Loading latest update...</p>
-        </div>
+
+      {latest ? (
+        <article class="status-update surface">
+          <img
+                  class="status-update-image"
+                  src={latest.data.image}
+                  alt={latest.data.alt}
+                  loading="lazy"
+          >
+          <div class="status-update-body">
+            <p class="status-update-kicker">Latest update</p>
+            <p class="status-update-caption">
+              <strong>{latest.data.label} — {latest.data.title}</strong>
+              <br>
+              {latest.data.summary}
+            </p>
+            <a href="/devlog/" class="link-row status-update-link">
+              <div>
+                <strong>View all updates</strong>
+                <span>Browse the development log</span>
+              </div>
+              <span>↗</span>
+            </a>
+          </div>
+        </article>
+      ) : (
+        <p>No updates yet.</p>
+      )}
     </div>
   </section>
 
@@ -349,7 +338,4 @@
       </div>
     </div>
   </section>
-</main>
-<div id="site-footer"></div>
-</body>
-</html>
+</BaseLayout>

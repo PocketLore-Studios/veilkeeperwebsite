@@ -1,3 +1,6 @@
+---
+const isDevlog = Astro.url.pathname.startsWith('/devlog');
+---
 <header class="topbar">
     <div class="container topbar-inner">
         <a class="brand" href="/" aria-label="Veilkeeper home">
@@ -23,7 +26,26 @@
             <a href="/#status">Status</a>
             <a href="/#roadmap">Roadmap</a>
             <a href="/#about">About</a>
-            <a href="/devlog/" class="nav-break" aria-current="page">Devlog</a>
+            <a href="/devlog/" class="nav-break" aria-current={isDevlog ? 'page' : undefined}>Devlog</a>
         </nav>
     </div>
 </header>
+
+<script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav');
+
+    if (menuToggle && nav) {
+        menuToggle.addEventListener('click', () => {
+            const isOpen = nav.classList.toggle('nav-open');
+            menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('nav-open');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+    }
+</script>

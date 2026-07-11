@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getSortedDevlogs, formatDate, getPostUrl } from '../../lib/devlog';
+
+const devlogs = await getSortedDevlogs();
+---
+<BaseLayout
+        title="Development Log | Veilkeeper"
+        description="Follow the progress of Veilkeeper as core systems come online."
+>
+    <section class="section">
+        <div class="container">
+            <div class="section-heading text-center">
+                <h1>Development Log</h1>
+                <p>Follow the progress of Veilkeeper as core systems come online.</p>
+            </div>
+
+            <div class="devlog-list">
+                {devlogs.length === 0 && <p>No devlogs yet.</p>}
+                {devlogs.map(entry => (
+                    <article class="devlog-entry surface">
+                        <div class="devlog-meta">{entry.data.label} — {formatDate(entry.data.date)}</div>
+                        <h3>{entry.data.title}</h3>
+                        <img src={entry.data.image} alt={entry.data.alt} loading="lazy">
+                        <p>{entry.data.summary}</p>
+                        <a href={getPostUrl(entry)} class="devlog-read-more">Read full update →</a>
+                    </article>
+                ))}
+            </div>
+        </div>
+    </section>
+</BaseLayout>
