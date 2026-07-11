@@ -1,26 +1,10 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Security | Veilkeeper</title>
-    <meta name="description" content="Security policy for Veilkeeper and vulnerability reporting information.">
-    <link rel="canonical" href="https://veilkeepergame.com/security">
-    <link rel="icon" type="image/png" href="/favicon.png">
-
-    <link rel="stylesheet" href="/css/base.css">
-    <link rel="stylesheet" href="/css/layout.css">
-    <link rel="stylesheet" href="/css/components.css">
-    <link rel="stylesheet" href="/css/sections.css">
-    <link rel="stylesheet" href="/css/responsive.css">
-
-    <script src="/js/includes.js" defer></script>
-    <script src="/js/menu.js" defer></script>
-</head>
-<body>
-<div id="site-header"></div>
-
-<main>
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+        title="Security | Veilkeeper"
+        description="Security policy for Veilkeeper and vulnerability reporting information."
+>
     <section class="section">
         <div class="container">
 
@@ -56,8 +40,4 @@
 
         </div>
     </section>
-</main>
-
-<div id="site-footer"></div>
-</body>
-</html>
+</BaseLayout>
