@@ -21,7 +21,18 @@ const devlogs = await getSortedDevlogs();
                     <article class="devlog-entry surface">
                         <div class="devlog-meta">{entry.data.label} — {formatDate(entry.data.date)}</div>
                         <h3>{entry.data.title}</h3>
-                        <img src={entry.data.image} alt={entry.data.alt} loading="lazy">
+                        {entry.data.video ? (
+                            <video
+                                    autoplay muted loop playsinline
+                                    preload="metadata"
+                                    src={entry.data.video}
+                                    poster={entry.data.image}
+                                    aria-label={entry.data.alt}
+                                    style="width: 100%; max-width: 360px; display: block; border-radius: var(--radius-lg); margin: 18px auto 20px;"
+                            ></video>
+                        ) : (
+                            <img src={entry.data.image} alt={entry.data.alt} loading="lazy">
+                        )}
                         <p>{entry.data.summary}</p>
                         <a href={getPostUrl(entry)} class="devlog-read-more">Read full update →</a>
                     </article>

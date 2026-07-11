@@ -2,7 +2,8 @@
 label: "Devlog 04"
 title: "Attacks & Unit Death"
 date: 2026-04-05
-image: "/assets/devlog/devlog-04.gif"
+image: "/assets/devlog/devlog-04-poster.png"
+video: "/assets/devlog/devlog-04.mp4"
 alt: "Units attacking and being defeated in combat prototype"
 summary: "Units can now attack and be defeated. The first full combat interaction is now working."
 ---

@@ -72,6 +72,8 @@ deploy-dry-run: build
 # ── Authoring ───────────────────────────────────────────────
 
 # Scaffold a new devlog entry: just new-devlog devlog-09 "Post title"
+# Tip: for animated media, add an optional `video: "/assets/devlog/<slug>.mp4"`
+# field to the frontmatter — `image` then serves as the poster/OG image.
 new-devlog slug title="TODO":
     @test ! -f "src/content/devlog/{{slug}}.md" || { echo "src/content/devlog/{{slug}}.md already exists"; exit 1; }
     @printf -- '---\nlabel: "TODO e.g. Devlog 09"\ntitle: "{{title}}"\ndate: %s\nimage: "/assets/devlog/{{slug}}.png"\nalt: "TODO describe the image"\nsummary: "TODO one-sentence summary (used on the homepage card, archive, OG description, and RSS)"\n---\n\nTODO write the post in markdown. `##` headings and `-` lists match the site styles.\n' "$(date +%Y-%m-%d)" > "src/content/devlog/{{slug}}.md"

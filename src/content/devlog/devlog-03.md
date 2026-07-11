@@ -2,7 +2,8 @@
 label: "Devlog 03"
 title: "Unit Selection & Movement"
 date: 2026-04-05
-image: "/assets/devlog/devlog-03.gif"
+image: "/assets/devlog/devlog-03-poster.png"
+video: "/assets/devlog/devlog-03.mp4"
 alt: "Unit selection and grid movement prototype"
 summary: "Units can now be selected and moved across the grid. This establishes the foundation for turn flow, pathing, and future combat interactions."
 ---

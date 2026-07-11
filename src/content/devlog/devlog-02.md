@@ -2,7 +2,8 @@
 label: "Devlog 02"
 title: "Cursor & Grid Interaction"
 date: 2026-03-28
-image: "/assets/devlog/devlog-02.gif"
+image: "/assets/devlog/devlog-02-poster.png"
+video: "/assets/devlog/devlog-02.mp4"
 alt: "Veilkeeper grid cursor highlighting tiles"
 summary: "Grid highlighting now supports mouse, keyboard, and controller. Input handling is in place, and the board is starting to feel responsive."
 ---

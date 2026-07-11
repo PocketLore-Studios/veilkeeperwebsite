@@ -35,7 +35,18 @@ const { Content } = await render(entry);
                 </header>
 
                 <figure class="devlog-post-media">
-                    <img src={entry.data.image} alt={entry.data.alt} loading="lazy">
+                    {entry.data.video ? (
+                        <video
+                                autoplay muted loop playsinline
+                                preload="metadata"
+                                src={entry.data.video}
+                                poster={entry.data.image}
+                                aria-label={entry.data.alt}
+                                style="width: 100%; max-width: 480px; display: block; margin: 0 auto; border-radius: var(--radius-lg);"
+                        ></video>
+                    ) : (
+                        <img src={entry.data.image} alt={entry.data.alt} loading="lazy">
+                    )}
                 </figure>
 
                 <div class="devlog-post-content">

@@ -112,12 +112,23 @@ const latest = devlogs[0];
 
       {latest ? (
         <article class="status-update surface">
-          <img
-                  class="status-update-image"
-                  src={latest.data.image}
-                  alt={latest.data.alt}
-                  loading="lazy"
-          >
+          {latest.data.video ? (
+            <video
+                    class="status-update-image"
+                    autoplay muted loop playsinline
+                    preload="metadata"
+                    src={latest.data.video}
+                    poster={latest.data.image}
+                    aria-label={latest.data.alt}
+            ></video>
+          ) : (
+            <img
+                    class="status-update-image"
+                    src={latest.data.image}
+                    alt={latest.data.alt}
+                    loading="lazy"
+            >
+          )}
           <div class="status-update-body">
             <p class="status-update-kicker">Latest update</p>
             <p class="status-update-caption">

@@ -2,7 +2,8 @@
 label: "Devlog 05"
 title: "Turn Readability & Unit States"
 date: 2026-04-09
-image: "/assets/devlog/devlog-05.gif"
+image: "/assets/devlog/devlog-05-poster.png"
+video: "/assets/devlog/devlog-05.mp4"
 alt: "Units dim after acting with clearer turn flow in combat"
 summary: "Combat readability improves with clearer turn flow and units dimming after acting."
 ---
