@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getSortedDevlogs } from '../lib/devlog';
+import { SITE } from '../lib/site';
 
 const devlogs = await getSortedDevlogs();
 const latest = devlogs[0];
@@ -38,7 +39,7 @@ const latest = devlogs[0];
             </a>
           </div>
 
-          <a class="button button--discord" href="https://discord.gg/5zu23e46s6" target="_blank" rel="noopener noreferrer">
+          <a class="button button--discord" href={SITE.social.discord} target="_blank" rel="noopener noreferrer">
             Join Discord
           </a>
 
@@ -311,7 +312,7 @@ const latest = devlogs[0];
         </p>
 
         <div class="direct-links">
-          <a class="link-row" href="https://veilkeepergame.com/" target="_blank" rel="noopener noreferrer">
+          <a class="link-row" href={SITE.url} target="_blank" rel="noopener noreferrer">
             <div>
               <strong>Official site</strong>
               <span>Project homepage and updates</span>
@@ -319,7 +320,7 @@ const latest = devlogs[0];
             <span>↗</span>
           </a>
 
-          <a class="link-row" href="https://bsky.app/profile/veilkeepergame.bsky.social" target="_blank" rel="noopener noreferrer">
+          <a class="link-row" href={SITE.social.bluesky} target="_blank" rel="noopener noreferrer">
             <div>
               <strong>Bluesky</strong>
               <span>Short-form development posts</span>
@@ -327,7 +328,7 @@ const latest = devlogs[0];
             <span>↗</span>
           </a>
 
-          <a class="link-row" href="https://discord.gg/5zu23e46s6" target="_blank" rel="noopener noreferrer">
+          <a class="link-row" href={SITE.social.discord} target="_blank" rel="noopener noreferrer">
             <div>
               <strong>Discord</strong>
               <span>Community and project discussion</span>

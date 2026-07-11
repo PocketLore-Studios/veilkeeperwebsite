@@ -32,20 +32,29 @@ const isDevlog = Astro.url.pathname.startsWith('/devlog');
 </header>
 
 <script>
-    const menuToggle = document.querySelector('.menu-toggle');
+    const menuToggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
     const nav = document.querySelector('.nav');
 
     if (menuToggle && nav) {
+        const closeMenu = () => {
+            nav.classList.remove('nav-open');
+            menuToggle.setAttribute('aria-expanded', 'false');
+        };
+
         menuToggle.addEventListener('click', () => {
             const isOpen = nav.classList.toggle('nav-open');
             menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         });
 
         nav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                nav.classList.remove('nav-open');
-                menuToggle.setAttribute('aria-expanded', 'false');
-            });
+            link.addEventListener('click', closeMenu);
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && nav.classList.contains('nav-open')) {
+                closeMenu();
+                menuToggle.focus();
+            }
         });
     }
 </script>

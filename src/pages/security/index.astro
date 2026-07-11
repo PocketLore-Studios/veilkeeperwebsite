@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../lib/site';
 ---
 <BaseLayout
         title="Security | Veilkeeper"
@@ -13,8 +14,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                 <p>
                     If you discover a security issue affecting Veilkeeper or this website,
                     please report it to
-                    <a href="mailto:security@veilkeepergame.com">
-                        security@veilkeepergame.com
+                    <a href={`mailto:${SITE.securityEmail}`}>
+                        {SITE.securityEmail}
                     </a>.
                 </p>
             </div>
