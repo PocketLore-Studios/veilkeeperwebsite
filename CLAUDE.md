@@ -26,7 +26,7 @@ Work happens on `development`; `main` is the release/PR target and auto-deploys 
 
 ## Architecture
 
-**Devlog posts are the content collection** in `src/content/devlog/*.md` — filename is the slug (`devlog-09.md`, `aotv-04.md` for "Art of the Veil" art posts). Schema lives in `src/content.config.ts`: `label`, `title`, `date`, `image` (path under `/assets/devlog/` in `public/`), `alt`, `summary`. The `summary` doubles as the homepage card text, archive blurb, OG description, and RSS description. Body is plain Markdown (`##` headings, `-` lists match the site styles).
+**Devlog posts are the content collection** in `src/content/devlog/*.md` — filename is the slug (`devlog-09.md`, `aotv-04.md` for "Art of the Veil" art posts). Schema lives in `src/content.config.ts`: `label`, `title`, `date`, `image` (path under `/assets/devlog/` in `public/`), `alt` (must be non-empty), `summary`, plus optional `video` (an MP4 under the same path). When `video` is set, the three render sites (homepage card, archive, post page) show an autoplaying muted loop and `image` serves as its poster frame and the OG image — convert GIFs to MP4 rather than shipping them (`ffmpeg -movflags +faststart -pix_fmt yuv420p`). The `summary` doubles as the homepage card text, archive blurb, OG description, and RSS description. Body is plain Markdown (`##` headings, `-` lists match the site styles).
 
 **Ordering:** everything sorts newest-first via `getSortedDevlogs()` in `src/lib/devlog.ts` — date descending, slug descending as tiebreaker (devlog-03/04 share a date). The homepage "Development Status" card always shows the newest entry; prev/next navigation on post pages follows the same order. Use the shared helpers (`getSortedDevlogs`, `formatDate`, `getPostUrl`) rather than re-sorting.
 
@@ -35,12 +35,15 @@ Work happens on `development`; `main` is the release/PR target and auto-deploys 
 - `src/pages/devlog/index.astro` — archive
 - `src/pages/devlog/[slug].astro` — one page per collection entry, with per-post OG tags (`ogImage` = the entry image)
 - `src/pages/security/index.astro` — security policy
+- `src/pages/404.astro` — not-found page, served with a real 404 status via `not_found_handling: "404-page"` in `wrangler.jsonc`
 - `src/pages/rss.xml.js` — RSS feed of all devlogs
+
+A sitemap (`sitemap-index.xml`, via `@astrojs/sitemap`) and `public/robots.txt` are also emitted. `public/_headers` is interpreted by Cloudflare's static-asset serving (Pages-style syntax): baseline security headers on everything plus tiered cache-control (`/_astro/*` immutable, `/assets/*` 30 days, `/css/*` 4 hours). Site-wide constants (social URLs — the Discord invite especially, since invites get rotated — site URL, security email) live in `src/lib/site.ts`; never hardcode them in markup.
 
 **`BaseLayout.astro`** (`src/layouts/`) owns the entire `<head>`: SEO/OG/Twitter meta, canonical URL (derived from `Astro.site` + path), stylesheet links, fonts, RSS discovery link. Props: `title`, `description`, optional `ogImage`/`ogType`. It renders `Header`/`Footer` components (ported from the old runtime-fetched partials) and `<main id="top">` (the footer's back-to-top anchor). New pages should always use it.
 
 **Styling is deliberately untouched from the pre-Astro site:** five plain global stylesheets in `public/css/` loaded in order (`base`, `layout`, `components`, `sections`, `responsive`) — no scoped Astro styles, no CSS build. Card-style elements share the `surface` class. Keep new markup compatible with these classes rather than adding scoped styles.
 
-**Legacy URL shim:** `public/devlog/post.html` JS-redirects old `/devlog/post.html?slug=X` links (shared on Discord/Bluesky before the migration) to `/devlog/X/`. Don't delete it. `public/.well-known/security.txt` (RFC 9116) must stay a plain static file.
+**Legacy URL shim:** `public/devlog/post.html` JS-redirects old `/devlog/post.html?slug=X` links (shared on Discord/Bluesky before the migration) to `/devlog/X/`. Don't delete it. `public/.well-known/security.txt` (RFC 9116) must stay a plain static file. The retired devlog GIFs (`devlog-02..05.gif`) also stay in `public/assets/devlog/` for the same reason — old social embeds link to them — even though no page references them.
 
 **Adding a devlog post:** `just new-devlog <slug> "Title"`, fill in the frontmatter TODOs, drop the image in `public/assets/devlog/`, done — the homepage, archive, post page, prev/next nav, and RSS all derive from the collection. If a new post shares a date with an existing one, the slug tiebreaker (descending) decides which counts as newer.
