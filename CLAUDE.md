@@ -20,9 +20,9 @@ just smoke      # assert all expected routes exist in dist/ (needs a prior build
 just new-devlog devlog-09 "Title"   # scaffold a devlog entry
 ```
 
-There is no unit test suite; `just ci` (check + build + smoke) is the verification path. GitHub Actions (`.github/workflows/ci.yml`) runs `just ci` on pushes/PRs and `just deploy` on pushes to `main` (needs `CLOUDFLARE_API_TOKEN`/`CLOUDFLARE_ACCOUNT_ID` secrets).
+There is no unit test suite; `just ci` (check + build + smoke) is the verification path. GitHub Actions (`.github/workflows/ci.yml`) runs `just ci` on pushes/PRs as a check only. Deployment is handled by Cloudflare's Workers Builds git integration (configured in the Cloudflare dashboard: build command `npm run build`, deploy command `npx wrangler deploy`), which deploys on pushes to `main`. `just deploy` exists as a manual escape hatch but note the two are independent — Cloudflare deploys even if GitHub checks fail.
 
-Work happens on `development` (migration currently on `astro-migration`); `main` is the release/PR target and auto-deploys.
+Work happens on `development`; `main` is the release/PR target and auto-deploys via Cloudflare.
 
 ## Architecture
 
