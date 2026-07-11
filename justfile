@@ -50,6 +50,7 @@ smoke:
     test -f dist/404.html
     test -f dist/sitemap-index.xml
     test -f dist/robots.txt
+    test -f dist/_headers
     @count=$(ls -d dist/devlog/*/ | wc -l); \
         src=$(ls src/content/devlog/*.md | wc -l); \
         [ "$count" -eq "$src" ] || { echo "expected $src devlog pages, found $count"; exit 1; }
