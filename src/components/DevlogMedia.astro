@@ -1,0 +1,45 @@
+---
+import type { DevlogEntry } from '../lib/devlog';
+
+interface Props {
+    entry: DevlogEntry;
+    /** Wrap the media in a navigational link to this URL (homepage/archive thumbnails). */
+    href?: string;
+    /** Link the image to its full-size file; Lightbox.astro upgrades it to a modal viewer. */
+    lightbox?: boolean;
+    class?: string;
+}
+
+const { entry, href, lightbox = false, class: className } = Astro.props;
+const { label, title, image, video, alt } = entry.data;
+---
+{href ? (
+    <a href={href} class:list={['media-link', className]} aria-label={`Read ${label} — ${title}`}>
+        {video ? (
+            <video
+                    autoplay muted loop playsinline
+                    preload="metadata"
+                    src={video}
+                    poster={image}
+                    aria-label={alt}
+            ></video>
+        ) : (
+            <img src={image} alt={alt} loading="lazy">
+        )}
+    </a>
+) : video ? (
+    <video
+            class={className}
+            autoplay muted loop playsinline
+            preload="metadata"
+            src={video}
+            poster={image}
+            aria-label={alt}
+    ></video>
+) : lightbox ? (
+    <a href={image} class:list={['media-link', 'lightbox-link', className]} data-lightbox>
+        <img src={image} alt={alt} loading="lazy">
+    </a>
+) : (
+    <img class={className} src={image} alt={alt} loading="lazy">
+)}

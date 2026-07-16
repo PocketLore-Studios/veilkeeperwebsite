@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getSortedDevlogs } from '../lib/devlog';
+import DevlogMedia from '../components/DevlogMedia.astro';
+import { getSortedDevlogs, getPostUrl } from '../lib/devlog';
 import { SITE } from '../lib/site';
 
 const devlogs = await getSortedDevlogs();
@@ -112,23 +113,7 @@ const latest = devlogs[0];
 
       {latest ? (
         <article class="status-update surface">
-          {latest.data.video ? (
-            <video
-                    class="status-update-image"
-                    autoplay muted loop playsinline
-                    preload="metadata"
-                    src={latest.data.video}
-                    poster={latest.data.image}
-                    aria-label={latest.data.alt}
-            ></video>
-          ) : (
-            <img
-                    class="status-update-image"
-                    src={latest.data.image}
-                    alt={latest.data.alt}
-                    loading="lazy"
-            >
-          )}
+          <DevlogMedia entry={latest} href={getPostUrl(latest)} class="status-update-image" />
           <div class="status-update-body">
             <p class="status-update-kicker">Latest update</p>
             <p class="status-update-caption">

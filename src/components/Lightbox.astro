@@ -1,0 +1,84 @@
+---
+// Full-size image viewer for devlog post images. Triggers are `a[data-lightbox]`
+// links (see DevlogMedia.astro); without JS they navigate to the image file instead.
+---
+<dialog class="lightbox" aria-label="Full-size image">
+    <button class="lightbox-close" type="button" aria-label="Close full-size image">✕</button>
+    <figure class="lightbox-figure">
+        <img class="lightbox-image" alt="">
+        <figcaption class="lightbox-caption"></figcaption>
+    </figure>
+    <div class="lightbox-nav" hidden>
+        <button class="lightbox-prev" type="button" aria-label="Previous image">←</button>
+        <button class="lightbox-next" type="button" aria-label="Next image">→</button>
+    </div>
+</dialog>
+
+<script>
+    const dialog = document.querySelector<HTMLDialogElement>('.lightbox');
+
+    if (dialog && typeof dialog.showModal === 'function') {
+        const image = dialog.querySelector<HTMLImageElement>('.lightbox-image')!;
+        const caption = dialog.querySelector('.lightbox-caption')!;
+        const closeButton = dialog.querySelector<HTMLButtonElement>('.lightbox-close')!;
+        const nav = dialog.querySelector<HTMLElement>('.lightbox-nav')!;
+        const prevButton = dialog.querySelector<HTMLButtonElement>('.lightbox-prev')!;
+        const nextButton = dialog.querySelector<HTMLButtonElement>('.lightbox-next')!;
+
+        // Images in the Markdown body aren't wrapped at build time — give them the
+        // same link semantics as the header image so they're keyboard-reachable.
+        document.querySelectorAll<HTMLImageElement>('.devlog-post-content img').forEach(img => {
+            if (img.closest('a')) return;
+            const link = document.createElement('a');
+            link.href = img.src;
+            link.className = 'media-link lightbox-link';
+            link.setAttribute('data-lightbox', '');
+            img.replaceWith(link);
+            link.append(img);
+        });
+
+        const triggers = [...document.querySelectorAll<HTMLAnchorElement>('a[data-lightbox]')];
+        let current = -1;
+
+        const show = (index: number) => {
+            current = (index + triggers.length) % triggers.length;
+            const trigger = triggers[current];
+            const alt = trigger.querySelector('img')?.alt ?? '';
+            image.src = trigger.href;
+            image.alt = alt;
+            caption.textContent = alt;
+        };
+
+        triggers.forEach((trigger, index) => {
+            trigger.addEventListener('click', event => {
+                event.preventDefault();
+                show(index);
+                nav.hidden = triggers.length < 2;
+                dialog.showModal();
+                closeButton.focus();
+            });
+        });
+
+        closeButton.addEventListener('click', () => dialog.close());
+        prevButton.addEventListener('click', () => show(current - 1));
+        nextButton.addEventListener('click', () => show(current + 1));
+
+        // Clicks on the backdrop are dispatched to the dialog element itself.
+        dialog.addEventListener('click', event => {
+            if (event.target === dialog) dialog.close();
+        });
+
+        dialog.addEventListener('keydown', event => {
+            if (triggers.length < 2) return;
+            if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                event.preventDefault();
+                show(event.key === 'ArrowLeft' ? current - 1 : current + 1);
+            }
+        });
+
+        // Native <dialog> handles Escape; return focus to the image that opened it.
+        dialog.addEventListener('close', () => {
+            triggers[current]?.focus();
+        });
+    }
+</script>
