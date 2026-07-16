@@ -3,6 +3,7 @@
 export const SITE = {
     name: 'Veilkeeper',
     url: 'https://veilkeepergame.com',
+    studioUrl: 'https://pocketlorestudios.com',
     securityEmail: 'security@veilkeepergame.com',
     social: {
         discord: 'https://discord.gg/5zu23e46s6',
