@@ -2,7 +2,7 @@
 label: "Art of the Veil 03"
 title: "Art of the Veil #03 — The World Takes Shape"
 date: 2026-06-25
-image: "/assets/devlog/art-of-the-veil-03.png"
+image: "/assets/devlog/art-of-the-veil-03.jpg"
 alt: "Concept artwork showing the Veilkeeper overlooking the city beneath a glowing purple rift while holding a staff illuminated by an amber crystal."
 summary: "The first colored concept for Veilkeeper's key art establishes the game's central visual contrast between the warmth of the home shard and the corruption of the rift."
 ---

@@ -1,0 +1,39 @@
+name: Check links
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 9 * * 1' # weekly, Monday 09:00 UTC
+  workflow_dispatch:
+
+jobs:
+  linkcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Build site
+        run: |
+          npm ci
+          npm run build
+
+      - name: Check links in built site
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # Remap Discord invites to the API so dead invites return 404
+          # instead of a 200 "invite invalid" page.
+          # Accept 403/429: X/Twitter and some sites block bots but the
+          # links are fine; a truly dead page still returns 404.
+          args: >-
+            --no-progress
+            --root-dir ${{ github.workspace }}/dist
+            --accept '200..=299,403,429'
+            --remap 'https://discord.com/invite/(.*) https://discord.com/api/v10/invites/$1'
+            'dist/**/*.html'
+          fail: true
