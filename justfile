@@ -46,7 +46,7 @@ smoke:
     test -f dist/devlog/post.html
     test -f dist/.well-known/security.txt
     test -f dist/favicon.png
-    test -f dist/css/base.css
+    @ls dist/_astro/*.css >/dev/null || { echo "no hashed CSS bundle in dist/_astro"; exit 1; }
     test -f dist/404.html
     test -f dist/sitemap-index.xml
     test -f dist/robots.txt

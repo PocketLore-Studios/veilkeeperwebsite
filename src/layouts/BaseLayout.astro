@@ -3,6 +3,14 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE } from '../lib/site';
 
+// Global stylesheets, bundled by Astro into a content-hashed /_astro/*.css file
+// so CSS changes bust caches. Import order defines the cascade — keep it.
+import '../styles/base.css';
+import '../styles/layout.css';
+import '../styles/components.css';
+import '../styles/sections.css';
+import '../styles/responsive.css';
+
 interface Props {
     title: string;
     description: string;
@@ -46,11 +54,6 @@ const ogImageUrl = new URL(ogImage, Astro.site);
     <link rel="alternate" type="application/rss+xml" title="Veilkeeper Development Log" href="/rss.xml">
     <link rel="preload" href="/assets/fonts/cinzel-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/assets/fonts/raleway-latin.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="/css/base.css">
-    <link rel="stylesheet" href="/css/layout.css">
-    <link rel="stylesheet" href="/css/components.css">
-    <link rel="stylesheet" href="/css/sections.css">
-    <link rel="stylesheet" href="/css/responsive.css">
 </head>
 <body>
 
