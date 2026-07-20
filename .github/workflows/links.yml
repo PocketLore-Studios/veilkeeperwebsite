@@ -26,14 +26,14 @@ jobs:
       - name: Check links in built site
         uses: lycheeverse/lychee-action@v2
         with:
-          # Remap Discord invites to the API so dead invites return 404
-          # instead of a 200 "invite invalid" page.
-          # Accept 403/429: X/Twitter and some sites block bots but the
-          # links are fine; a truly dead page still returns 404.
           args: >-
             --no-progress
             --root-dir ${{ github.workspace }}/dist
+            --index-files index.html
             --accept '200..=299,403,429'
+            --remap '^https://veilkeepergame\.com file://${{ github.workspace }}/dist'
+            --remap '^https://www\.veilkeepergame\.com file://${{ github.workspace }}/dist'
             --remap 'https://discord.com/invite/(.*) https://discord.com/api/v10/invites/$1'
             'dist/**/*.html'
           fail: true
+          
