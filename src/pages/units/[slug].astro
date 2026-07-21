@@ -1,0 +1,64 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import UnitMedia from '../../components/UnitMedia.astro';
+import Lightbox from '../../components/Lightbox.astro';
+import { getSortedUnits, getUnitUrl } from '../../lib/units';
+
+export async function getStaticPaths() {
+    const units = await getSortedUnits();
+
+    return units.map((entry, index) => ({
+        params: { slug: entry.id },
+        props: {
+            entry,
+            prev: index > 0 ? units[index - 1] : null,
+            next: index < units.length - 1 ? units[index + 1] : null
+        }
+    }));
+}
+
+const { entry, prev, next } = Astro.props;
+const { Content } = await render(entry);
+---
+<BaseLayout
+        title={`${entry.data.name} | Veilkeeper`}
+        description={entry.data.summary}
+        ogImage={entry.data.image}
+        ogType="article"
+>
+    <section class="section">
+        <div class="container">
+            <article class="unit-post surface">
+                <figure class="unit-post-media">
+                    <UnitMedia entry={entry} lightbox />
+                </figure>
+
+                <header class="unit-post-header">
+                    <h1 class="unit-post-title">{entry.data.name}</h1>
+                    <div class="unit-tags">
+                        <span class="status-tag">{entry.data.role}</span>
+                        {entry.data.faction && <span class="status-tag tag--faction">{entry.data.faction}</span>}
+                        {entry.data.tags.map(tag => <span class="status-tag tag--muted">{tag}</span>)}
+                    </div>
+                </header>
+
+                <div class="unit-post-content devlog-post-content">
+                    <Content />
+                </div>
+
+                <div class="devlog-post-nav">
+                    {prev
+                        ? <a href={getUnitUrl(prev)} class="devlog-read-more">← {prev.data.name}</a>
+                        : <span class="devlog-nav-spacer"></span>}
+                    <a href="/units/" class="devlog-read-more">All units</a>
+                    {next
+                        ? <a href={getUnitUrl(next)} class="devlog-read-more">{next.data.name} →</a>
+                        : <span class="devlog-nav-spacer"></span>}
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <Lightbox />
+</BaseLayout>

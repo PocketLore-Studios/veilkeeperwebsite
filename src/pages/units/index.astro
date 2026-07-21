@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import UnitMedia from '../../components/UnitMedia.astro';
+import { getSortedUnits, getUnitUrl } from '../../lib/units';
+
+const units = await getSortedUnits();
+---
+<BaseLayout
+        title="Units | Veilkeeper"
+        description="Meet the units of Veilkeeper — the characters you'll command on the tactical grid."
+>
+    <section class="section">
+        <div class="container">
+            <div class="section-heading text-center">
+                <h1>Units</h1>
+                <p>Meet the characters you'll command on the tactical grid.</p>
+            </div>
+
+            <div class="units-grid">
+                {units.length === 0 && <p>No units yet.</p>}
+                {units.map(entry => (
+                    <article class="unit-card surface">
+                        <UnitMedia entry={entry} href={getUnitUrl(entry)} />
+                        <h3>{entry.data.name}</h3>
+                        <div class="unit-tags">
+                            <span class="status-tag">{entry.data.role}</span>
+                            {entry.data.faction && <span class="status-tag tag--faction">{entry.data.faction}</span>}
+                        </div>
+                        <p>{entry.data.summary}</p>
+                        <a href={getUnitUrl(entry)} class="devlog-read-more">View unit →</a>
+                    </article>
+                ))}
+            </div>
+        </div>
+    </section>
+</BaseLayout>

@@ -43,7 +43,8 @@
         const show = (index: number) => {
             current = (index + triggers.length) % triggers.length;
             const trigger = triggers[current];
-            const alt = trigger.querySelector('img')?.alt ?? '';
+            // Sprite triggers (units) have no <img>; fall back to the link's aria-label.
+            const alt = trigger.querySelector('img')?.alt ?? trigger.getAttribute('aria-label') ?? '';
             image.src = trigger.href;
             image.alt = alt;
             caption.textContent = alt;

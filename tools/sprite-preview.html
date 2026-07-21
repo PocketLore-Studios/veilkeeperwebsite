@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Veilkeeper — Spritesheet preview / tuner</title>
+    <style>
+        :root { color-scheme: dark; }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: system-ui, sans-serif;
+            background: #0b0713;
+            color: #ece7f5;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+        }
+        aside {
+            padding: 24px;
+            border-right: 1px solid #241a38;
+            background: #120b1f;
+        }
+        h1 { font-size: 1.05rem; margin: 0 0 4px; }
+        p.hint { margin: 0 0 20px; color: #9a8fb5; font-size: 0.85rem; line-height: 1.4; }
+        label { display: block; margin: 14px 0 4px; font-size: 0.8rem; color: #b9aed4; }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid #34274f;
+            background: #1a1129;
+            color: #fff;
+            font: inherit;
+        }
+        .drop {
+            margin-bottom: 8px;
+            padding: 22px 12px;
+            border: 2px dashed #3d2e5c;
+            border-radius: 12px;
+            text-align: center;
+            color: #9a8fb5;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .drop.drag { border-color: #c98a3a; color: #f0c07a; }
+        main {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            align-items: flex-start;
+        }
+        .stage {
+            padding: 28px;
+            border-radius: 16px;
+            background:
+                linear-gradient(45deg, #17101f 25%, transparent 25%) -8px 0/16px 16px,
+                linear-gradient(-45deg, #17101f 25%, transparent 25%) -8px 0/16px 16px,
+                linear-gradient(45deg, transparent 75%, #17101f 75%) -8px 0/16px 16px,
+                linear-gradient(-45deg, transparent 75%, #17101f 75%) -8px 0/16px 16px,
+                #0e0a17;
+        }
+        .unit-sprite { display: inline-block; overflow: hidden; image-rendering: pixelated; }
+        .unit-sprite__x { background-repeat: no-repeat; image-rendering: pixelated; will-change: transform; }
+        @keyframes unit-sprite-x { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+        h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: #9a8fb5; margin: 0 0 8px; }
+        textarea {
+            width: 100%;
+            max-width: 520px;
+            min-height: 150px;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #34274f;
+            background: #140d22;
+            color: #cfe6c9;
+            font-family: ui-monospace, monospace;
+            font-size: 0.82rem;
+        }
+    </style>
+</head>
+<body>
+    <aside>
+        <h1>Spritesheet tuner</h1>
+        <p class="hint">Drop a spritesheet, dial in the frame size / count / fps until the
+            preview loops right, then copy the frontmatter into a unit's markdown.
+            Nothing is uploaded — the sheet is read locally.</p>
+
+        <div class="drop" id="drop">Drop a PNG here, or click to pick</div>
+        <input type="file" id="file" accept="image/*" hidden>
+
+        <label>Frame width (px) — one cell<input type="number" id="frameWidth" value="64" min="1"></label>
+        <label>Frame height (px) — one row's height<input type="number" id="frameHeight" value="64" min="1"></label>
+        <label>Frame count — columns in this row<input type="number" id="frameCount" value="8" min="1"></label>
+        <label>Row to play (0 = top row)<input type="number" id="spriteRow" value="0" min="0"></label>
+        <label>FPS<input type="number" id="fps" value="12" min="1" step="0.5"></label>
+    </aside>
+
+    <main>
+        <div class="stage"><div class="unit-sprite" id="sprite"></div></div>
+        <div>
+            <h2>Frontmatter</h2>
+            <textarea id="out" readonly></textarea>
+        </div>
+    </main>
+
+    <script>
+        const $ = id => document.getElementById(id);
+        const drop = $('drop'), file = $('file'), sprite = $('sprite'), out = $('out');
+        const inputs = ['frameWidth', 'frameHeight', 'frameCount', 'spriteRow', 'fps'].map($);
+        let sheetUrl = null;
+
+        function render() {
+            const fw = +$('frameWidth').value || 1;
+            const fh = +$('frameHeight').value || 1;
+            const frames = +$('frameCount').value || 1;
+            const row = Math.max(0, +$('spriteRow').value || 0);
+            const fps = +$('fps').value || 12;
+            const rowW = frames * fw;
+            const dur = frames / fps;
+
+            // Viewport = one frame; inner element = the whole animated row.
+            sprite.style.width = fw + 'px';
+            sprite.style.height = fh + 'px';
+            sprite.innerHTML = '';
+
+            const x = document.createElement('span');
+            x.className = 'unit-sprite__x';
+            x.style.cssText = `display:block;width:${rowW}px;height:${fh}px;` +
+                (sheetUrl ? `background-image:url('${sheetUrl}');` : '') +
+                `background-repeat:no-repeat;background-position:0 ${-(row * fh)}px;` +
+                `animation:unit-sprite-x ${dur}s steps(${frames}) infinite`;
+            sprite.appendChild(x);
+
+            const rowLine = row ? `\nspriteRow: ${row}` : '';
+            out.value =
+                `sprite: "/assets/units/<slug>-sheet.png"\n` +
+                `frameWidth: ${fw}\nframeHeight: ${fh}\nframeCount: ${frames}` +
+                rowLine +
+                `\nfps: ${fps}`;
+        }
+
+        function loadFile(f) {
+            if (!f) return;
+            if (sheetUrl) URL.revokeObjectURL(sheetUrl);
+            sheetUrl = URL.createObjectURL(f);
+            render();
+        }
+
+        inputs.forEach(i => i.addEventListener('input', render));
+        drop.addEventListener('click', () => file.click());
+        file.addEventListener('change', e => loadFile(e.target.files[0]));
+        ['dragenter', 'dragover'].forEach(t => drop.addEventListener(t, e => {
+            e.preventDefault(); drop.classList.add('drag');
+        }));
+        ['dragleave', 'drop'].forEach(t => drop.addEventListener(t, e => {
+            e.preventDefault(); drop.classList.remove('drag');
+        }));
+        drop.addEventListener('drop', e => loadFile(e.dataTransfer.files[0]));
+
+        render();
+    </script>
+</body>
+</html>

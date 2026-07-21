@@ -54,7 +54,12 @@ smoke:
     @count=$(ls -d dist/devlog/*/ | wc -l); \
         src=$(ls src/content/devlog/*.md | wc -l); \
         [ "$count" -eq "$src" ] || { echo "expected $src devlog pages, found $count"; exit 1; }
-    @echo "smoke OK: all routes present, $(ls src/content/devlog/*.md | wc -l) devlog pages built"
+    test -f dist/units/index.html
+    @count=$(ls -d dist/units/*/ | wc -l); \
+        src=$(ls src/content/units/*.md | wc -l); \
+        [ "$count" -eq "$src" ] || { echo "expected $src unit pages, found $count"; exit 1; }
+    @test ! -e dist/sprite-preview.html && test ! -e dist/tools || { echo "dev-only preview harness leaked into dist/"; exit 1; }
+    @echo "smoke OK: all routes present, $(ls src/content/devlog/*.md | wc -l) devlog + $(ls src/content/units/*.md | wc -l) unit pages built"
 
 # Full pipeline as CI runs it
 ci: install check build smoke
@@ -78,3 +83,15 @@ new-devlog slug title="TODO":
     @test ! -f "src/content/devlog/{{slug}}.md" || { echo "src/content/devlog/{{slug}}.md already exists"; exit 1; }
     @printf -- '---\nlabel: "TODO e.g. Devlog 09"\ntitle: "{{title}}"\ndate: %s\nimage: "/assets/devlog/{{slug}}.png"\nalt: "TODO describe the image"\nsummary: "TODO one-sentence summary (used on the homepage card, archive, OG description, and RSS)"\n---\n\nTODO write the post in markdown. `##` headings and `-` lists match the site styles.\n' "$(date +%Y-%m-%d)" > "src/content/devlog/{{slug}}.md"
     @echo "created src/content/devlog/{{slug}}.md — remember to add /assets/devlog/{{slug}}.png to public/"
+
+# Scaffold a new unit: just new-unit ash-warden "Ash Warden"
+# For an animated sprite, uncomment the sprite/frame fields (tune them with
+# `just sprite-preview`); or use `video:` for an MP4 loop instead.
+new-unit slug name="TODO":
+    @test ! -f "src/content/units/{{slug}}.md" || { echo "src/content/units/{{slug}}.md already exists"; exit 1; }
+    @printf -- '---\nname: "{{name}}"\nrole: "TODO e.g. Vanguard"\n# faction: "TODO optional (enables grouping later)"\ntags: []\norder: 99\nimage: "/assets/units/{{slug}}.png"\nalt: "TODO describe the image"\nsummary: "TODO one-sentence summary (used on the roster card and OG description)"\n# Animated media (optional) — use EITHER video OR sprite, not both:\n#   video: "/assets/units/{{slug}}.mp4"\n#   sprite: "/assets/units/{{slug}}-sheet.png"\n#   frameWidth: 64\n#   frameHeight: 64\n#   frameCount: 8   # columns in the row you want to play\n#   fps: 12\n#   # spriteRow: 0   # which row of a multi-row sheet to play (0 = top)\n---\n\nTODO write the unit description in markdown. `##` headings and `-` lists match the site styles.\n' > "src/content/units/{{slug}}.md"
+    @echo "created src/content/units/{{slug}}.md — remember to add /assets/units/{{slug}}.png to public/"
+
+# Open the spritesheet preview/tuner in a browser (loads sheets locally; no server)
+sprite-preview:
+    @xdg-open tools/sprite-preview.html 2>/dev/null || echo "Open this in your browser: file://$(pwd)/tools/sprite-preview.html"

@@ -231,6 +231,48 @@
     border-color: var(--status-planned-border);
 }
 
+.tag--faction {
+    color: var(--ember);
+}
+
+.tag--muted {
+    color: var(--muted);
+    font-weight: 600;
+}
+
+/* ── Unit sprites ──────────────────────────────────────────
+   A spritesheet animated entirely in CSS: an overflow-clipped
+   viewport shows one frame; the inner element is the whole
+   animated row (background-position-y selects which row on a
+   multi-row sheet) and steps left across its columns. The shared
+   keyframe translates 0 → -100% of the row's width, so only the
+   concrete sizes/offset/duration/step count are set inline
+   (see UnitMedia.astro). */
+.unit-sprite {
+    display: inline-block;
+    overflow: hidden;
+    image-rendering: pixelated;
+}
+
+.unit-sprite__x {
+    display: block;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    will-change: transform;
+}
+
+@keyframes unit-sprite-x {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    /* Freeze on the first frame of the selected row. */
+    .unit-sprite__x {
+        animation: none !important;
+    }
+}
+
 .mini-list {
     margin: 0;
     padding-left: var(--space-8);

@@ -1,0 +1,65 @@
+---
+import type { UnitEntry } from '../lib/units';
+
+interface Props {
+    entry: UnitEntry;
+    /** Wrap the media in a navigational link (roster thumbnails). */
+    href?: string;
+    /** Link the static image to its full size; Lightbox.astro upgrades it to a modal. */
+    lightbox?: boolean;
+    class?: string;
+}
+
+const { entry, href, lightbox = false, class: className } = Astro.props;
+const { name, image, alt, video, sprite, fps } = entry.data;
+
+// Render precedence: sprite → video → image.
+const isSprite = !!sprite;
+
+// Sprite geometry (schema guarantees frame*/count when `sprite` is set). One
+// row of `frames` columns is animated; `spriteRow` offsets to that row on a
+// multi-row sheet. The window (viewport) shows one frame; the inner element is
+// the whole animated row and translateX steps across its columns, while
+// background-position-y holds the chosen row.
+const fw = entry.data.frameWidth ?? 0;
+const fh = entry.data.frameHeight ?? 0;
+const frames = entry.data.frameCount ?? 1;
+const row = entry.data.spriteRow;
+const rowStyle =
+    `width:${frames * fw}px;height:${fh}px;` +
+    `background-image:url('${sprite}');background-position:0 ${-(row * fh)}px;` +
+    `animation:unit-sprite-x ${frames / fps}s steps(${frames}) infinite`;
+---
+{href ? (
+    <a class:list={['media-link', className]} href={href} aria-label={`View ${name}`}>
+        {isSprite ? (
+            <span class="unit-sprite" style={`width:${fw}px;height:${fh}px`} role="img" aria-label={alt}>
+                <span class="unit-sprite__x" style={rowStyle}></span>
+            </span>
+        ) : video ? (
+            <video autoplay muted loop playsinline preload="metadata" src={video} poster={image} aria-label={alt}></video>
+        ) : (
+            <img src={image} alt={alt} loading="lazy" />
+        )}
+    </a>
+) : lightbox ? (
+    <a class:list={['media-link', 'lightbox-link', className]} href={image} data-lightbox aria-label={alt}>
+        {isSprite ? (
+            <span class="unit-sprite" style={`width:${fw}px;height:${fh}px`} role="img" aria-label={alt}>
+                <span class="unit-sprite__x" style={rowStyle}></span>
+            </span>
+        ) : video ? (
+            <video autoplay muted loop playsinline preload="metadata" src={video} poster={image} aria-label={alt}></video>
+        ) : (
+            <img src={image} alt={alt} loading="lazy" />
+        )}
+    </a>
+) : isSprite ? (
+    <span class:list={['unit-sprite', className]} style={`width:${fw}px;height:${fh}px`} role="img" aria-label={alt}>
+        <span class="unit-sprite__x" style={rowStyle}></span>
+    </span>
+) : video ? (
+    <video class={className} autoplay muted loop playsinline preload="metadata" src={video} poster={image} aria-label={alt}></video>
+) : (
+    <img class={className} src={image} alt={alt} loading="lazy" />
+)}
