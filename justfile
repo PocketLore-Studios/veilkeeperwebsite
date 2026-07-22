@@ -25,7 +25,9 @@ preview port="4321":
 
 # Run the Worker + static assets locally to exercise the /feedback endpoint.
 # Uses Cloudflare's Turnstile test keys (site key falls back automatically in
-# the page); email sends are simulated/logged unless the binding is remote.
+# the page). RESEND_FROM_ADDRESS / FEEDBACK_DESTINATION come from wrangler.jsonc;
+# put a real RESEND_API_KEY in a gitignored .dev.vars for a real send, or omit
+# it to exercise the Resend non-2xx (502) error path.
 wrangler-dev: build
     npx wrangler@4 dev \
         --var ALLOWED_ORIGINS:http://localhost:8787 \

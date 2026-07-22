@@ -312,11 +312,12 @@ a[href^="mailto"] {
 }
 
 .category-option {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-    padding: var(--space-7) var(--space-7) var(--space-7) var(--space-11);
-    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: var(--space-5);
+    row-gap: var(--space-1);
+    align-items: start;
+    padding: var(--space-7);
     border: 1px solid var(--border-soft);
     border-radius: var(--radius-lg);
     background: var(--surface-overlay-soft);
@@ -329,9 +330,9 @@ a[href^="mailto"] {
 }
 
 .category-option input {
-    position: absolute;
-    top: var(--space-7);
-    left: var(--space-5);
+    grid-column: 1;
+    grid-row: 1;
+    margin-top: 0.2em;
     accent-color: var(--veil);
 }
 
@@ -346,16 +347,24 @@ a[href^="mailto"] {
 }
 
 .category-label {
+    grid-column: 2;
     font-weight: 700;
 }
 
 .category-blurb {
+    grid-column: 2;
     color: var(--muted);
     font-size: var(--font-size-body-sm);
     line-height: 1.4;
 }
 
-/* Fields */
+/* Fields — only the selected category's fieldset is shown. The [hidden]
+   attribute (set at build time and toggled by JS) must win over the flex
+   display below, so it is raised in specificity here. */
+.feedback-form [hidden] {
+    display: none !important;
+}
+
 .category-fields {
     display: flex;
     flex-direction: column;

@@ -4,7 +4,7 @@
 // wrangler.jsonc); every other request is served from static assets. The
 // handler validates a Turnstile token server-side, allowlists the submitted
 // fields against the shared schema, and emails a plain-text notification to
-// support@veilkeepergame.com via Cloudflare Email Sending.
+// support@veilkeepergame.com via the Resend REST API (no SDK, no paid plan).
 
 import {
     CATEGORY_VALUES,
@@ -15,28 +15,25 @@ import {
     getCategory,
 } from '../src/lib/feedback';
 
-interface EmailSendMessage {
-    to: string;
-    from: { email: string; name: string };
-    subject: string;
-    text: string;
-    replyTo?: string;
-}
-
 interface Env {
     ASSETS: Fetcher;
-    EMAIL: { send(message: EmailSendMessage): Promise<{ messageId?: string }> };
+    // Secrets (wrangler secret put):
     TURNSTILE_SECRET: string;
+    RESEND_API_KEY: string;
+    // Runtime vars:
     ALLOWED_HOSTNAMES: string;
     ALLOWED_ORIGINS: string;
     // Expected Turnstile action, enforced when non-empty (production = "feedback").
     // Left empty in local dev because dummy test tokens carry no action.
     TURNSTILE_ACTION: string;
+    // "Veilkeeper Feedback <noreply@feedback.veilkeepergame.com>"
+    RESEND_FROM_ADDRESS: string;
+    // "support@veilkeepergame.com"
+    FEEDBACK_DESTINATION: string;
 }
 
-const FROM = { email: 'feedback@veilkeepergame.com', name: 'Veilkeeper Feedback' };
-const TO = 'support@veilkeepergame.com';
 const SITEVERIFY = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+const RESEND_ENDPOINT = 'https://api.resend.com/emails';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // C0 control characters (U+0000–U+001F) plus DEL (U+007F). Built via RegExp()
 // so no literal control bytes ever appear in this source file.
@@ -162,10 +159,8 @@ async function handleFeedback(request: Request, env: Env): Promise<Response> {
     }
     const text = bodyLines.join('\n');
 
-    try {
-        await env.EMAIL.send({ to: TO, from: FROM, subject, text, replyTo });
-    } catch (err) {
-        console.error('feedback email send failed', err);
+    const sent = await sendViaResend(env, { subject, text, replyTo });
+    if (!sent) {
         return json({ error: 'Could not deliver your feedback right now.' }, 502);
     }
 
@@ -206,6 +201,42 @@ async function verifyTurnstile(token: string, request: Request, env: Env): Promi
         );
     } catch (err) {
         console.error('turnstile verify failed', err);
+        return false;
+    }
+}
+
+/**
+ * Send the notification via the Resend REST API. Returns true on a 2xx.
+ * All failure detail is logged server-side; callers surface a generic error so
+ * neither Resend's response nor the API key can leak to the client.
+ */
+async function sendViaResend(
+    env: Env,
+    msg: { subject: string; text: string; replyTo?: string },
+): Promise<boolean> {
+    try {
+        const res = await fetch(RESEND_ENDPOINT, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${env.RESEND_API_KEY}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                from: env.RESEND_FROM_ADDRESS,
+                to: env.FEEDBACK_DESTINATION,
+                subject: msg.subject,
+                text: msg.text,
+                reply_to: msg.replyTo,
+            }),
+        });
+        if (!res.ok) {
+            const detail = await res.text().catch(() => '<no body>');
+            console.error(`resend send failed: ${res.status} ${res.statusText} — ${detail}`);
+            return false;
+        }
+        return true;
+    } catch (err) {
+        console.error('resend request threw', err);
         return false;
     }
 }

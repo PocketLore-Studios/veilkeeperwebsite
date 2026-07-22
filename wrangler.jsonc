@@ -16,21 +16,19 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
-  // Outbound-only notification email. Restricted to the single support inbox.
-  // Google Workspace remains the inbound provider — do NOT enable Email Routing.
-  "send_email": [
-    {
-      "name": "EMAIL",
-      "destination_address": "support@veilkeepergame.com"
-    }
-  ],
-  // Non-secret runtime allowlists (production values). Parsed into Sets and
-  // matched by exact equality in the Worker. TURNSTILE_SECRET is a Worker
-  // secret (wrangler secret put), not stored here. The Turnstile *site key*
-  // is a build-time PUBLIC_TURNSTILE_SITE_KEY env var for Astro.
+  // Non-secret runtime vars (production values). Allowlists are parsed into Sets
+  // and matched by exact equality in the Worker. Outbound email goes through the
+  // Resend REST API — RESEND_API_KEY and TURNSTILE_SECRET are Worker secrets
+  // (wrangler secret put), not stored here. The Turnstile *site key* is a
+  // build-time PUBLIC_TURNSTILE_SITE_KEY env var for Astro.
+  //
+  // Inbound email stays Google Workspace; Resend sends only from the dedicated
+  // feedback.veilkeepergame.com subdomain — do NOT touch the root MX records.
   "vars": {
     "ALLOWED_HOSTNAMES": "veilkeepergame.com,www.veilkeepergame.com",
     "ALLOWED_ORIGINS": "https://veilkeepergame.com,https://www.veilkeepergame.com",
-    "TURNSTILE_ACTION": "feedback"
+    "TURNSTILE_ACTION": "feedback",
+    "RESEND_FROM_ADDRESS": "Veilkeeper Feedback <noreply@feedback.veilkeepergame.com>",
+    "FEEDBACK_DESTINATION": "support@veilkeepergame.com"
   }
 }
