@@ -22,7 +22,6 @@ jobs:
         run: |
           npm ci
           npm run build
-
       - name: Check links in built site
         uses: lycheeverse/lychee-action@v2
         with:
@@ -37,3 +36,4 @@ jobs:
             --remap 'https://discord.com/invite/(.*) https://discord.com/api/v10/invites/$1'
             'dist/**/*.html'
           fail: true
+          
