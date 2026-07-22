@@ -8,14 +8,11 @@
   "main": "worker/index.ts",
   "assets": {
     "directory": "./dist",
-<<<<<<< HEAD
-    "not_found_handling": "404-page"
-=======
+    "not_found_handling": "404-page",
     "binding": "ASSETS",
     "run_worker_first": [
       "/api/*"
     ]
->>>>>>> feedback-form
   },
   "compatibility_flags": [
     "nodejs_compat"
