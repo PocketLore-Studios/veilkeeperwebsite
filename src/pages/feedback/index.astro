@@ -1,0 +1,210 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { CATEGORIES, EMAIL_FIELD, HONEYPOT_FIELD } from '../../lib/feedback';
+
+// Cloudflare Turnstile site key is public; injected at build time.
+// Falls back to Cloudflare's "always passes" test key for local dev.
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '1x00000000000000000000AA';
+
+const fields = [EMAIL_FIELD]; // shared, category-independent
+---
+<BaseLayout
+        title="Feedback | Veilkeeper"
+        description="Report a bug or share feedback on Veilkeeper. Tell us what you were playing and what happened — it goes straight to the team."
+>
+    <section class="section">
+        <div class="container">
+
+            <div class="section-heading">
+                <h1>Send Feedback</h1>
+                <p class="text-muted">
+                    Bug, balance note, or something that just felt off — pick what fits and
+                    tell us what happened. The more specific the better.
+                </p>
+            </div>
+
+            <noscript>
+                <div class="panel surface">
+                    <p>
+                        This form needs JavaScript. You can email us directly at
+                        <a href="mailto:support@veilkeepergame.com">support@veilkeepergame.com</a>.
+                    </p>
+                </div>
+            </noscript>
+
+            <form
+                    id="feedback-form"
+                    class="panel surface feedback-form"
+                    action="/api/feedback"
+                    method="POST"
+            >
+                <!-- Honeypot: real people never fill this in. -->
+                <div class="honeypot" aria-hidden="true">
+                    <label for={HONEYPOT_FIELD}>Company</label>
+                    <input
+                            type="text"
+                            id={HONEYPOT_FIELD}
+                            name={HONEYPOT_FIELD}
+                            tabindex="-1"
+                            autocomplete="off"
+                    />
+                </div>
+
+                <fieldset class="category-picker">
+                    <legend>What are you submitting?</legend>
+                    <div class="category-grid">
+                        {CATEGORIES.map((cat, i) => (
+                            <label class="category-option">
+                                <input
+                                        type="radio"
+                                        name="category"
+                                        value={cat.value}
+                                        checked={i === 0}
+                                        required
+                                />
+                                <span class="category-label">{cat.label}</span>
+                                <span class="category-blurb">{cat.blurb}</span>
+                            </label>
+                        ))}
+                    </div>
+                </fieldset>
+
+                {CATEGORIES.map((cat, i) => (
+                    <fieldset class="category-fields" data-fieldset={cat.value} hidden={i !== 0}>
+                        <legend class="visually-hidden">{cat.label}</legend>
+                        {cat.fields.map((field) => (
+                            <div class="field">
+                                <label for={field.name}>
+                                    {field.label}
+                                    {field.required && <span class="req" aria-hidden="true">*</span>}
+                                </label>
+                                {field.help && <p class="field-help">{field.help}</p>}
+                                {field.type === 'textarea' ? (
+                                    <textarea
+                                            id={field.name}
+                                            name={field.name}
+                                            rows="4"
+                                            maxlength={field.maxLength}
+                                            required={field.required}
+                                            disabled={i !== 0}
+                                            placeholder={field.placeholder}
+                                    ></textarea>
+                                ) : field.type === 'select' ? (
+                                    <select
+                                            id={field.name}
+                                            name={field.name}
+                                            required={field.required}
+                                            disabled={i !== 0}
+                                    >
+                                        <option value="">Choose one…</option>
+                                        {field.options?.map((opt) => (
+                                            <option value={opt}>{opt}</option>
+                                        ))}
+                                    </select>
+                                ) : (
+                                    <input
+                                            type={field.type === 'url' ? 'url' : 'text'}
+                                            id={field.name}
+                                            name={field.name}
+                                            maxlength={field.maxLength}
+                                            required={field.required}
+                                            disabled={i !== 0}
+                                            placeholder={field.placeholder}
+                                    />
+                                )}
+                            </div>
+                        ))}
+                    </fieldset>
+                ))}
+
+                {fields.map((field) => (
+                    <div class="field">
+                        <label for={field.name}>{field.label}</label>
+                        {field.help && <p class="field-help">{field.help}</p>}
+                        <input
+                                type="email"
+                                id={field.name}
+                                name={field.name}
+                                maxlength={field.maxLength}
+                                placeholder={field.placeholder}
+                        />
+                    </div>
+                ))}
+
+                <div
+                        class="cf-turnstile"
+                        data-sitekey={siteKey}
+                        data-action="feedback"
+                        data-theme="dark"
+                ></div>
+
+                <div class="form-actions">
+                    <button type="submit" class="button button--primary">Send feedback</button>
+                    <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+                </div>
+            </form>
+
+        </div>
+    </section>
+</BaseLayout>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
+
+<script>
+    const form = document.getElementById('feedback-form') as HTMLFormElement | null;
+    const status = document.getElementById('form-status');
+    if (form && status) {
+        const fieldsets = form.querySelectorAll<HTMLFieldSetElement>('[data-fieldset]');
+        const radios = form.querySelectorAll<HTMLInputElement>('input[name="category"]');
+        const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+
+        const activate = (value: string) => {
+            fieldsets.forEach((fs) => {
+                const on = fs.dataset.fieldset === value;
+                fs.hidden = !on;
+                fs.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>(
+                    'input, textarea, select'
+                ).forEach((el) => {
+                    el.disabled = !on;
+                });
+            });
+        };
+
+        const resetTurnstile = () => {
+            // @ts-ignore — injected by the Turnstile script
+            window.turnstile?.reset();
+        };
+
+        radios.forEach((r) => r.addEventListener('change', () => activate(r.value)));
+
+        const setStatus = (msg: string, kind: 'ok' | 'error' | '') => {
+            status.textContent = msg;
+            status.dataset.kind = kind;
+        };
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            setStatus('Sending…', '');
+            if (submit) submit.disabled = true;
+            try {
+                const res = await fetch('/api/feedback', {
+                    method: 'POST',
+                    body: new FormData(form),
+                });
+                if (res.ok) {
+                    setStatus('Thanks — your feedback reached the team.', 'ok');
+                    form.reset();
+                    const checked = form.querySelector<HTMLInputElement>('input[name="category"]:checked');
+                    activate(checked?.value ?? radios[0].value);
+                } else {
+                    setStatus('Something went wrong sending that. Please try again.', 'error');
+                }
+            } catch {
+                setStatus('Could not reach the server. Please try again.', 'error');
+            } finally {
+                if (submit) submit.disabled = false;
+                resetTurnstile();
+            }
+        });
+    }
+</script>
