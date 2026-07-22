@@ -1,0 +1,7 @@
+# Copy to `.dev.vars` (gitignored) for local `just wrangler-dev`.
+# Only needed to actually deliver a feedback email in local dev — omit it and
+# the Worker exercises the Resend non-2xx (502) error path instead.
+#
+# Get a key at https://resend.com (API Keys). For a real local send you also
+# need the feedback.veilkeepergame.com sending domain verified in Resend.
+RESEND_API_KEY=re_your_key_here

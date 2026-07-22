@@ -290,3 +290,190 @@ a[href^="mailto"] {
     font-weight: 600;
     text-decoration: underline;
 }
+
+/* ── Feedback form ─────────────────────────────────────────── */
+
+.feedback-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-11);
+    max-width: 780px;
+    margin: var(--space-12) auto 0;
+}
+
+.feedback-form fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.feedback-form legend {
+    padding: 0;
+    margin-bottom: var(--space-6);
+    font-family: 'Cinzel', serif;
+    font-size: var(--font-size-panel-title);
+}
+
+.visually-hidden,
+.honeypot {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Category picker */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-5);
+}
+
+.category-option {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: var(--space-5);
+    row-gap: var(--space-1);
+    align-items: start;
+    padding: var(--space-7);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-lg);
+    background: var(--surface-overlay-soft);
+    cursor: pointer;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.category-option:hover {
+    border-color: var(--border-heavy);
+}
+
+.category-option input {
+    grid-column: 1;
+    grid-row: 1;
+    margin-top: 0.2em;
+    accent-color: var(--veil);
+}
+
+.category-option:has(input:checked) {
+    border-color: var(--veil);
+    background: var(--status-planned-bg);
+}
+
+.category-option:has(input:focus-visible) {
+    outline: 2px solid var(--ember);
+    outline-offset: 2px;
+}
+
+.category-label {
+    grid-column: 2;
+    font-weight: 700;
+}
+
+.category-blurb {
+    grid-column: 2;
+    color: var(--muted);
+    font-size: var(--font-size-body-sm);
+    line-height: 1.4;
+}
+
+/* Fields — only the selected category's fieldset is shown. The [hidden]
+   attribute (set at build time and toggled by JS) must win over the flex
+   display below, so it is raised in specificity here. */
+.feedback-form [hidden] {
+    display: none !important;
+}
+
+.category-fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-9);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.field > label {
+    font-weight: 600;
+    font-size: var(--font-size-body-md);
+}
+
+.field .req {
+    color: var(--ember);
+    margin-left: var(--space-1);
+}
+
+.field-help {
+    margin: 0;
+    color: var(--text-faint);
+    font-size: var(--font-size-body-sm);
+}
+
+.feedback-form input,
+.feedback-form textarea,
+.feedback-form select {
+    width: 100%;
+    padding: var(--space-5) var(--space-6);
+    color: var(--text);
+    font: inherit;
+    background: var(--surface-overlay);
+    border: 1px solid var(--border-heavy);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.feedback-form textarea {
+    resize: vertical;
+    min-height: 96px;
+}
+
+.feedback-form input::placeholder,
+.feedback-form textarea::placeholder {
+    color: var(--text-faint);
+}
+
+.feedback-form input:focus,
+.feedback-form textarea:focus,
+.feedback-form select:focus {
+    outline: none;
+    border-color: var(--veil);
+    box-shadow: 0 0 0 3px var(--status-planned-bg);
+}
+
+.feedback-form select {
+    appearance: none;
+    cursor: pointer;
+}
+
+/* Actions + status */
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-8);
+}
+
+.form-actions .button {
+    align-self: flex-start;
+}
+
+.form-status {
+    margin: 0;
+    font-size: var(--font-size-body-md);
+    color: var(--muted);
+}
+
+.form-status[data-kind="ok"] {
+    color: var(--ok);
+}
+
+.form-status[data-kind="error"] {
+    color: var(--ember);
+}

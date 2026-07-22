@@ -23,6 +23,18 @@ dev:
 preview port="4321":
     npm run preview -- --port {{port}}
 
+# Run the Worker + static assets locally to exercise the /feedback endpoint.
+# Uses Cloudflare's Turnstile test keys (site key falls back automatically in
+# the page). RESEND_FROM_ADDRESS / FEEDBACK_DESTINATION come from wrangler.jsonc;
+# put a real RESEND_API_KEY in a gitignored .dev.vars for a real send, or omit
+# it to exercise the Resend non-2xx (502) error path.
+wrangler-dev: build
+    npx wrangler@4 dev \
+        --var ALLOWED_ORIGINS:http://localhost:8787 \
+        --var ALLOWED_HOSTNAMES:example.com,localhost,127.0.0.1 \
+        --var TURNSTILE_SECRET:1x0000000000000000000000000000000AA \
+        --var TURNSTILE_ACTION:
+
 # Remove build output and caches
 clean:
     rm -rf dist .astro node_modules/.vite
@@ -42,6 +54,7 @@ smoke:
     test -f dist/index.html
     test -f dist/devlog/index.html
     test -f dist/security/index.html
+    test -f dist/feedback/index.html
     test -f dist/rss.xml
     test -f dist/devlog/post.html
     test -f dist/.well-known/security.txt
