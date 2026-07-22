@@ -43,3 +43,6 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # Public Turnstile site key — embedded in the built page HTML, so it is
+          # not secret. Its secret counterpart is the TURNSTILE_SECRET Worker secret.
+          PUBLIC_TURNSTILE_SITE_KEY: "0x4AAAAAAD7jYecPL3c82-lW"
