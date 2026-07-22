@@ -2,9 +2,11 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { CATEGORIES, EMAIL_FIELD, HONEYPOT_FIELD } from '../../lib/feedback';
 
-// Cloudflare Turnstile site key is public; injected at build time.
-// Falls back to Cloudflare's "always passes" test key for local dev.
-const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '1x00000000000000000000AA';
+// Cloudflare Turnstile site key (public — rendered into the page HTML).
+// Defaults to the real production widget so the git-driven Cloudflare build
+// needs no extra config. `just wrangler-dev` overrides this with Cloudflare's
+// "always passes" test key so local browser testing works on localhost.
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '0x4AAAAAAD7jYecPL3c82-lW';
 
 const fields = [EMAIL_FIELD]; // shared, category-independent
 ---
