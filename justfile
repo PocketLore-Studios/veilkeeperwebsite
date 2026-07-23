@@ -93,3 +93,48 @@ new-devlog slug title="TODO":
     @test ! -f "src/content/devlog/{{slug}}.md" || { echo "src/content/devlog/{{slug}}.md already exists"; exit 1; }
     @printf -- '---\nlabel: "TODO e.g. Devlog 09"\ntitle: "{{title}}"\ndate: %s\nimage: "/assets/devlog/{{slug}}.png"\nalt: "TODO describe the image"\nsummary: "TODO one-sentence summary (used on the homepage card, archive, OG description, and RSS)"\n---\n\nTODO write the post in markdown. `##` headings and `-` lists match the site styles.\n' "$(date +%Y-%m-%d)" > "src/content/devlog/{{slug}}.md"
     @echo "created src/content/devlog/{{slug}}.md — remember to add /assets/devlog/{{slug}}.png to public/"
+
+
+# ── Git convenience ───────────────────────────────────────────────
+
+# Show the working-tree summary, then prompt for a message and commit everything.
+commit:
+	#!/usr/bin/env bash
+	set -euo pipefail
+	git status -s
+	echo
+	git diff --stat
+	echo
+	read -rp "Commit message: " msg
+	[ -n "$msg" ] || { echo "Aborted: empty message"; exit 1; }
+	git add -A
+	git commit -m "$msg"
+
+# Pick a local branch from a numbered menu and switch to it.
+switch:
+	#!/usr/bin/env bash
+	set -euo pipefail
+	PS3="Switch to which branch? "
+	select b in $(git branch --format='%(refname:short)'); do
+		[ -n "${b:-}" ] || { echo "Invalid selection"; exit 1; }
+		git switch "$b"
+		break
+	done
+
+# Create and switch to a new branch (prompts for the name).
+new:
+	#!/usr/bin/env bash
+	set -euo pipefail
+	read -rp "New branch name: " name
+	[ -n "$name" ] || { echo "Aborted: empty name"; exit 1; }
+	git switch -c "$name"
+
+# Push the current branch to origin.
+push:
+	git push origin $(git branch --show-current)
+
+# High-level view of what's changed.
+status:
+	git status -s
+	@echo
+	git diff --stat
