@@ -30,6 +30,9 @@
     "ALLOWED_ORIGINS": "https://veilkeepergame.com,https://www.veilkeepergame.com",
     "TURNSTILE_ACTION": "feedback",
     "RESEND_FROM_ADDRESS": "Veilkeeper Feedback <noreply@feedback.veilkeepergame.com>",
-    "FEEDBACK_DESTINATION": "support@veilkeepergame.com"
+    "FEEDBACK_DESTINATION": "support@veilkeepergame.com",
+    // IANA timezone for the "Received" line in the notification email. Set to
+    // your local zone (e.g. "America/New_York", "Europe/London") to taste.
+    "FEEDBACK_TIMEZONE": "UTC"
   }
 }

@@ -30,6 +30,27 @@ interface Env {
     RESEND_FROM_ADDRESS: string;
     // "support@veilkeepergame.com"
     FEEDBACK_DESTINATION: string;
+    // IANA timezone for the "Received" line, e.g. "UTC" or "America/New_York".
+    FEEDBACK_TIMEZONE: string;
+}
+
+/** Human-friendly received timestamp, e.g. "Wed, Jul 22, 2026, 11:38 PM UTC". */
+function formatReceived(tz: string): string {
+    try {
+        return new Intl.DateTimeFormat('en-US', {
+            timeZone: tz || 'UTC',
+            weekday: 'short',
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            timeZoneName: 'short',
+        }).format(new Date());
+    } catch {
+        // Invalid/unknown timezone → fall back to the ISO string.
+        return new Date().toISOString();
+    }
 }
 
 const SITEVERIFY = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
@@ -149,7 +170,7 @@ async function handleFeedback(request: Request, env: Env): Promise<Response> {
     const bodyLines = [
         `Category: ${category.label}`,
         `Contact: ${replyTo ?? '(none provided)'}`,
-        `Received: ${new Date().toISOString()}`,
+        `Received: ${formatReceived(env.FEEDBACK_TIMEZONE)}`,
         '',
         '----------------------------------------',
         '',
