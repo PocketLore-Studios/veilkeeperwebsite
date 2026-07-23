@@ -33,6 +33,6 @@
     "FEEDBACK_DESTINATION": "support@veilkeepergame.com",
     // IANA timezone for the "Received" line in the notification email. Set to
     // your local zone (e.g. "America/New_York", "Europe/London") to taste.
-    "FEEDBACK_TIMEZONE": "UTC"
+    "FEEDBACK_TIMEZONE": "America/New_York"
   }
 }
