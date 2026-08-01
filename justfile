@@ -5,6 +5,10 @@
 
 set shell := ["bash", "-euo", "pipefail", "-c"]
 
+# Repo slug for `pr`: origin is the SSH host alias `github-pocketlore`, which gh
+# cannot auto-resolve, so --repo is passed explicitly.
+repo := "PocketLore-Studios/veilkeeperwebsite"
+
 # List available recipes
 default:
     @just --list
@@ -97,6 +101,29 @@ new-devlog slug title="TODO":
 
 # ── Git convenience ───────────────────────────────────────────────
 
+# Show the repository's Conventional Commit convention (used from the first commit).
+commit-help:
+	@echo "Commit format:"
+	@echo "  type(optional-scope): description"
+	@echo
+	@echo "Allowed types:"
+	@echo "  feat      New functionality"
+	@echo "  fix       Bug fixes"
+	@echo "  content   Devlog posts, copy, and site assets"
+	@echo "  ui        Interface and visual presentation"
+	@echo "  refactor  Internal restructuring without behavior changes"
+	@echo "  perf      Performance improvements"
+	@echo "  docs      Documentation"
+	@echo "  build     Dependencies, deploys, and packaging"
+	@echo "  ci        Continuous integration and automation"
+	@echo "  chore     General maintenance"
+	@echo "  revert    Revert a previous commit"
+	@echo
+	@echo "Examples:"
+	@echo "  feat(feedback): add turnstile validation"
+	@echo "  content(devlog): add devlog 09"
+	@echo "  ui: tighten homepage hero spacing"
+
 # Show the working-tree summary, then prompt for a message and commit everything.
 commit:
 	#!/usr/bin/env bash
@@ -129,6 +156,10 @@ new:
 	[ -n "$name" ] || { echo "Aborted: empty name"; exit 1; }
 	git switch -c "$name"
 
+# Fast-forward the current branch from origin (no merge commits).
+pull:
+	git pull --ff-only origin $(git branch --show-current)
+
 # Push the current branch to origin.
 push:
 	git push origin $(git branch --show-current)
@@ -138,3 +169,9 @@ status:
 	git status -s
 	@echo
 	git diff --stat
+
+# --repo is set because origin is the SSH host alias `github-pocketlore`, which
+# gh cannot auto-resolve. --fill drafts title/body from commits. Needs gh authed.
+# Open a PR from the current branch into the given base (default: main).
+pr base="main":
+	gh pr create --repo {{repo}} --base {{base}} --head $(git branch --show-current) --fill
