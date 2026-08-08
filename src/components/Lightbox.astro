@@ -25,7 +25,7 @@
         const prevButton = dialog.querySelector<HTMLButtonElement>('.lightbox-prev')!;
         const nextButton = dialog.querySelector<HTMLButtonElement>('.lightbox-next')!;
 
-        // Images in the Markdown body aren't wrapped at build time — give them the
+        // Images in the Markdown body aren't wrapped at build time - give them the
         // same link semantics as the header image so they're keyboard-reachable.
         document.querySelectorAll<HTMLImageElement>('.devlog-post-content img').forEach(img => {
             if (img.closest('a')) return;

@@ -50,12 +50,6 @@
     text-transform: uppercase;
 }
 
-.hero-logo {
-    width: min(100%, 420px);
-    margin-bottom: var(--space-7);
-    filter: var(--shadow-hero-logo);
-}
-
 .lead {
     margin: 0 0 var(--space-6);
     max-width: 640px;
@@ -437,8 +431,11 @@
     opacity: 0.65;
 }
 
+/* Wraps because the row grew past a phone viewport once Press joined the
+   Feedback/Security links - without this the whole page scrolls sideways. */
 .footer-follow-row{
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 10px;
 }

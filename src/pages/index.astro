@@ -12,16 +12,32 @@ const latest = devlogs[0];
         description="Veilkeeper is a tactical RPG where your army shrinks the deeper you push. Build your shard, extend relay lines, and survive the cost of the rift."
 >
   <section class="hero">
+    {/* Decorative: the hero's meaning is carried by the heading and logo beside it,
+        and .hero::before lays the readability gradients over the top.
+
+        Two crops because the hero's aspect swings from ~1.7 on desktop to ~0.35 on a
+        phone. The landscape key art centre-crops to empty sky at that width, so narrow
+        viewports get the portrait composition, which runs top-to-bottom and keeps both
+        the rift and the figure in frame. */}
+    <picture>
+      <source
+              media="(max-width: 720px)"
+              srcset="/assets/hero/veilkeeper-key-art-hero-portrait.webp"
+              width="1100"
+              height="1468"
+      >
+      <img
+              class="hero-bg"
+              src="/assets/hero/veilkeeper-key-art-hero.webp"
+              alt=""
+              width="2560"
+              height="1462"
+              fetchpriority="high"
+      >
+    </picture>
     <div class="container">
       <div class="hero-content">
-        <div class="eyebrow">Early development • Tactical RPG • Stream-integrated vision</div>
-
-        <img
-                class="hero-logo"
-                src="/assets/logos/Veilkeeper_main_logo.webp"
-                alt="Veilkeeper"
-                fetchpriority="high"
-        >
+        <div class="eyebrow">Early development • Tactical RPG</div>
 
         <h1>Your army shrinks the deeper you push.</h1>
         <p class="lead">
@@ -34,6 +50,13 @@ const latest = devlogs[0];
         </p>
 
         <div class="actions">
+          {/* A real disabled <button>, not a dead <a> - it is keyboard-skipped and
+              announced as unavailable rather than looking like a broken link. Swap
+              for the wishlist link below once the Steam page is live. */}
+          <button class="button button--steam" type="button" disabled>
+            Steam - coming soon
+          </button>
+
           <div hidden>
             <a class="button button--primary" href="https://store.steampowered.com/" target="_blank" rel="noopener noreferrer">
               Wishlist on Steam
@@ -117,7 +140,7 @@ const latest = devlogs[0];
           <div class="status-update-body">
             <p class="status-update-kicker">Latest update</p>
             <p class="status-update-caption">
-              <strong>{latest.data.label} — {latest.data.title}</strong>
+              <strong>{latest.data.label} - {latest.data.title}</strong>
               <br>
               {latest.data.summary}
             </p>
@@ -198,7 +221,7 @@ const latest = devlogs[0];
           <ul class="mini-list">
             <li>The tactics must be fun before anything else exists.</li>
             <li>The shard only grows once combat proves itself.</li>
-            <li>Community features layer on top — never replace gameplay.</li>
+            <li>Community features layer on top - never replace gameplay.</li>
             <li>Each phase reinforces the one before it.</li>
           </ul>
         </aside>

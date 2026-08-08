@@ -117,10 +117,6 @@
         padding: 92px 0 62px;
     }
 
-    .hero-logo {
-        width: min(100%, 300px);
-    }
-
     .actions {
         flex-direction: column;
     }

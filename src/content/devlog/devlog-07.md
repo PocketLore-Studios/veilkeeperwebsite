@@ -1,6 +1,6 @@
 ---
 label: "Devlog 07"
-title: "Devlog #07 — First Playable Loop"
+title: "Devlog #07 - First Playable Loop"
 date: 2026-06-21
 image: "/assets/devlog/devlog-07.png"
 alt: "The Veilkeeper main menu and victory screen, marking the first complete playable loop from game start to battle completion."

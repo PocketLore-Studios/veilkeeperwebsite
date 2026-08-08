@@ -4,7 +4,7 @@ import Footer from '../components/Footer.astro';
 import { SITE } from '../lib/site';
 
 // Global stylesheets, bundled by Astro into a content-hashed /_astro/*.css file
-// so CSS changes bust caches. Import order defines the cascade — keep it.
+// so CSS changes bust caches. Import order defines the cascade - keep it.
 import '../styles/base.css';
 import '../styles/layout.css';
 import '../styles/components.css';
@@ -21,7 +21,7 @@ interface Props {
 const {
     title,
     description,
-    ogImage = '/assets/hero/veilkeeper_logo_with_text_preview_image.png',
+    ogImage = '/assets/hero/veilkeeper-key-art-og.jpg',
     ogType = 'website'
 } = Astro.props;
 

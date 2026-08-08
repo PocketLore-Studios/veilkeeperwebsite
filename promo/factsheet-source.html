@@ -1,0 +1,182 @@
+<style>
+@font-face { font-family:'Cinzel'; src:url(data:font/woff2;base64,__CINZEL__) format('woff2'); font-weight:400 700; }
+@font-face { font-family:'Raleway'; src:url(data:font/woff2;base64,__RALEWAY__) format('woff2'); font-weight:300 600; }
+@page { size: letter; margin: 0; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:'Raleway',sans-serif; color:#2e2745; font-size:10pt; line-height:1.5;
+       -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+h1,h2,h3 { font-family:'Cinzel',serif; margin:0; }
+/* bottom padding reserves room for the absolutely-positioned .foot, which is
+   out of flow and would otherwise be overlapped by the last line of content. */
+.page { width:8.5in; height:11in; padding:0 0.62in 0.78in; overflow:hidden;
+        page-break-after:always; position:relative; }
+.page:last-child { page-break-after:auto; }
+
+/* The key art runs full-bleed behind the title block. It is the logo-free hero
+   crop (the site homepage uses the same file) because the lockup version would
+   put a second VEILKEEPER wordmark next to the h1. The scrim is opaque on the
+   left, where the type sits, and thins out to the right so the hooded figure
+   still reads. The file is pre-cropped to exactly the slice the band shows --
+   handing Chrome the full 2560x1462 hero made it embed all 3.7MP and tripled
+   the size of the PDF. Regenerate the crop if the band height changes. */
+.band { margin:0 -0.62in 11px; padding:0.30in 0.62in 0.26in; color:#fff; display:flex; align-items:center; gap:20px;
+        min-height:1.95in;
+        background:linear-gradient(90deg, rgba(9,6,18,.90) 0%, rgba(9,6,18,.82) 42%, rgba(9,6,18,.50) 68%, rgba(9,6,18,.26) 100%),
+                   url(data:image/webp;base64,__KEYART__) center center / cover no-repeat,
+                   linear-gradient(180deg,#180f2b,#0b0715); }
+.band img { width:74px; height:74px; }
+.band h1 { font-size:27pt; letter-spacing:.02em; line-height:1; }
+.band .kick { font-size:7.5pt; letter-spacing:.22em; text-transform:uppercase; color:#f4c07c; margin-bottom:5px; }
+.band .sub { font-size:9pt; color:#cfc3eb; margin-top:6px; }
+
+h2 { font-size:12.5pt; color:#3d2470; margin:13px 0 7px; padding-bottom:5px; border-bottom:1.5px solid #e6e0f0; }
+.page > h2:first-of-type { margin-top:0; }
+.lede { font-size:11pt; color:#3d2470; font-style:italic; margin:0 0 10px; }
+p { margin:0 0 7px; }
+
+/* Page 2 carries more sections than page 1, so it runs a tighter rhythm to
+   keep the factsheet to two pages. */
+.tight h2 { margin:7px 0 4px; }
+.tight p { margin:0 0 5px; }
+.tight li { margin-bottom:1px; }
+.tight ul { margin-bottom:5px; }
+.tight figcaption { margin-top:4px; }
+.tight .muted { line-height:1.35; }
+
+table { width:100%; border-collapse:collapse; }
+th { text-align:left; width:1.55in; font-weight:600; color:#3d2470; vertical-align:top;
+     padding:3px 10px 3px 0; border-bottom:1px solid #efecf5; font-size:9.5pt; }
+td { padding:3px 0; border-bottom:1px solid #efecf5; vertical-align:top; }
+.note { display:block; font-size:8pt; color:#7c7391; }
+
+.cols { display:flex; gap:20px; }
+.cols > * { flex:1; min-width:0; }
+ul { margin:0 0 8px; padding-left:15px; }
+li { margin-bottom:4px; }
+.tag { display:inline-block; font-size:7pt; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+       padding:2px 7px; border-radius:99px; margin-left:5px; vertical-align:1px; }
+.t-now { background:#e2f6ee; color:#1d6b52; }
+.t-soon { background:#f3ecfb; color:#5b3a9e; }
+.muted { font-size:8.5pt; color:#7c7391; }
+figure { margin:0; }
+figure img { width:100%; border:1px solid #ddd6ea; border-radius:5px; display:block; }
+figcaption { font-size:8pt; color:#7c7391; margin-top:5px; }
+.foot { position:absolute; left:0.62in; right:0.62in; bottom:0.30in; display:flex;
+        align-items:center; justify-content:space-between; border-top:1px solid #e6e0f0;
+        padding-top:7px; font-size:7.5pt; color:#7c7391; }
+.foot img { height:21px; }
+</style>
+
+<div class="page">
+  <div class="band">
+    <img src="data:image/webp;base64,__VKLOGO__">
+    <div>
+      <div class="kick">Press Factsheet</div>
+      <h1>Veilkeeper</h1>
+      <div class="sub">A tactical RPG by PocketLore Studios &middot; veilkeepergame.com</div>
+    </div>
+  </div>
+
+  <!-- Must match the "One line" panel on /press. -->
+  <p class="lede">Your army shrinks the deeper you push. Choose who stays behind. How far can you go
+  before the connection breaks?</p>
+
+  <h2>Factsheet</h2>
+  <table>__ROWS__</table>
+
+  <h2>Description</h2>
+  <p><strong>Short.</strong> Veilkeeper is a tactical RPG about the cost of pushing too far. You lead
+  expeditions into unstable rifts, and every relay you leave behind to hold the line is a soldier who
+  does not fight in the next battle. The army that reaches the end is a fraction of the one that entered.</p>
+  <p><strong>Long.</strong> Veilkeeper is built around the tension between presence and absence. You play
+  the Veilkeeper, a figure with no memory of the world&rsquo;s history, rediscovering it through play. You
+  never enter combat yourself - you remain on the home shard maintaining the rift connection that
+  makes expeditions possible, and your influence reaches the battlefield through the heroes you send.</p>
+  <p>Expeditions push into rifts along a chain of signal relays, and holding that chain costs bodies. Units
+  left behind to garrison a relay are units that do not reach the next fight, so the force thins as the
+  objective gets closer. Deciding which unit to leave where is as consequential as any individual battle.</p>
+  <p>Between expeditions, the home shard is designed to keep running without you. A planned stream
+  integration layer will let viewers inhabit that world while you are away. Veilkeeper is designed to remain
+  fully playable offline; stream integration is an optional enhancement rather than a requirement.</p>
+  <p class="muted">Descriptions may be quoted or excerpted with attribution to PocketLore Studios.</p>
+
+  <div class="foot">
+    <span>Veilkeeper Press Factsheet &middot; Last updated August 2026 &middot; press@veilkeepergame.com</span>
+    <img src="data:image/png;base64,__PLLOGO__">
+  </div>
+</div>
+
+<div class="page tight" style="padding-top:0.62in">
+  <h2>What is playable today</h2>
+  <p>The tactical combat layer runs end to end: draft a squad, deploy it, fight, win or lose. It is the only
+  layer that currently exists as software, and it is still under active development.</p>
+  <div class="cols">
+    <div>
+      <ul>
+        <li><strong>Grid tactics</strong> - turn-based combat with movement, facing, and positional damage from side and rear attacks.</li>
+        <li><strong>Four archetypes</strong> - Knight, Archer, Assassin and Mauler, separated by stat profile, reach and how their weapon interacts with armor rather than by abilities.</li>
+        <li><strong>Readable resolution</strong> - damage type and delivery resolve against armor type through a published table. Every attack shows its damage before you commit to it.</li>
+        <li><strong>Full input support</strong> - mouse, keyboard and controller are all first-class.</li>
+      </ul>
+    </div>
+    <div>
+      <figure>
+        <img src="data:image/webp;base64,__SHOT__">
+        <figcaption>Damage, the health it leaves behind, and whether the target can counter - all
+        shown before the attack is committed. Unit and terrain artwork is placeholder.</figcaption>
+      </figure>
+      <p style="font-size:9pt;margin-top:8px"><strong>The demo run.</strong> The current press and
+      convention build is a scripted three-fight run of about five minutes. You draft six units from a pool
+      of twelve, then choose exactly one unit to leave behind between each fight. Your force shrinks from
+      six to five to four while the opposition grows from three to four to five.</p>
+    </div>
+  </div>
+
+  <h2>The three layers</h2>
+  <p>Veilkeeper is built outward from combat. Each layer has to stand on its own before the next leans on it.</p>
+  <ul>
+    <li><strong>Tactical combat</strong><span class="tag t-now">Playable</span><span class="tag t-soon">In active development</span><br>
+    Direct unit control on a grid, where winning feels like executing a plan under pressure.</li>
+    <li><strong>The home shard</strong><span class="tag t-soon">Designed, not built</span><br>
+    A settlement you build and return to, which will run autonomously while you are away.</li>
+    <li><strong>Stream integration</strong><span class="tag t-soon">Designed, not built</span><br>
+    Viewers interact with the home shard while the Veilkeeper is away raiding. An enhancement layer only.</li>
+  </ul>
+
+  <h2>Events</h2>
+  <p><strong>Play NYC 2026</strong> &middot; August 20&ndash;23, 2026 &middot; Javits Center, New York<br>
+  Veilkeeper is exhibiting, sharing a booth with Swiggins Studios. Playable stations run the three-fight
+  build on controller. Press attending can arrange hands-on time or an interview in advance.</p>
+
+  <div class="cols">
+    <div>
+      <h2>Credits</h2>
+      <ul>
+        <li><strong>John Serwatka</strong> - design, programming, production</li>
+        <li><strong>Zorbius</strong> - commissioned logo</li>
+        <li><strong>Udara</strong> - PocketLore Studios logo and brand identity, commissioned through 99designs by Vista</li>
+        <li><strong>Falsemind</strong> - commissioned promo art</li>
+      </ul>
+      <p class="muted">Placeholder in-game art (Tiny Swords by Pixel Frog); all of it will be
+      replaced before release.</p>
+    </div>
+    <div>
+      <h2>Contact &amp; links</h2>
+      <ul>
+        <li><strong>Press</strong> - press@veilkeepergame.com</li>
+        <li><strong>Press kit</strong> - veilkeepergame.com/press</li>
+        <li><strong>Site</strong> - veilkeepergame.com</li>
+        <li><strong>Devlog</strong> - veilkeepergame.com/devlog</li>
+        <li><strong>Studio</strong> - pocketlorestudios.com</li>
+        <li><strong>Bluesky</strong> - @veilkeepergame.bsky.social</li>
+      </ul>
+      <p class="muted">Solo studio - replies come from the developer. Build access for coverage
+      available on request.</p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Veilkeeper Press Factsheet &middot; Last updated August 2026 &middot; press@veilkeepergame.com</span>
+    <img src="data:image/png;base64,__PLLOGO__">
+  </div>
+</div>

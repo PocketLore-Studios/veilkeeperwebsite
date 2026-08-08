@@ -1,6 +1,6 @@
 ---
 label: "Art of the Veil 03"
-title: "Art of the Veil #03 — The World Takes Shape"
+title: "Art of the Veil #03 - The World Takes Shape"
 date: 2026-06-25
 image: "/assets/devlog/art-of-the-veil-03.jpg"
 alt: "Concept artwork showing the Veilkeeper overlooking the city beneath a glowing purple rift while holding a staff illuminated by an amber crystal."

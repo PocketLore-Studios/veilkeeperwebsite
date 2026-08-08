@@ -165,7 +165,7 @@ async function handleFeedback(request: Request, env: Env): Promise<Response> {
     const summarySource =
         getField(category.summaryField).trim() || collected[0].value;
     const summary = sanitizeLine(summarySource).slice(0, 80) || category.label;
-    const subject = sanitizeLine(`[Veilkeeper] ${category.label} — ${summary}`).slice(0, 200);
+    const subject = sanitizeLine(`[Veilkeeper] ${category.label} - ${summary}`).slice(0, 200);
 
     const bodyLines = [
         `Category: ${category.label}`,
@@ -252,7 +252,7 @@ async function sendViaResend(
         });
         if (!res.ok) {
             const detail = await res.text().catch(() => '<no body>');
-            console.error(`resend send failed: ${res.status} ${res.statusText} — ${detail}`);
+            console.error(`resend send failed: ${res.status} ${res.statusText} - ${detail}`);
             return false;
         }
         return true;

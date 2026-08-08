@@ -7,9 +7,9 @@ alt: "Tag validation system catching invalid data entries in development"
 summary: "A startup validation layer prevents silent failures in the data-driven tag system."
 ---
 
-Veilkeeper’s combat system is heavily data-driven, which makes it flexible—but it also introduces a subtle risk: silent failure.
+Veilkeeper’s combat system is heavily data-driven, which makes it flexible-but it also introduces a subtle risk: silent failure.
 
-If a tag is misspelled, nothing breaks. For example, adding a “poison” effect but typing “pooison” on a weapon won’t cause an error—the system simply falls back to a default and the effect never applies. These kinds of issues are easy to miss and can persist unnoticed for long periods.
+If a tag is misspelled, nothing breaks. For example, adding a “poison” effect but typing “pooison” on a weapon won’t cause an error-the system simply falls back to a default and the effect never applies. These kinds of issues are easy to miss and can persist unnoticed for long periods.
 
 To address this, I added a validation layer that runs at startup. It checks all tag usage across data files against a centralized registry of valid tags. If an invalid tag is found, the game will fail fast in development builds and log the issue in release builds. This allows errors to be caught early without impacting runtime stability.
 
