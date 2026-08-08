@@ -20,7 +20,7 @@ const devlogs = await getSortedDevlogs();
                 {devlogs.length === 0 && <p>No devlogs yet.</p>}
                 {devlogs.map(entry => (
                     <article class="devlog-entry surface">
-                        <div class="devlog-meta">{entry.data.label} — {formatDate(entry.data.date)}</div>
+                        <div class="devlog-meta">{entry.data.label} - {formatDate(entry.data.date)}</div>
                         <h3>{entry.data.title}</h3>
                         <DevlogMedia entry={entry} href={getPostUrl(entry)} />
                         <p>{entry.data.summary}</p>

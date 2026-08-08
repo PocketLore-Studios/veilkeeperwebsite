@@ -1,0 +1,600 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../lib/site';
+
+// Kept deliberately vague where the project genuinely is vague. Commercial
+// release and price are unset, and "TBA" is the honest form -- the internal
+// design docs carry two different price figures, so publishing either would be
+// a guess. The public alpha date is separate and confirmed.
+//
+// Screenshots are lossless WebP converted from the cleaned 1920x1080 PNGs in
+// /promo/screenshots-1920x1080-new/ with:
+//   ffmpeg -i <src>.png -c:v libwebp -lossless 1 -compression_level 6 <dst>.webp
+// Lossless beats lossy on this flat UI art (80KB vs 144KB at q88) and avoids
+// smearing the pixel art. Full-resolution originals also go in the Drive kit.
+//
+// These captures are from the actual three-fight run, so the numbers on screen
+// match "The demo run" below: 6/6 drafted from a pool of twelve, first fight
+// 3 enemies, then 4, then 5. The earlier scenario captures showed a 3-unit
+// squad and needed a disclaimer; that no longer applies, so it is gone.
+//
+// Deliberately not shown: attack-impact (its damage number is clipped off the
+// top of the capture), movement-range and unit-info (redundant with
+// movement-preview and action-menu), the two single-pick draft screens, and the
+// title screen (menu art, not gameplay -- it serves as the OG/social card).
+const shots = [
+    {
+        src: '/assets/press/press-squad-draft.webp',
+        alt: 'The draft screen reading "Squad: 6 / 6" above a grid of twelve unit choices - three each of Knight, Archer, Assassin and Mauler - with a header noting the first fight has three enemies',
+        caption: 'Six units drafted from a pool of twelve, with the first fight’s opposition named up front.',
+    },
+    {
+        src: '/assets/press/press-movement.webp',
+        alt: 'A selected Mauler with its movement range shaded across the grid and an arrow tracing the path to the chosen tile',
+        caption: 'Movement range, and the path to the tile you are about to take.',
+    },
+    {
+        src: '/assets/press/press-action-menu.webp',
+        alt: 'The action menu open on an Archer showing Attack, Move, Wait and Cancel, with both sides of the board visible',
+        caption: 'Per-unit actions, resolved one unit at a time.',
+    },
+    {
+        src: '/assets/press/press-leave-behind.webp',
+        alt: 'A screen reading "The signal grows weak - Leave a Unit Behind to hold the connection", listing six surviving units and noting the next fight has four enemies',
+        caption: 'The cost, stated plainly: one unit stays to hold the relay, and the next fight is bigger.',
+    },
+    {
+        src: '/assets/press/press-leave-behind-2.webp',
+        alt: 'The second leave-behind screen, now listing five surviving units and noting the next fight has five enemies',
+        caption: 'By the third fight the force is down to four and the opposition is up to five.',
+    },
+    {
+        src: '/assets/press/press-victory.webp',
+        alt: 'The victory screen at the end of an encounter, offering Restart Encounter, Return to Title and Quit Game',
+        caption: 'Encounter resolution.',
+    },
+];
+
+const factsheet = [
+    { label: 'Studio', value: 'PocketLore Studios' },
+    { label: 'Developer', value: 'John Serwatka - design, programming, and production', note: 'Solo developer' },
+    { label: 'Location', value: 'New York, United States' },
+    { label: 'Engine', value: 'Godot 4 (.NET / C#)' },
+    { label: 'Platforms', value: 'PC - Windows and Linux' },
+    { label: 'Genre', value: 'Tactical RPG' },
+    { label: 'Players', value: 'Single-player' },
+    { label: 'Status', value: 'Pre-alpha, in active development', tag: 'iterating', note: 'Current tactical combat milestone v0.1' },
+    { label: 'Public alpha', value: 'August 20, 2026', tag: 'planned', note: 'Releasing on itch.io alongside the Steam page' },
+    { label: 'Commercial release', value: 'TBA' },
+    { label: 'Price', value: 'TBA' },
+];
+
+const lastUpdated = 'August 2026';
+---
+<BaseLayout
+        title="Press Kit | Veilkeeper"
+        description="Press kit for Veilkeeper, a tactical RPG by PocketLore Studios where your army shrinks the deeper you push. Factsheet, descriptions, assets, and press contact."
+>
+    <div class="press-page">
+        <section class="section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">Press Kit</div>
+                    <h1>Veilkeeper</h1>
+                    <p>
+                        A tactical RPG where your army shrinks the deeper you push. Everything on this
+                        page is cleared for editorial use. For anything not listed here - including
+                        build access, interviews, or higher-resolution assets - email
+                        <a href={`mailto:${SITE.pressEmail}`}>{SITE.pressEmail}</a>.
+                    </p>
+                </div>
+
+                <div class="press-actions">
+                    <a class="button button--primary" href={SITE.pressKitUrl} target="_blank" rel="noopener noreferrer">
+                        Download Press Kit
+                    </a>
+                    <a class="button button--secondary" href={`mailto:${SITE.pressEmail}?subject=Veilkeeper%20build%20access`}>
+                        Request Build Access
+                    </a>
+                    <a class="button button--secondary" href="#screenshots">
+                        View Screenshots
+                    </a>
+                </div>
+
+                <figure class="press-hero-media">
+                    <img
+                            src="/assets/press/press-damage-preview.webp"
+                            alt="Attack confirmation showing 32 damage, the target dropping from 45 to 13 HP, and “No counter”, above a prompt reading “Click again to confirm”"
+                            width="1920"
+                            height="1080"
+                            fetchpriority="high"
+                    >
+                    <figcaption>
+                        Damage, the health it leaves behind, and whether the target can counter - all
+                        shown before the attack is committed, in the current Veilkeeper pre-alpha
+                        build. Unit and terrain artwork is placeholder.
+                    </figcaption>
+                </figure>
+
+                <p class="notice">
+                    Veilkeeper is in early development. The tactical combat layer is playable; the home
+                    shard, rift campaign, and stream integration layers described below are designed but
+                    not yet built. This page separates the two throughout.
+                </p>
+            </div>
+        </section>
+
+        <section id="factsheet" class="section section--tight">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Factsheet</h2>
+                </div>
+
+                <div class="status-card surface">
+                    <div class="status-list">
+                        {factsheet.map(row => (
+                            <div class="status-row">
+                                <div>
+                                    <div class="status-name">{row.label}</div>
+                                    {row.note && <div class="text-muted">{row.note}</div>}
+                                </div>
+                                {row.tag
+                                    ? <div class={`status-tag tag--${row.tag}`}>{row.value}</div>
+                                    : <div class="factsheet-value">{row.value}</div>}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <p class="press-meta">Last updated: {lastUpdated}</p>
+            </div>
+        </section>
+
+        <section id="description" class="section">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Description</h2>
+                    <p>The descriptions below may be quoted or excerpted with attribution to PocketLore Studios.</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="panel surface">
+                        <h3>Short</h3>
+                        <p>
+                            Veilkeeper is a tactical RPG about the cost of pushing too far. You lead
+                            expeditions into unstable rifts, and every relay you leave behind to hold
+                            the line is a soldier who does not fight in the next battle. The army that
+                            reaches the end is a fraction of the one that entered.
+                        </p>
+                    </div>
+
+                    <div class="panel surface">
+                        <h3>One line</h3>
+                        <p>Your army shrinks the deeper you push. Choose who stays behind. How far can you go before the connection breaks?</p>
+                    </div>
+                </div>
+
+                <div class="panel surface">
+                    <h3>Long</h3>
+                    <p>
+                        Veilkeeper is a tactical RPG built around the tension between presence and
+                        absence. You play the Veilkeeper, a figure with no memory of the world's
+                        history, rediscovering it through play. You never enter combat yourself -
+                        you remain on the home shard maintaining the rift connection that makes
+                        expeditions possible, and your influence reaches the battlefield through the
+                        heroes you send.
+                    </p>
+                    <p>
+                        Expeditions push into rifts along a chain of signal relays, and holding that
+                        chain costs bodies. Units left behind to garrison a relay are units that do not
+                        reach the next fight, so the force thins as the objective gets closer. Deciding
+                        which unit to leave where is as consequential as any individual battle.
+                    </p>
+                    <p>
+                        Between expeditions, the home shard is designed to keep running without you.
+                        You build something, you leave, the world moves on, and the decisions you made
+                        before departing determine what you come back to. A planned stream integration
+                        layer will let viewers inhabit that world while you are away. Veilkeeper is
+                        designed to remain fully playable offline; stream integration is an optional
+                        enhancement rather than a requirement.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="playable" class="section">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>What is playable today</h2>
+                    <p>
+                        The tactical combat layer runs end to end: draft a squad, deploy it, fight, win
+                        or lose. It is the only layer that currently exists as software, and it is still
+                        under active development - systems below are subject to change as it is tuned.
+                    </p>
+                </div>
+
+                <div class="feature-grid">
+                    <article class="card surface">
+                        <h3>Grid tactics</h3>
+                        <p>
+                            Turn-based combat on a flat grid with movement, facing, and positional
+                            damage from side and rear attacks.
+                        </p>
+                    </article>
+
+                    <article class="card surface">
+                        <h3>Four archetypes</h3>
+                        <p>
+                            Knight, Archer, Assassin, and Mauler, separated by stat profile, reach, and
+                            how their weapon interacts with armor rather than by abilities.
+                        </p>
+                    </article>
+
+                    <article class="card surface">
+                        <h3>Readable resolution</h3>
+                        <p>
+                            Damage type and delivery method resolve against armor type through a
+                            published table. Every attack shows its damage before you commit to it.
+                        </p>
+                    </article>
+
+                    <article class="card surface">
+                        <h3>Full input support</h3>
+                        <p>
+                            Mouse, keyboard, and controller are all first-class, including target
+                            cycling and pad-driven deployment.
+                        </p>
+                    </article>
+                </div>
+
+                <div class="panel surface">
+                    <h3>The demo run</h3>
+                    <p>
+                        The current press and convention build is a scripted three-fight run that takes
+                        about five minutes. You draft six units from a pool of twelve, then choose
+                        exactly one unit to leave behind between each fight. Your force shrinks from six
+                        to five to four while the opposition grows from three to four to five.
+                    </p>
+                    <p>
+                        It is a deliberately small taste of the identity mechanic: the shrinking
+                        expedition army, compressed into a single sitting and without the campaign
+                        structure that will eventually surround it.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="layers" class="section">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>The three layers</h2>
+                    <p>
+                        Veilkeeper is built outward from combat. Each layer has to stand on its own
+                        before the next one is allowed to lean on it.
+                    </p>
+                </div>
+
+                <div class="roadmap">
+                    <article class="roadmap-phase phase-expedition surface">
+                        <div class="phase-top">
+                            <span class="phase-kicker">Layer One</span>
+                            <h3 class="phase-title">Tactical Combat</h3>
+                        </div>
+                        <div class="phase-meta">
+                            <div class="phase-tag">Grid combat</div>
+                            <div class="status-tag tag--current">Playable</div>
+                            <div class="status-tag tag--iterating">In active development</div>
+                        </div>
+                        <p class="text-muted">
+                            Direct unit control on a grid, where winning feels like executing a plan
+                            under pressure without losing anyone you could not afford to lose. The
+                            satisfaction is in foresight, not reaction.
+                        </p>
+                    </article>
+
+                    <article class="roadmap-phase phase-shard surface">
+                        <div class="phase-top">
+                            <span class="phase-kicker">Layer Two</span>
+                            <h3 class="phase-title">The Home Shard</h3>
+                        </div>
+                        <div class="phase-meta">
+                            <div class="phase-tag">Settlement building</div>
+                            <div class="status-tag tag--planned">Designed, not built</div>
+                        </div>
+                        <p class="text-muted">
+                            A settlement you build and return to, which will run autonomously while you
+                            are away. It is not meant to be a second job - it is an exhale. Somewhere to
+                            notice what changed, make a few decisions, and go back out.
+                        </p>
+                    </article>
+
+                    <article class="roadmap-phase phase-community surface">
+                        <div class="phase-top">
+                            <span class="phase-kicker">Layer Three</span>
+                            <h3 class="phase-title">Stream Integration</h3>
+                        </div>
+                        <div class="phase-meta">
+                            <div class="phase-tag">Twitch</div>
+                            <div class="status-tag tag--planned">Designed, not built</div>
+                        </div>
+                        <p class="text-muted">
+                            Viewers will be able to interact with the home shard while the Veilkeeper is
+                            away raiding. An enhancement layer only - Veilkeeper is designed to remain
+                            fully playable offline.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="events" class="section">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Events</h2>
+                </div>
+
+                <div class="panel surface">
+                    <h3>Play NYC 2026</h3>
+                    <p class="text-muted">
+                        <time datetime="2026-08-20">August 20</time>–<time datetime="2026-08-23">23, 2026</time>
+                        · Javits Center, New York
+                    </p>
+                    <p>
+                        Veilkeeper is exhibiting at Play NYC 2026, sharing a booth with Swiggins
+                        Studios. Attendees can play the three-fight build using a controller.
+                    </p>
+                    <p>
+                        Press attending the show can arrange hands-on time or an interview in advance at
+                        <a href={`mailto:${SITE.pressEmail}`}>{SITE.pressEmail}</a>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="assets" class="section">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Assets</h2>
+                    <p>
+                        Everything below is cleared for editorial use. The full kit - game and studio
+                        logo assets, gameplay captures, and a plain-text factsheet - lives in a
+                        shared Drive folder.
+                    </p>
+                </div>
+
+                <div class="panel surface">
+                    <h3>Key Art</h3>
+                    <figure class="press-key-art">
+                        <img
+                                src="/assets/press/press-key-art.webp"
+                                alt="Veilkeeper key art: a hooded figure holds a crescent-topped staff on a golden balcony, facing a cracked purple orb split by a blazing vertical beam of light in a starry sky, with the Veilkeeper logo across the lower half"
+                                width="1232"
+                                height="704"
+                                loading="lazy"
+                        >
+                    </figure>
+                    <p class="press-credit">Commissioned key art by Falsemind.</p>
+                    <p>
+                        Shown here in the landscape lockup with the logo. A portrait version and
+                        plain variants without the logo or title are in the Drive folder. Please do
+                        not recolor, crop through the figure, or overlay text on the rift.
+                    </p>
+                </div>
+
+                <div class="press-logo-grid">
+                    <div class="panel surface">
+                        <h3>Veilkeeper Logo</h3>
+                        <div class="press-logo-plate">
+                            <img
+                                    class="press-logo"
+                                    src="/assets/logos/Veilkeeper_main_logo.webp"
+                                    alt="Veilkeeper game logo"
+                                    width="768"
+                                    height="768"
+                                    loading="lazy"
+                            >
+                        </div>
+                        <p class="press-credit">Commissioned logo by Zorbius.</p>
+                        <p>
+                            Please do not recolor, stretch, distort, or place the logo over visually
+                            busy backgrounds.
+                        </p>
+                    </div>
+
+                    <div class="panel surface">
+                        <h3>PocketLore Studios Logo</h3>
+                        <div class="press-logo-plate press-logo-plate--studio">
+                            <img
+                                    class="press-logo"
+                                    src="/assets/logos/pocketlore/pocketlore-logo-stacked.png"
+                                    alt="PocketLore Studios logo"
+                                    width="2834"
+                                    height="2657"
+                                    loading="lazy"
+                            >
+                        </div>
+                        <p class="press-credit">
+                            PocketLore Studios brand identity designed by Udara, commissioned through
+                            99designs by Vista.
+                        </p>
+                        <p>
+                            Please do not recolor, stretch, distort, alter the logo arrangement, or
+                            place it over visually busy backgrounds.
+                        </p>
+                    </div>
+                </div>
+
+                <div id="screenshots" class="panel surface">
+                    <h3>Screenshots</h3>
+                    <p>
+                        Captured from the three-fight press build described above, in the current
+                        pre-alpha. Unit and terrain artwork is placeholder. Full-resolution PNG
+                        originals are in the Drive folder.
+                    </p>
+                    <div class="press-shots">
+                        {shots.map(shot => (
+                            <figure>
+                                {/* The board sits in the middle of a 16:9 frame, so UI text is
+                                    small at grid size. Link through to the full capture. */}
+                                <a class="press-shot-link" href={shot.src} target="_blank" rel="noopener noreferrer">
+                                    <img src={shot.src} alt={shot.alt} width="1920" height="1080" loading="lazy">
+                                </a>
+                                <figcaption>{shot.caption}</figcaption>
+                            </figure>
+                        ))}
+                    </div>
+                </div>
+
+                <div class="panel surface">
+                    <h3>Download the kit</h3>
+                    {/*
+                      TODO(drive): the linked folder does not yet contain the PocketLore Studios
+                      logo pack - everything under /public/assets/logos/pocketlore/. Add them, then
+                      update the copy below to "Game and studio logo packs, gameplay captures from
+                      the current build, and a plain-text factsheet." Left unchanged until the
+                      files are actually there.
+                    */}
+                    <p>
+                        Logo pack, gameplay captures from the current build, and a plain-text
+                        factsheet. Captures are still being produced, so the folder is filling in -
+                        if something you need is not there yet, email and it will be sent directly.
+                    </p>
+                    <div class="direct-links">
+                        <a class="link-row" href={SITE.pressKitUrl} target="_blank" rel="noopener noreferrer">
+                            <div>
+                                <strong>Veilkeeper press kit</strong>
+                                <span>Google Drive - logos, screenshots, factsheet</span>
+                            </div>
+                            <span aria-hidden="true">↗</span>
+                        </a>
+
+                        <a class="link-row" href={`mailto:${SITE.pressEmail}?subject=Veilkeeper%20press%20assets`}>
+                            <div>
+                                <strong>Request something specific</strong>
+                                <span>Higher-resolution assets or build access</span>
+                            </div>
+                            <span aria-hidden="true">↗</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="credits" class="section">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Credits and disclosure</h2>
+                </div>
+
+                <div class="panel surface press-studio">
+                    <div class="press-studio-plate">
+                        {/* alt="" is deliberate: the heading beside it already names the
+                            studio, so describing the logo again is redundant for screen
+                            readers. The Assets section carries the labelled copy. */}
+                        <img
+                                class="press-studio-logo"
+                                src="/assets/logos/pocketlore/pocketlore-logo-horizontal.png"
+                                alt=""
+                                width="2834"
+                                height="1049"
+                                loading="lazy"
+                        >
+                    </div>
+                    <div>
+                        <h3>A PocketLore Studios game</h3>
+                        <p>
+                            Veilkeeper is developed and published by PocketLore Studios, a solo
+                            studio based in New York. Studio enquiries and anything outside the
+                            scope of this page go to
+                            <a href={SITE.studioUrl} target="_blank" rel="noopener noreferrer">pocketlorestudios.com</a>.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="panel surface">
+                        <h3>Team</h3>
+                        <ul>
+                            <li><strong>John Serwatka</strong> - design, programming, production</li>
+                            <li><strong>Zorbius</strong> - commissioned logo</li>
+                            <li><strong>Udara</strong> - PocketLore Studios logo and brand identity, commissioned through 99designs by Vista</li>
+                            <li><strong>Falsemind</strong> - commissioned promo art</li>
+                        </ul>
+                    </div>
+
+                    <div class="panel surface">
+                        <h3>Placeholder art</h3>
+                        <p>
+                            The in-game art in current builds and captures is placeholder. Unit and
+                            terrain sprites are from the Tiny Swords pack by Pixel Frog.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Contact and links</h2>
+                </div>
+
+                <div class="grid-2">
+                    <div class="panel surface">
+                        <h3>Press contact</h3>
+                        <p>
+                            <a href={`mailto:${SITE.pressEmail}`}>{SITE.pressEmail}</a>
+                        </p>
+                        <p>
+                            Solo studio, so replies come from the developer directly. Build access for
+                            coverage is available on request.
+                        </p>
+                        <p>
+                            The v0.1 alpha is set to release on itch.io on August 20, 2026, alongside
+                            the Steam page.
+                        </p>
+                    </div>
+
+                    <div class="panel surface">
+                        <h3>Follow development</h3>
+                        <div class="direct-links">
+                            <a class="link-row" href="/devlog/">
+                                <div>
+                                    <strong>Development log</strong>
+                                    <span>Long-form posts on systems and progress</span>
+                                </div>
+                                <span aria-hidden="true">↗</span>
+                            </a>
+
+                            <a class="link-row" href={SITE.social.bluesky} target="_blank" rel="noopener noreferrer">
+                                <div>
+                                    <strong>Bluesky</strong>
+                                    <span>Short-form development posts</span>
+                                </div>
+                                <span aria-hidden="true">↗</span>
+                            </a>
+
+                            <a class="link-row" href={SITE.social.discord} target="_blank" rel="noopener noreferrer">
+                                <div>
+                                    <strong>Discord</strong>
+                                    <span>Community and project discussion</span>
+                                </div>
+                                <span aria-hidden="true">↗</span>
+                            </a>
+
+                            <a class="link-row" href="/rss.xml">
+                                <div>
+                                    <strong>RSS</strong>
+                                    <span>Devlog feed</span>
+                                </div>
+                                <span aria-hidden="true">↗</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</BaseLayout>

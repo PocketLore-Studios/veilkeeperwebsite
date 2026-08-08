@@ -9,7 +9,7 @@ export async function GET(context) {
         description: 'Follow the progress of Veilkeeper as core systems come online.',
         site: context.site,
         items: devlogs.map(entry => ({
-            title: `${entry.data.label} — ${entry.data.title}`,
+            title: `${entry.data.label} - ${entry.data.title}`,
             pubDate: entry.data.date,
             description: entry.data.summary,
             link: getPostUrl(entry)

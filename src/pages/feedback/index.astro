@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { CATEGORIES, EMAIL_FIELD, HONEYPOT_FIELD } from '../../lib/feedback';
 
-// Cloudflare Turnstile site key (public — rendered into the page HTML).
+// Cloudflare Turnstile site key (public - rendered into the page HTML).
 // Defaults to the real production widget so the git-driven Cloudflare build
 // needs no extra config. `just wrangler-dev` overrides this with Cloudflare's
 // "always passes" test key so local browser testing works on localhost.
@@ -12,7 +12,7 @@ const fields = [EMAIL_FIELD]; // shared, category-independent
 ---
 <BaseLayout
         title="Feedback | Veilkeeper"
-        description="Report a bug or share feedback on Veilkeeper. Tell us what you were playing and what happened — it goes straight to the team."
+        description="Report a bug or share feedback on Veilkeeper. Tell us what you were playing and what happened - it goes straight to the team."
 >
     <section class="section">
         <div class="container">
@@ -20,7 +20,7 @@ const fields = [EMAIL_FIELD]; // shared, category-independent
             <div class="section-heading">
                 <h1>Send Feedback</h1>
                 <p class="text-muted">
-                    Bug, balance note, or something that just felt off — pick what fits and
+                    Bug, balance note, or something that just felt off - pick what fits and
                     tell us what happened. The more specific the better.
                 </p>
             </div>
@@ -173,7 +173,7 @@ const fields = [EMAIL_FIELD]; // shared, category-independent
         };
 
         const resetTurnstile = () => {
-            // @ts-ignore — injected by the Turnstile script
+            // @ts-ignore - injected by the Turnstile script
             window.turnstile?.reset();
         };
 
@@ -194,7 +194,7 @@ const fields = [EMAIL_FIELD]; // shared, category-independent
                     body: new FormData(form),
                 });
                 if (res.ok) {
-                    setStatus('Thanks — your feedback reached the team.', 'ok');
+                    setStatus('Thanks - your feedback reached the team.', 'ok');
                     form.reset();
                     const checked = form.querySelector<HTMLInputElement>('input[name="category"]:checked');
                     activate(checked?.value ?? radios[0].value);

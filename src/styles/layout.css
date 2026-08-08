@@ -22,6 +22,25 @@
     margin-top: 1.5rem;
 }
 
+/* ...but not as grid siblings, where `gap` already does the spacing and this
+   margin only knocks the second card 24px below the first. */
+.grid-2 > .panel + .panel {
+    margin-top: 0;
+}
+
+/* A panel that follows a grid of cards gets no spacing from `.panel + .panel`
+   either - its previous sibling is the grid container, not a panel - so it ends
+   up flush against the row above. Match each grid's own gap so the trailing
+   panel reads as part of the same cluster rather than a separate slab. */
+.grid-2 + .panel {
+    margin-top: var(--space-10);
+}
+
+.feature-grid + .panel,
+.roadmap + .panel {
+    margin-top: var(--space-8);
+}
+
 .surface {
     background: var(--surface-bg);
     border: 1px solid var(--line);

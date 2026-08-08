@@ -8,7 +8,7 @@
 }
 
 .topbar-inner {
-    min-height: 72px;
+    min-height: var(--topbar-height);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -135,6 +135,33 @@
     color: #fff;
     background: var(--glass-button);
     border: 1px solid var(--border-heavy);
+}
+
+/* .button is written for <a>; a real <button> needs the UA defaults cleared. */
+button.button {
+    font-family: inherit;
+    font-size: inherit;
+    border: 0;
+    cursor: pointer;
+}
+
+/* Placeholder until the Steam page is live: present, but inert.
+   Element-qualified so it outranks the `button.button` border reset above. */
+button.button--steam {
+    color: #fff;
+    background: var(--glass-button);
+    border: 1px solid var(--border-heavy);
+}
+
+.button:disabled {
+    opacity: 0.72;
+    cursor: not-allowed;
+}
+
+/* The lift on .button:hover would imply it is actionable. */
+.button:disabled:hover {
+    transform: none;
+    opacity: 0.72;
 }
 
 .card {
@@ -381,7 +408,7 @@ a[href^="mailto"] {
     line-height: 1.4;
 }
 
-/* Fields — only the selected category's fieldset is shown. The [hidden]
+/* Fields - only the selected category's fieldset is shown. The [hidden]
    attribute (set at build time and toggled by JS) must win over the flex
    display below, so it is raised in specificity here. */
 .feedback-form [hidden] {
@@ -476,4 +503,266 @@ a[href^="mailto"] {
 
 .form-status[data-kind="error"] {
     color: var(--ember);
+}
+/* ---------------------------------------------------------------------------
+   Press kit
+   Scoped under .press-page because this page shares .section, .status-row and
+   .panel with the homepage and devlog - the tighter rhythm and prose measure
+   below are right for a reference document, not for the marketing pages.
+   --------------------------------------------------------------------------- */
+
+/* ~28% off the global 78px section rhythm (78px -> 56px). Enough that the page
+   reads as one continuous document rather than a stack of separate screens,
+   while still leaving the sections clearly delineated. */
+.press-page .section {
+    padding: calc(var(--space-18) * 0.72) 0;
+}
+
+.press-page .section-heading {
+    margin-bottom: calc(var(--space-12) * 0.72);
+}
+
+/* Cards stay full width, but paragraphs inside them stop at a readable measure
+   instead of running the whole 1160px. */
+.press-page .panel p,
+.press-page .panel li,
+.press-page .roadmap-phase p {
+    max-width: var(--measure);
+}
+
+/* Lead gameplay still, directly under the intro. Sized by the intrinsic 16:9 of
+   the captures so it reserves layout space before the image decodes. */
+.press-hero-media {
+    margin: var(--space-12) 0 0;
+}
+
+.press-hero-media img,
+.press-shots img {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-lg);
+}
+
+.press-hero-media figcaption,
+.press-shots figcaption {
+    margin-top: var(--space-4);
+    color: var(--muted);
+    font-size: var(--font-size-meta);
+}
+
+.press-shots {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-10);
+    margin-top: var(--space-9);
+}
+
+.press-shots figure {
+    margin: 0;
+}
+
+.press-shot-link {
+    display: block;
+    line-height: 0;
+    border-radius: var(--radius-lg);
+}
+
+.press-shot-link img {
+    transition: border-color var(--transition-fast);
+}
+
+.press-shot-link:hover img,
+.press-shot-link:focus-visible img {
+    border-color: var(--veil-2);
+}
+
+/* Captions are metadata, not body copy, so they escape the prose measure. */
+.press-page .press-shots figcaption,
+.press-page .press-hero-media figcaption {
+    max-width: none;
+}
+
+/* Primary press actions, directly under the intro. */
+.press-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    margin-top: var(--space-12);
+}
+
+/* Secondary metadata (e.g. "Last updated"), not a heading. */
+.press-meta {
+    margin: var(--space-9) 0 0;
+    color: var(--muted);
+    font-size: var(--font-size-meta);
+}
+
+/* Factsheet: label and value close enough to read as one row. The global
+   `1.2fr auto` pushes values to the far right, which is hard to track across. */
+.press-page .status-row {
+    grid-template-columns: minmax(0, 210px) minmax(0, 1fr);
+    gap: var(--space-2) var(--space-11);
+    align-items: baseline;
+}
+
+.press-page .status-list {
+    gap: var(--space-6);
+}
+
+/* Most factsheet rows are plain reference data, not status. Only the rows that
+   genuinely describe project state keep the .status-tag pill treatment. */
+.factsheet-value {
+    color: var(--text-bright);
+    font-weight: 600;
+}
+
+.press-page .status-row + .status-row {
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border-subtle);
+}
+
+/* Key art sits above the logo pair - it is the asset press reach for first. */
+.press-key-art {
+    margin: 0 0 var(--space-8);
+}
+
+.press-key-art img {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-lg);
+}
+
+/* Two logo cards side by side, equal width - the game brand and the studio
+   brand carry the same weight for press. */
+.press-logo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-10);
+    align-items: stretch;
+    margin-bottom: var(--space-10);
+}
+
+/* The global `.panel + .panel` stacking margin would push the second card down
+   by 24px; inside this grid the gap already handles the spacing. */
+.press-logo-grid > .panel + .panel {
+    margin-top: 0;
+}
+
+/* Fixed-ratio plate so both previews occupy identical space regardless of the
+   source aspect ratio. object-fit: contain guarantees neither logo is cropped
+   or distorted; the plate colour supplies the letterbox. */
+.press-logo-plate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    margin-bottom: var(--space-8);
+    padding: var(--space-12);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-lg);
+    background: var(--bg);
+}
+
+.press-logo {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* The studio lockup is transparent, and its wordmark is dark purple - invisible
+   on the near-black plate the game logo uses. The backdrop is the warm neutral
+   the designer supplied the brand on, so the pairing stays the artist's own. */
+.press-logo-plate--studio {
+    background: #d8d1c8;
+    border-color: rgba(0, 0, 0, 0.14);
+}
+
+/* Credit line under a logo preview: attribution, not body copy. */
+.press-credit {
+    margin: 0 0 var(--space-4);
+    font-weight: 600;
+}
+
+/* Studio attribution block leading the credits section. The horizontal lockup
+   sits on the same warm plate as the Assets preview - its outlines are near
+   black (1.06:1 against the page background) and would vanish on the dark
+   surface, so the light backdrop is what keeps the linework readable. */
+.press-studio {
+    display: grid;
+    grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+    gap: var(--space-11);
+    align-items: center;
+    margin-bottom: var(--space-10);
+}
+
+.press-studio-plate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-9) var(--space-11);
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    border-radius: var(--radius-lg);
+    background: #d8d1c8;
+}
+
+.press-studio-logo {
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Inline prose links: underlined so they do not depend on colour alone. */
+.press-page .section-heading p a,
+.press-page .panel p a {
+    color: var(--veil-2);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.press-page .section-heading p a:hover,
+.press-page .panel p a:hover {
+    color: var(--text);
+}
+
+/* .link-row ships without a hover or focus affordance. */
+.press-page .link-row {
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.press-page .link-row:hover,
+.press-page .link-row:focus-visible {
+    border-color: var(--border-heavy);
+    background: var(--surface-overlay);
+}
+
+@media (max-width: 980px) {
+    .press-logo-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .press-shots {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 720px) {
+    .press-page .status-row {
+        grid-template-columns: 1fr;
+    }
+
+    .press-studio {
+        grid-template-columns: 1fr;
+    }
+
+    .press-actions .button {
+        width: 100%;
+    }
 }

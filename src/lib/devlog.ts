@@ -13,7 +13,7 @@ export async function getSortedDevlogs(): Promise<DevlogEntry[]> {
     );
 }
 
-/** "July 2026" — matches the old client-side formatting (UTC to avoid date shifts). */
+/** "July 2026" - matches the old client-side formatting (UTC to avoid date shifts). */
 export function formatDate(date: Date): string {
     return new Intl.DateTimeFormat('en-US', {
         year: 'numeric',

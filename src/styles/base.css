@@ -1,4 +1,4 @@
-/* Self-hosted variable fonts (latin subset) — licenses in /assets/fonts/OFL-*.txt */
+/* Self-hosted variable fonts (latin subset) - licenses in /assets/fonts/OFL-*.txt */
 @font-face {
     font-family: 'Cinzel';
     font-style: normal;
@@ -71,7 +71,6 @@
     --shadow-brand-soft: 0 0 24px rgba(158, 109, 255, 0.28);
     --shadow-button-primary: 0 14px 34px rgba(128, 76, 255, 0.3);
     --shadow-button-discord: 0 14px 34px rgba(95, 113, 255, 0.24);
-    --shadow-hero-logo: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.45));
 
     /* Radius */
     --radius-xs: 10px;
@@ -103,6 +102,9 @@
 
     /* Layout */
     --max-width: 1160px;
+    --topbar-height: 72px;
+    /* Roughly 70-80 characters at the body size - a comfortable prose measure. */
+    --measure: 68ch;
 
     /* Typography */
     --font-size-label: 0.78rem;
@@ -151,8 +153,15 @@ html {
     scroll-behavior: smooth;
 }
 
+/* The topbar is sticky, so anchor targets would otherwise scroll to sit
+   underneath it. Offset every element that can be an anchor destination by the
+   bar's height plus a little air. Affects scroll position only, not layout. */
+:where(section, article, div, h1, h2, h3)[id] {
+    scroll-margin-top: calc(var(--topbar-height) + var(--space-11));
+}
+
 /* Reduced motion: collapse transitions to near-zero (rather than 'none')
-   so state changes — e.g. the mobile nav opening — still complete
+   so state changes - e.g. the mobile nav opening - still complete
    immediately and any transitionend listeners still fire. */
 @media (prefers-reduced-motion: reduce) {
     html {

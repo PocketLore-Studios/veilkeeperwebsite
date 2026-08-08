@@ -1,6 +1,6 @@
 ---
 label: "Devlog 08"
-title: "Devlog #08 — Making the Draft More Approachable"
+title: "Devlog #08 - Making the Draft More Approachable"
 date: 2026-07-05
 image: "/assets/devlog/devlog-08.png"
 alt: "Veilkeeper's squad drafting screen showing new unit information cards with portraits, battlefield roles, strengths, weaknesses, and tactical descriptions alongside the squad selection interface."

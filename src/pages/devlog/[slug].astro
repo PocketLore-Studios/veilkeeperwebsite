@@ -23,7 +23,7 @@ const { entry, newer, older } = Astro.props;
 const { Content } = await render(entry);
 ---
 <BaseLayout
-        title={`${entry.data.label} — ${entry.data.title} | Veilkeeper`}
+        title={`${entry.data.label} - ${entry.data.title} | Veilkeeper`}
         description={entry.data.summary}
         ogImage={entry.data.image}
         ogType="article"
@@ -32,7 +32,7 @@ const { Content } = await render(entry);
         <div class="container">
             <article class="devlog-post surface">
                 <header class="devlog-post-header">
-                    <div class="devlog-meta">{entry.data.label} — {formatDate(entry.data.date)}</div>
+                    <div class="devlog-meta">{entry.data.label} - {formatDate(entry.data.date)}</div>
                     <h1 class="devlog-post-title">{entry.data.title}</h1>
                 </header>
 

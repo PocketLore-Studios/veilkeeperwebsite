@@ -7,7 +7,7 @@
 export type FieldType = 'text' | 'textarea' | 'select' | 'email' | 'url';
 
 export interface FieldDef {
-    /** Form control `name` — also the allowlist key on the server. */
+    /** Form control `name` - also the allowlist key on the server. */
     name: string;
     label: string;
     type: FieldType;
@@ -55,7 +55,7 @@ export const EMAIL_FIELD: FieldDef = {
     help: 'Only used if we need to follow up. Never shared.',
 };
 
-/** Hidden honeypot control name — any value means "bot". */
+/** Hidden honeypot control name - any value means "bot". */
 export const HONEYPOT_FIELD = 'company';
 
 export const CATEGORIES: CategoryDef[] = [

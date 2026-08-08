@@ -1,4 +1,4 @@
-# Veilkeeper landing site — task runner
+# Veilkeeper landing site - task runner
 #
 # Local (NixOS): `nix-shell` provides Node 22; `just` is on PATH.
 # CI: .github/workflows/ci.yml runs `just ci` on every push/PR.
@@ -61,6 +61,7 @@ smoke:
     test -f dist/devlog/index.html
     test -f dist/security/index.html
     test -f dist/feedback/index.html
+    test -f dist/press/index.html
     test -f dist/rss.xml
     test -f dist/devlog/post.html
     test -f dist/.well-known/security.txt
@@ -92,12 +93,23 @@ deploy-dry-run: build
 
 # Scaffold a new devlog entry: just new-devlog devlog-09 "Post title"
 # Tip: for animated media, add an optional `video: "/assets/devlog/<slug>.mp4"`
-# field to the frontmatter — `image` then serves as the poster/OG image.
+# field to the frontmatter - `image` then serves as the poster/OG image.
 new-devlog slug title="TODO":
     @test ! -f "src/content/devlog/{{slug}}.md" || { echo "src/content/devlog/{{slug}}.md already exists"; exit 1; }
     @printf -- '---\nlabel: "TODO e.g. Devlog 09"\ntitle: "{{title}}"\ndate: %s\nimage: "/assets/devlog/{{slug}}.png"\nalt: "TODO describe the image"\nsummary: "TODO one-sentence summary (used on the homepage card, archive, OG description, and RSS)"\n---\n\nTODO write the post in markdown. `##` headings and `-` lists match the site styles.\n' "$(date +%Y-%m-%d)" > "src/content/devlog/{{slug}}.md"
-    @echo "created src/content/devlog/{{slug}}.md — remember to add /assets/devlog/{{slug}}.png to public/"
+    @echo "created src/content/devlog/{{slug}}.md - remember to add /assets/devlog/{{slug}}.png to public/"
 
+
+# Render the press factsheet PDF from promo/factsheet-source.html.
+#
+# Not part of `just ci`: it needs a browser and its output is a tracked binary,
+# so it runs on demand when the factsheet copy or its screenshots change. Pulls
+# Chromium itself rather than assuming it is installed (NixOS), so this recipe
+# works from outside nix-shell too. ./veilkeeper-press-factsheet.pdf is the only
+# copy -- there was a second one in promo/ and two tracked 2MB binaries drifted.
+factsheet:
+	nix-shell -p chromium nodejs_22 --run 'node promo/build-factsheet.mjs'
+	@echo "factsheet rendered - check both pages before sending it to press"
 
 # ── Git convenience ───────────────────────────────────────────────
 
