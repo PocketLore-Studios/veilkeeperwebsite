@@ -165,13 +165,20 @@ figcaption { font-size:8pt; color:#7c7391; margin-top:5px; }
       <ul>
         <li><strong>Press</strong> - press@veilkeepergame.com</li>
         <li><strong>Press kit</strong> - veilkeepergame.com/press</li>
-        <li><strong>Site</strong> - veilkeepergame.com</li>
+        <!-- Vanity redirect to the Steam store page: far shorter in print than the
+             store.steampowered.com/app/... URL, and repointable without a re-render. -->
+        <li><strong>Steam</strong> - veilkeepergame.com/play</li>
+        <!-- No standalone "Site" entry: the bare domain is already in the page-1
+             header and in the footer of both pages, and this column has no spare
+             lines - see the note below. -->
         <li><strong>Devlog</strong> - veilkeepergame.com/devlog</li>
         <li><strong>Studio</strong> - pocketlorestudios.com</li>
         <li><strong>Bluesky</strong> - @veilkeepergame.bsky.social</li>
       </ul>
-      <p class="muted">Solo studio - replies come from the developer. Build access for coverage
-      available on request.</p>
+      <!-- This column runs to the bottom of the page and .page is overflow:hidden, so
+           every line here is load-bearing - adding one pushes this note under the
+           footer. Keep it short and re-render both pages after any change. -->
+      <p class="muted">Solo studio - build access for coverage on request.</p>
     </div>
   </div>
 

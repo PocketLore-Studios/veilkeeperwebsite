@@ -64,7 +64,8 @@ const factsheet = [
     { label: 'Genre', value: 'Tactical RPG' },
     { label: 'Players', value: 'Single-player' },
     { label: 'Status', value: 'Pre-alpha, in active development', tag: 'iterating', note: 'Current tactical combat milestone v0.1' },
-    { label: 'Public alpha', value: 'August 20, 2026', tag: 'planned', note: 'Releasing on itch.io alongside the Steam page' },
+    { label: 'Public alpha', value: 'August 20, 2026', tag: 'planned', note: 'Releasing on itch.io; the Steam page is live for wishlists now' },
+    { label: 'Steam page', value: 'store.steampowered.com/app/4515130', href: SITE.steamUrl },
     { label: 'Commercial release', value: 'TBA' },
     { label: 'Price', value: 'TBA' },
 ];
@@ -141,7 +142,11 @@ const lastUpdated = 'August 2026';
                                 </div>
                                 {row.tag
                                     ? <div class={`status-tag tag--${row.tag}`}>{row.value}</div>
-                                    : <div class="factsheet-value">{row.value}</div>}
+                                    : <div class="factsheet-value">
+                                        {row.href
+                                            ? <a href={row.href} target="_blank" rel="noopener noreferrer">{row.value}</a>
+                                            : row.value}
+                                    </div>}
                             </div>
                         ))}
                     </div>
@@ -552,8 +557,9 @@ const lastUpdated = 'August 2026';
                             coverage is available on request.
                         </p>
                         <p>
-                            The v0.1 alpha is set to release on itch.io on August 20, 2026, alongside
-                            the Steam page.
+                            The v0.1 alpha is set to release on itch.io on August 20, 2026. The
+                            <a href={SITE.steamUrl} target="_blank" rel="noopener noreferrer">Steam page</a>
+                            is live now and open for wishlists.
                         </p>
                     </div>
 
@@ -564,6 +570,14 @@ const lastUpdated = 'August 2026';
                                 <div>
                                     <strong>Development log</strong>
                                     <span>Long-form posts on systems and progress</span>
+                                </div>
+                                <span aria-hidden="true">↗</span>
+                            </a>
+
+                            <a class="link-row" href={SITE.steamUrl} target="_blank" rel="noopener noreferrer">
+                                <div>
+                                    <strong>Steam</strong>
+                                    <span>Store page and wishlist</span>
                                 </div>
                                 <span aria-hidden="true">↗</span>
                             </a>

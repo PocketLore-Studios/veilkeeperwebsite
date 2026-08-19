@@ -30,7 +30,10 @@ const rows = [
     ['Genre', 'Tactical RPG'],
     ['Players', 'Single-player'],
     ['Status', 'Pre-alpha, in active development', 'Current tactical combat milestone v0.1'],
-    ['Public alpha', 'August 20, 2026', 'Releasing on itch.io alongside the Steam page'],
+    // The web factsheet (src/pages/press/index.astro) carries the Steam store URL as
+    // its own row; there is no vertical room for an eleventh row here before page 1
+    // collides with the footer, so the URL lives in Contact & links on page 2 instead.
+    ['Public alpha', 'August 20, 2026', 'Releasing on itch.io; the Steam page is live for wishlists now'],
     ['Commercial release', 'TBA'],
     ['Price', 'TBA'],
 ];
