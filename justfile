@@ -71,6 +71,10 @@ smoke:
     test -f dist/sitemap-index.xml
     test -f dist/robots.txt
     test -f dist/_headers
+    test -f dist/_redirects
+    @steam=$(grep -o 'store\.steampowered\.com/app/[0-9]*' src/lib/site.ts | head -1); \
+        grep -q "$steam" dist/_redirects \
+        || { echo "_redirects /play target does not match SITE.steamUrl ($steam)"; exit 1; }
     @count=$(ls -d dist/devlog/*/ | wc -l); \
         src=$(ls src/content/devlog/*.md | wc -l); \
         [ "$count" -eq "$src" ] || { echo "expected $src devlog pages, found $count"; exit 1; }

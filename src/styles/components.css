@@ -145,14 +145,7 @@ button.button {
     cursor: pointer;
 }
 
-/* Placeholder until the Steam page is live: present, but inert.
-   Element-qualified so it outranks the `button.button` border reset above. */
-button.button--steam {
-    color: #fff;
-    background: var(--glass-button);
-    border: 1px solid var(--border-heavy);
-}
-
+/* Used by the feedback form's submit button while a send is in flight. */
 .button:disabled {
     opacity: 0.72;
     cursor: not-allowed;

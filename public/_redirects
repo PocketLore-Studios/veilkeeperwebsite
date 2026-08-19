@@ -1,2 +1,8 @@
-/play / 200
-/play/ / 200
+# /play is a vanity link shared in socials and on stream overlays. It points at
+# the Steam store page - keep the URL in sync with SITE.steamUrl in
+# src/lib/site.ts (`just smoke` fails if the app IDs diverge).
+#
+# 302, not 301: browsers cache 301s indefinitely, and this destination should
+# stay repointable (itch.io during the alpha, a bundle page later, etc).
+/play https://store.steampowered.com/app/4515130/Veilkeeper/ 302
+/play/ https://store.steampowered.com/app/4515130/Veilkeeper/ 302

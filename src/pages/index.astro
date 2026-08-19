@@ -50,18 +50,9 @@ const latest = devlogs[0];
         </p>
 
         <div class="actions">
-          {/* A real disabled <button>, not a dead <a> - it is keyboard-skipped and
-              announced as unavailable rather than looking like a broken link. Swap
-              for the wishlist link below once the Steam page is live. */}
-          <button class="button button--steam" type="button" disabled>
-            Steam - coming soon
-          </button>
-
-          <div hidden>
-            <a class="button button--primary" href="https://store.steampowered.com/" target="_blank" rel="noopener noreferrer">
-              Wishlist on Steam
-            </a>
-          </div>
+          <a class="button button--primary" href={SITE.steamUrl} target="_blank" rel="noopener noreferrer">
+            Wishlist on Steam
+          </a>
 
           <a class="button button--discord" href={SITE.social.discord} target="_blank" rel="noopener noreferrer">
             Join Discord
