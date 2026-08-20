@@ -131,6 +131,14 @@
     box-shadow: var(--shadow-button-discord);
 }
 
+/* Ember (--ember) is light, so this variant inks its label dark rather than
+   using the white the other filled buttons take. */
+.button--ember {
+    color: #2a1b06;
+    background: var(--button-ember-bg);
+    box-shadow: var(--shadow-button-ember);
+}
+
 .button--secondary {
     color: #fff;
     background: var(--glass-button);

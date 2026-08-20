@@ -71,6 +71,7 @@
     --shadow-brand-soft: 0 0 24px rgba(158, 109, 255, 0.28);
     --shadow-button-primary: 0 14px 34px rgba(128, 76, 255, 0.3);
     --shadow-button-discord: 0 14px 34px rgba(95, 113, 255, 0.24);
+    --shadow-button-ember: 0 14px 34px rgba(244, 192, 124, 0.24);
 
     /* Radius */
     --radius-xs: 10px;
@@ -141,6 +142,7 @@
 
     --button-primary-bg: linear-gradient(135deg, #8b5dff 0%, #c587ff 100%);
     --button-discord-bg: linear-gradient(135deg, #5f71ff 0%, #8897ff 100%);
+    --button-ember-bg: linear-gradient(135deg, #f4c07c 0%, #ffd9a8 100%);
 }
 
 *,
