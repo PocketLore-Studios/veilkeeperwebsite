@@ -13,6 +13,8 @@ export const SITE = {
     // link) because static _redirects cannot import this file - keep them in
     // sync; `just smoke` fails if the app IDs diverge.
     steamUrl: 'https://store.steampowered.com/app/4515130/Veilkeeper/',
+    // itch.io page hosting the public alpha build.
+    itchUrl: 'https://pocketlore-studios.itch.io/veilkeeper',
     social: {
         discord: 'https://discord.gg/5zu23e46s6',
         bluesky: 'https://bsky.app/profile/veilkeepergame.bsky.social',
