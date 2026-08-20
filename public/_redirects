@@ -2,7 +2,11 @@
 # the Steam store page - keep the URL in sync with SITE.steamUrl in
 # src/lib/site.ts (`just smoke` fails if the app IDs diverge).
 #
+# It stays pointed at Steam even during the itch.io alpha: the printed/overlay
+# QR code encodes /play and its job is wishlists. The alpha build is linked
+# separately (SITE.itchUrl, the homepage hero button).
+#
 # 302, not 301: browsers cache 301s indefinitely, and this destination should
-# stay repointable (itch.io during the alpha, a bundle page later, etc).
+# stay repointable (a bundle page later, etc).
 /play https://store.steampowered.com/app/4515130/Veilkeeper/ 302
 /play/ https://store.steampowered.com/app/4515130/Veilkeeper/ 302
