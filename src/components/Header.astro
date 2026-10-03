@@ -1,6 +1,7 @@
 ---
 import { SITE } from '../lib/site';
 
+const isHome = Astro.url.pathname === '/';
 const isDevlog = Astro.url.pathname.startsWith('/devlog');
 const isRoadmap = Astro.url.pathname.startsWith('/roadmap');
 const isGameplay = Astro.url.pathname.startsWith('/gameplay');
@@ -34,10 +35,10 @@ const isGameplay = Astro.url.pathname.startsWith('/gameplay');
         </button>
 
         <nav class="nav" id="site-nav" aria-label="Primary navigation">
-            <a href="/">Home</a>
-            <a href="/#status">Status</a>
-            <a href="/#about">About</a>
-            <a href="/gameplay/" class="nav-break" aria-current={isGameplay ? 'page' : undefined}>Gameplay</a>
+            {/* Pages only. The homepage's #status and #about sections keep their ids
+                for old links, but they no longer get nav entries. */}
+            <a href="/" aria-current={isHome ? 'page' : undefined}>Home</a>
+            <a href="/gameplay/" aria-current={isGameplay ? 'page' : undefined}>Gameplay</a>
             <a href="/devlog/" aria-current={isDevlog ? 'page' : undefined}>Devlog</a>
             <a href="/roadmap/" aria-current={isRoadmap ? 'page' : undefined}>Roadmap</a>
         </nav>
