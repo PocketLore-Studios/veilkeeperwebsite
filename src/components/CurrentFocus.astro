@@ -1,0 +1,18 @@
+---
+// "Currently building" strip. The value lives in SITE.currentFocus (see the
+// maintenance note there); this only renders it.
+import { SITE } from '../lib/site';
+
+interface Props {
+    /** Show the "View roadmap" link - off on /roadmap itself. */
+    roadmapLink?: boolean;
+}
+
+const { roadmapLink = true } = Astro.props;
+---
+<p class="current-focus">
+    <span class="current-focus-label">Currently building</span>
+    <span class="current-focus-sep" aria-hidden="true">·</span>
+    <span class="current-focus-value">{SITE.currentFocus}</span>
+    {roadmapLink && <a class="current-focus-link" href="/roadmap/">View roadmap <span aria-hidden="true">→</span></a>}
+</p>

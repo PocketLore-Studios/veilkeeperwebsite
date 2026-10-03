@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CurrentFocus from '../components/CurrentFocus.astro';
 import DevlogMedia from '../components/DevlogMedia.astro';
 import { getSortedDevlogs, getPostUrl } from '../lib/devlog';
 import { SITE } from '../lib/site';
@@ -108,6 +109,14 @@ const loop = [
     </div>
   </section>
 
+  {/* Homepage only by design: a persistent bar on every page costs too much
+      vertical space on mobile. /roadmap shows the same SITE.currentFocus. */}
+  <section class="focus-band" aria-label="Current development focus">
+    <div class="container">
+      <CurrentFocus />
+    </div>
+  </section>
+
   {/* id="features" rather than "gameplay": this replaced the old feature-card
       section, and /#features links are already out in the wild. */}
   <section id="features" class="section">
@@ -134,7 +143,7 @@ const loop = [
       </ol>
 
       <p class="loop-note">
-        Screens from the v0.1 alpha. Unit and terrain artwork is placeholder.
+        Screens from the v0.1 alpha build - work in progress. Unit and terrain artwork is placeholder.
       </p>
 
       <div class="actions loop-actions">
@@ -148,12 +157,30 @@ const loop = [
     </div>
   </section>
 
+  <section id="about" class="section">
+    <div class="container">
+      <div class="panel surface about-panel">
+        <h3>What Veilkeeper is aiming for</h3>
+        <p>
+          Veilkeeper is built around the tension between presence and absence. You build
+          something, you leave, the world keeps moving, and the choices you made before leaving
+          determine what you come back to.
+        </p>
+        <p>
+          The fantasy is not just winning fights. It is holding a fragile line, deciding what can
+          be saved, and building something worth defending when you return.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* The latest devlog card - its image and copy change with every new post. */}
   <section id="status" class="section">
     <div class="container">
       <div class="section-heading">
         <h2>Development Status</h2>
         <p>
-          The latest public-facing update from current development.
+          What is changing in the game right now, from the latest development update.
         </p>
       </div>
 
@@ -182,116 +209,68 @@ const loop = [
     </div>
   </section>
 
-  {/* Replaces three overlapping sections (core pillars, current layer, roadmap)
-      that each restated the same four layers. */}
+  {/* id="roadmap" kept so old /#roadmap links land on a pointer to /roadmap/
+      instead of the top of the page. The layers themselves live in
+      src/lib/roadmap.ts and render on /roadmap. */}
   <section id="roadmap" class="section">
     <div class="container">
-      <div class="section-heading">
-        <h2>Built in layers</h2>
-        <p>
-          Veilkeeper grows from the combat outward. Each layer has to stand on its own before
-          the next is allowed to lean on it, and community features sit on top of the game -
-          they never replace it.
-        </p>
-      </div>
-
-      <div class="roadmap">
-        <article class="roadmap-phase phase-expedition surface">
-          <div class="phase-top">
-            <span class="phase-kicker">Phase I</span>
-            <h3 class="phase-title">The Expedition</h3>
-          </div>
-          <div class="phase-meta">
-            <div class="phase-tag">Tactical combat</div>
-            <div class="status-tag tag--current">Playable now</div>
-          </div>
-          <ul class="phase-list">
-            <li>Grid combat with facing and positional damage across four unit roles</li>
-            <li>The shrinking army: one unit left behind to hold the relay after every fight</li>
-            <li>Mouse, keyboard, and controller support</li>
-          </ul>
-        </article>
-
-        <article class="roadmap-phase phase-shard surface">
-          <div class="phase-top">
-            <span class="phase-kicker">Phase II</span>
-            <h3 class="phase-title">The Shard</h3>
-          </div>
-          <div class="phase-meta">
-            <div class="phase-tag">Home base</div>
-            <div class="phase-status">Planned</div>
-          </div>
-          <ul class="phase-list">
-            <li>A settlement you build and return to, which keeps moving while you are away</li>
-            <li>Hero housing</li>
-            <li>Cosmetic and systemic upgrades</li>
-          </ul>
-        </article>
-
-        <article class="roadmap-phase phase-campaign surface">
-          <div class="phase-top">
-            <span class="phase-kicker">Phase III</span>
-            <h3 class="phase-title">The Campaign</h3>
-          </div>
-          <div class="phase-meta">
-            <div class="phase-tag">Rift campaign</div>
-            <div class="phase-status">Planned</div>
-          </div>
-          <ul class="phase-list">
-            <li>Relay networks stretched across the rift</li>
-            <li>Node defense - deciding which links are worth holding</li>
-            <li>Strategic pressure across the rift map</li>
-          </ul>
-        </article>
-
-        <article class="roadmap-phase phase-community surface">
-          <div class="phase-top">
-            <span class="phase-kicker">Phase IV</span>
-            <h3 class="phase-title">The Community</h3>
-          </div>
-          <div class="phase-meta">
-            <div class="phase-tag">Stream integration</div>
-            <div class="phase-status">Future</div>
-          </div>
-          <ul class="phase-list">
-            <li>Viewer characters and stream events</li>
-            <li>Community shards and audience participation</li>
-            <li>Optional by design - Veilkeeper stays fully playable offline</li>
-          </ul>
-        </article>
+      <div class="panel surface roadmap-teaser">
+        <div>
+          <h3>Where Veilkeeper is going</h3>
+          <p>
+            Veilkeeper is being built outward from its tactical core, toward the Home Shard, the
+            Rift Campaign, and optional community systems.
+          </p>
+        </div>
+        <a class="button button--secondary" href="/roadmap/">
+          Explore the roadmap&nbsp;<span aria-hidden="true">→</span>
+        </a>
       </div>
     </div>
   </section>
 
-  <section id="about" class="section">
+  <section id="follow" class="section">
     <div class="container grid-2">
       <div class="panel surface">
-        <h3>What Veilkeeper is aiming for</h3>
+        <h3>Play and tell us</h3>
         <p>
-          Veilkeeper is built around the tension between presence and absence. You build
-          something, you leave, the world keeps moving, and the choices you made before leaving
-          determine what you come back to.
-        </p>
-        <p>
-          The fantasy is not just winning fights. It is holding a fragile line, deciding what can
-          be saved, and building something worth defending when you return.
-        </p>
-      </div>
-
-      <div class="panel surface">
-        <h3>Follow the project</h3>
-        <p>
-          Play the alpha, then tell us what worked and what did not - feedback from these early
-          builds shapes what comes next.
+          Feedback from these early builds shapes what comes next - what worked, what did not,
+          and anything that felt off.
         </p>
 
         <div class="direct-links">
+          <a class="link-row" href={SITE.itchUrl} target="_blank" rel="noopener noreferrer">
+            <div>
+              <strong>Play the alpha</strong>
+              <span>Free on itch.io for Windows and Linux</span>
+            </div>
+            <span aria-hidden="true">↗</span>
+          </a>
+
           <a class="link-row" href="/feedback/">
             <div>
               <strong>Send feedback</strong>
               <span>Bugs, balance notes, and first impressions</span>
             </div>
             <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="panel surface">
+        <h3>Follow the project</h3>
+        <p>
+          Wishlist to hear about releases, or join the community to follow development as it
+          happens.
+        </p>
+
+        <div class="direct-links">
+          <a class="link-row" href={SITE.steamUrl} target="_blank" rel="noopener noreferrer">
+            <div>
+              <strong>Wishlist on Steam</strong>
+              <span>Get notified about new releases</span>
+            </div>
+            <span aria-hidden="true">↗</span>
           </a>
 
           <a class="link-row" href={SITE.social.discord} target="_blank" rel="noopener noreferrer">

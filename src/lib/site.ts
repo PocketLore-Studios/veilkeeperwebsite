@@ -15,6 +15,12 @@ export const SITE = {
     // link) because static _redirects cannot import this file - keep them in
     // sync; `just smoke` fails if the app IDs diverge.
     steamUrl: 'https://store.steampowered.com/app/4515130/Veilkeeper/',
+    // The one feature being worked on right now, in player terms. Shown as the
+    // "Currently building" strip on the homepage and on /roadmap.
+    // MAINTENANCE: whenever a new devlog is published, check this still matches
+    // the actual focus and update it if not - a stale "currently" is worse than
+    // none. Not a progress figure, ETA, or task list; one short phrase.
+    currentFocus: 'Isometric Battlefield + Cursor Navigation',
     // itch.io page hosting the public alpha build.
     itchUrl: 'https://pocketlore-studios.itch.io/veilkeeper',
     social: {

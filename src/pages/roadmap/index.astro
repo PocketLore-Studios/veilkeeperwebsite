@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CurrentFocus from '../../components/CurrentFocus.astro';
+import { ROADMAP } from '../../lib/roadmap';
+import { SITE } from '../../lib/site';
+---
+<BaseLayout
+        title="Roadmap | Veilkeeper"
+        description="Where Veilkeeper is going: the playable tactical core first, then the home shard, the rift campaign, and optional stream integration."
+>
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h1>Roadmap</h1>
+                <p>
+                    Veilkeeper is built outward from its tactical core. Each layer has to stand on its
+                    own before the next is allowed to lean on it, and community features sit on top of
+                    the game - they never replace it.
+                </p>
+            </div>
+
+            <div class="surface roadmap-focus">
+                <CurrentFocus roadmapLink={false} />
+            </div>
+
+            <div class="roadmap">
+                {ROADMAP.map(layer => (
+                    <article class={`roadmap-phase ${layer.colorClass} surface`}>
+                        <div class="phase-top">
+                            <span class="phase-kicker">{layer.phase}</span>
+                            <h2 class="phase-title">{layer.title}</h2>
+                        </div>
+                        <div class="phase-meta">
+                            <div class="phase-tag">{layer.tag}</div>
+                            {layer.statuses.map(status => (
+                                <div class={`status-tag tag--${status.kind}`}>{status.label}</div>
+                            ))}
+                        </div>
+                        <p class="roadmap-description">{layer.description}</p>
+                        <ul class="phase-list">
+                            {layer.points.map(point => <li>{point}</li>)}
+                        </ul>
+                    </article>
+                ))}
+            </div>
+
+            <p class="notice roadmap-disclaimer">
+                The roadmap reflects the current direction of development, not a promise. Layers,
+                features, and their order may change as the game is built and tested.
+            </p>
+
+            <div class="actions roadmap-actions">
+                <a class="button button--primary" href={SITE.itchUrl} target="_blank" rel="noopener noreferrer">
+                    Play the alpha
+                </a>
+                <a class="button button--secondary" href="/devlog/">
+                    Read the devlog
+                </a>
+            </div>
+        </div>
+    </section>
+</BaseLayout>

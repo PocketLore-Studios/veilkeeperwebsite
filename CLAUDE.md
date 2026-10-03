@@ -22,7 +22,7 @@ just new-devlog devlog-09 "Title"   # scaffold a devlog entry
 just factsheet  # re-render the press factsheet PDF (needs a browser; not in ci)
 ```
 
-**The press factsheet PDF** is generated, not hand-edited: `promo/factsheet-source.html` holds the markup with `__TOKEN__` placeholders, and `promo/build-factsheet.mjs` (via `just factsheet`) inlines the fonts and images as data URIs and prints it with headless Chromium to `veilkeeper-press-factsheet.pdf` in the repo root, which is the only copy. Two things to know before editing it: the factsheet table is duplicated from the `factsheet` array in `src/pages/press/index.astro` into `rows` in the build script, and `.page` is `overflow:hidden`, so content that no longer fits is silently clipped or collides with the footer instead of reflowing - always render both pages and look at them after a copy change.
+**The press factsheet PDF** is generated, not hand-edited: `promo/factsheet-source.html` holds the markup with `__TOKEN__` placeholders, and `promo/build-factsheet.mjs` (via `just factsheet`) inlines the fonts and images as data URIs and prints it with headless Chromium to `veilkeeper-press-factsheet.pdf` in the repo root, which is the only copy. Two things to know before editing it: the factsheet table is duplicated from the `factsheet` array in `src/pages/press/index.astro` into `rows` in the build script (the roadmap list is not - it is generated from `src/lib/roadmap.ts`), and `.page` is `overflow:hidden`, so content that no longer fits is silently clipped or collides with the footer instead of reflowing - always render both pages and look at them after a copy change.
 
 The only unit tests are for the feedback Worker (`worker/index.test.ts`, Node's built-in runner, Turnstile/Resend stubbed via global fetch); otherwise `just ci` (check + test-worker + build + smoke) is the verification path. The Worker has its own `worker/tsconfig.json` (workerd globals via `@cloudflare/workers-types`) because the root tsconfig excludes `worker/`; its imports use explicit `.ts` extensions so Node can load them directly. GitHub Actions (`.github/workflows/ci.yml`) runs `just ci` on pushes/PRs as a check only. Deployment is handled by Cloudflare's Workers Builds git integration (configured in the Cloudflare dashboard: build command `npm run build`, deploy command `npx wrangler deploy`), which deploys on pushes to `main`. `just deploy` exists as a manual escape hatch but note the two are independent - Cloudflare deploys even if GitHub checks fail.
 
@@ -39,6 +39,7 @@ Work happens on `development`; `main` is the release/PR target and auto-deploys 
 - `src/pages/devlog/index.astro` - archive
 - `src/pages/devlog/[slug].astro` - one page per collection entry, with per-post OG tags (`ogImage` = the entry image)
 - `src/pages/security/index.astro` - security policy
+- `src/pages/roadmap/index.astro` - full roadmap; the homepage keeps only a teaser at `#roadmap` (so old `/#roadmap` links still land somewhere)
 - `src/pages/404.astro` - not-found page, served with a real 404 status via `not_found_handling: "404-page"` in `wrangler.jsonc`
 - `src/pages/rss.xml.js` - RSS feed of all devlogs
 
@@ -50,4 +51,6 @@ A sitemap (`sitemap-index.xml`, via `@astrojs/sitemap`) and `public/robots.txt` 
 
 **Legacy URL shim:** `public/devlog/post.html` JS-redirects old `/devlog/post.html?slug=X` links (shared on Discord/Bluesky before the migration) to `/devlog/X/`. Don't delete it. `public/.well-known/security.txt` (RFC 9116) must stay a plain static file. The retired devlog GIFs (`devlog-02..05.gif`) also stay in `public/assets/devlog/` for the same reason - old social embeds link to them - even though no page references them.
 
-**Adding a devlog post:** `just new-devlog <slug> "Title"`, fill in the frontmatter TODOs, drop the image in `public/assets/devlog/`, done - the homepage, archive, post page, prev/next nav, and RSS all derive from the collection. If a new post shares a date with an existing one, the slug tiebreaker (descending) decides which counts as newer.
+**Adding a devlog post:** `just new-devlog <slug> "Title"`, fill in the frontmatter TODOs, drop the image in `public/assets/devlog/`, done - the homepage, archive, post page, prev/next nav, and RSS all derive from the collection. If a new post shares a date with an existing one, the slug tiebreaker (descending) decides which counts as newer. Then check `SITE.currentFocus` in `src/lib/site.ts` (the "Currently building" strip on the homepage and `/roadmap`) still describes the actual focus, and update it if not.
+
+**Roadmap layers are shared data** in `src/lib/roadmap.ts`, rendered by `/roadmap` (everything), `/press` (title, status, description) and the PDF factsheet (title, status, one-line `summary` - keep it short, page 2 of the PDF has no spare height). Edit the plan there only; re-run `just factsheet` after changing it.

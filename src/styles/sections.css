@@ -136,6 +136,93 @@
     margin: var(--space-10) 0 0;
 }
 
+/* "Currently building" (CurrentFocus.astro). On the homepage it is a slim
+   band between the hero and the first section; on /roadmap it sits in a card. */
+.focus-band {
+    border-bottom: 1px solid var(--border-soft);
+    background: var(--surface-overlay-soft);
+}
+
+.current-focus {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-2) var(--space-4);
+    margin: 0;
+    padding: var(--space-6) 0;
+    font-size: var(--font-size-body-md);
+}
+
+.current-focus-label {
+    color: var(--ember);
+    font-size: var(--font-size-label);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.current-focus-sep {
+    color: var(--text-faint);
+}
+
+.current-focus-value {
+    color: var(--text-bright);
+    font-weight: 600;
+}
+
+.current-focus-link {
+    margin-left: auto;
+    color: var(--veil-2);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.current-focus-link:hover,
+.current-focus-link:focus-visible {
+    text-decoration: underline;
+}
+
+.roadmap-focus {
+    margin-bottom: var(--space-10);
+    padding: 0 var(--space-10);
+}
+
+/* A lone full-width panel would run its prose far past a readable measure. */
+.about-panel {
+    max-width: 820px;
+}
+
+/* Homepage pointer to /roadmap: copy on the left, button on the right. */
+.roadmap-teaser {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+}
+
+.roadmap-teaser > div {
+    flex: 1 1 420px;
+}
+
+.roadmap-teaser p {
+    margin: 0;
+}
+
+/* /roadmap: the description reads as body copy above the point list. */
+.roadmap-description {
+    margin: 0 0 var(--space-5);
+    color: var(--text-soft);
+}
+
+.roadmap-disclaimer {
+    margin: var(--space-10) 0 0;
+}
+
+.roadmap-actions {
+    margin: var(--space-8) 0 0;
+}
+
 .status-update {
     display: grid;
     grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
