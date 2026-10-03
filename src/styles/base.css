@@ -140,8 +140,11 @@
             rgba(8, 6, 15, 0.78) 100%
     );
 
-    --button-primary-bg: linear-gradient(135deg, #8b5dff 0%, #c587ff 100%);
-    --button-discord-bg: linear-gradient(135deg, #5f71ff 0%, #8897ff 100%);
+    /* White labels sit on these, so every stop keeps >= 4.5:1 against #fff
+       (WCAG AA, normal text): primary 5.8-4.8:1, discord 5.6-4.8:1. The lighter
+       pastel ends they replaced dropped to ~2.5:1. */
+    --button-primary-bg: linear-gradient(135deg, #6f3ff0 0%, #9a3cf5 100%);
+    --button-discord-bg: linear-gradient(135deg, #4357e8 0%, #5062f0 100%);
     --button-ember-bg: linear-gradient(135deg, #f4c07c 0%, #ffd9a8 100%);
 }
 
