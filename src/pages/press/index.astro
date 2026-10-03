@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ROADMAP } from '../../lib/roadmap';
 import { SITE } from '../../lib/site';
 
 // Kept deliberately vague where the project genuinely is vague. Commercial
@@ -113,8 +114,8 @@ const lastUpdated = 'October 2026';
                     >
                     <figcaption>
                         Damage, the health it leaves behind, and whether the target can counter - all
-                        shown before the attack is committed, captured from the Veilkeeper press
-                        build shortly before the v0.1 alpha. Unit and terrain artwork is placeholder.
+                        shown before the attack is committed, captured from the v0.1 alpha build.
+                        Work in progress - unit and terrain artwork is placeholder.
                     </figcaption>
                 </figure>
 
@@ -273,62 +274,31 @@ const lastUpdated = 'October 2026';
         <section id="layers" class="section">
             <div class="container">
                 <div class="section-heading">
-                    <h2>The three layers</h2>
+                    <h2>The roadmap</h2>
                     <p>
                         Veilkeeper is built outward from combat. Each layer has to stand on its own
-                        before the next one is allowed to lean on it.
+                        before the next one is allowed to lean on it. The full roadmap is at
+                        <a href="/roadmap/">veilkeepergame.com/roadmap</a>.
                     </p>
                 </div>
 
+                {/* Shared with /roadmap and the PDF factsheet - edit src/lib/roadmap.ts. */}
                 <div class="roadmap">
-                    <article class="roadmap-phase phase-expedition surface">
-                        <div class="phase-top">
-                            <span class="phase-kicker">Layer One</span>
-                            <h3 class="phase-title">Tactical Combat</h3>
-                        </div>
-                        <div class="phase-meta">
-                            <div class="phase-tag">Grid combat</div>
-                            <div class="status-tag tag--current">Playable</div>
-                            <div class="status-tag tag--iterating">In active development</div>
-                        </div>
-                        <p class="text-muted">
-                            Direct unit control on a grid, where winning feels like executing a plan
-                            under pressure without losing anyone you could not afford to lose. The
-                            satisfaction is in foresight, not reaction.
-                        </p>
-                    </article>
-
-                    <article class="roadmap-phase phase-shard surface">
-                        <div class="phase-top">
-                            <span class="phase-kicker">Layer Two</span>
-                            <h3 class="phase-title">The Home Shard</h3>
-                        </div>
-                        <div class="phase-meta">
-                            <div class="phase-tag">Settlement building</div>
-                            <div class="status-tag tag--planned">Designed, not built</div>
-                        </div>
-                        <p class="text-muted">
-                            A settlement you build and return to, which will run autonomously while you
-                            are away. It is not meant to be a second job - it is an exhale. Somewhere to
-                            notice what changed, make a few decisions, and go back out.
-                        </p>
-                    </article>
-
-                    <article class="roadmap-phase phase-community surface">
-                        <div class="phase-top">
-                            <span class="phase-kicker">Layer Three</span>
-                            <h3 class="phase-title">Stream Integration</h3>
-                        </div>
-                        <div class="phase-meta">
-                            <div class="phase-tag">Twitch</div>
-                            <div class="status-tag tag--planned">Designed, not built</div>
-                        </div>
-                        <p class="text-muted">
-                            Viewers will be able to interact with the home shard while the Veilkeeper is
-                            away raiding. An enhancement layer only - Veilkeeper is designed to remain
-                            fully playable offline.
-                        </p>
-                    </article>
+                    {ROADMAP.map(layer => (
+                        <article class={`roadmap-phase ${layer.colorClass} surface`}>
+                            <div class="phase-top">
+                                <span class="phase-kicker">{layer.phase}</span>
+                                <h3 class="phase-title">{layer.title}</h3>
+                            </div>
+                            <div class="phase-meta">
+                                <div class="phase-tag">{layer.tag}</div>
+                                {layer.statuses.map(status => (
+                                    <div class={`status-tag tag--${status.kind}`}>{status.label}</div>
+                                ))}
+                            </div>
+                            <p class="text-muted">{layer.description}</p>
+                        </article>
+                    ))}
                 </div>
             </div>
         </section>
@@ -434,8 +404,8 @@ const lastUpdated = 'October 2026';
                 <div id="screenshots" class="panel surface">
                     <h3>Screenshots</h3>
                     <p>
-                        Captured from the three-fight press build described above, shortly before
-                        the v0.1 alpha. Unit and terrain artwork is placeholder. Full-resolution PNG
+                        Captured from the v0.1 alpha build - the three-fight run described above.
+                        Work in progress - unit and terrain artwork is placeholder. Full-resolution PNG
                         originals are in the Drive folder.
                     </p>
                     <div class="press-shots">

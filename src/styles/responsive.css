@@ -110,6 +110,21 @@
 }
 
 @media (max-width: 640px) {
+    /* Too narrow for label, value and link on one line: stack them, and drop
+       the separator dot that would otherwise dangle at a line end. */
+    .current-focus {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .current-focus-sep {
+        display: none;
+    }
+
+    .current-focus-link {
+        margin-left: 0;
+    }
+
     .feature-grid {
         grid-template-columns: 1fr;
     }

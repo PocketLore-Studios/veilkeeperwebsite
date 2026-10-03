@@ -2,6 +2,7 @@
 import { SITE } from '../lib/site';
 
 const isDevlog = Astro.url.pathname.startsWith('/devlog');
+const isRoadmap = Astro.url.pathname.startsWith('/roadmap');
 ---
 <header class="topbar">
     <div class="container topbar-inner">
@@ -35,9 +36,9 @@ const isDevlog = Astro.url.pathname.startsWith('/devlog');
             <a href="/">Home</a>
             <a href="/#features">Gameplay</a>
             <a href="/#status">Status</a>
-            <a href="/#roadmap">Roadmap</a>
             <a href="/#about">About</a>
             <a href="/devlog/" class="nav-break" aria-current={isDevlog ? 'page' : undefined}>Devlog</a>
+            <a href="/roadmap/" aria-current={isRoadmap ? 'page' : undefined}>Roadmap</a>
         </nav>
     </div>
 </header>

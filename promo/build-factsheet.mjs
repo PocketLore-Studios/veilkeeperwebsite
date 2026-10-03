@@ -6,15 +6,18 @@
 // (the PDF has to be self-contained -- press contacts open it offline) and
 // prints the result with headless Chrome.
 //
-// The factsheet table is the one piece of content duplicated from the /press
-// page. Keep `rows` below in step with the `factsheet` array in
-// src/pages/press/index.astro.
+// The factsheet table is duplicated from the /press page: keep `rows` below in
+// step with the `factsheet` array in src/pages/press/index.astro. The roadmap
+// list is not duplicated - it comes from src/lib/roadmap.ts (Node strips the
+// types itself), the same data the /press and /roadmap pages render.
 
 import { readFileSync, writeFileSync, mkdtempSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import { ROADMAP } from '../src/lib/roadmap.ts';
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = process.argv[2] ?? join(REPO, 'veilkeeper-press-factsheet.pdf');
@@ -43,6 +46,17 @@ const rowsHtml = rows
         `<tr><th>${label}</th><td>${value}${note ? `<span class="note">${note}</span>` : ''}</td></tr>`)
     .join('\n');
 
+// Playable layers get the green pill; everything else the purple one.
+const layersHtml = ROADMAP
+    .map((layer) => {
+        const tags = layer.statuses
+            .map((s) => `<span class="tag ${s.kind === 'current' ? 't-now' : 't-soon'}">${s.label}</span>`)
+            .join('');
+        // One line per layer: page 2 has no spare height (.page is overflow:hidden).
+        return `    <li><strong>${layer.title}</strong>${tags} - ${layer.summary}</li>`;
+    })
+    .join('\n');
+
 const body = readFileSync(join(REPO, 'promo/factsheet-source.html'), 'utf8')
     .replace('__CINZEL__', b64('public/assets/fonts/cinzel-latin.woff2'))
     .replace('__RALEWAY__', b64('public/assets/fonts/raleway-latin.woff2'))
@@ -51,7 +65,8 @@ const body = readFileSync(join(REPO, 'promo/factsheet-source.html'), 'utf8')
     .replace('__KEYART__', b64('promo/key-art/veilkeeper-key-art-banner.webp'))
     .replaceAll('__PLLOGO__', b64('public/assets/logos/pocketlore/pocketlore-logo-horizontal.png'))
     .replace('__SHOT__', b64('public/assets/press/press-damage-preview.webp'))
-    .replace('__ROWS__', rowsHtml);
+    .replace('__ROWS__', rowsHtml)
+    .replace('__LAYERS__', layersHtml);
 
 // A typo'd placeholder would otherwise render as a missing image, which is easy
 // to miss in a 2-page PDF.

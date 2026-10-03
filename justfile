@@ -69,6 +69,7 @@ smoke:
     test -f dist/security/index.html
     test -f dist/feedback/index.html
     test -f dist/press/index.html
+    test -f dist/roadmap/index.html
     test -f dist/rss.xml
     test -f dist/devlog/post.html
     test -f dist/.well-known/security.txt
@@ -109,6 +110,7 @@ new-devlog slug title="TODO":
     @test ! -f "src/content/devlog/{{slug}}.md" || { echo "src/content/devlog/{{slug}}.md already exists"; exit 1; }
     @printf -- '---\nlabel: "TODO e.g. Devlog 09"\ntitle: "{{title}}"\ndate: %s\nimage: "/assets/devlog/{{slug}}.png"\nalt: "TODO describe the image"\nsummary: "TODO one-sentence summary (used on the homepage card, archive, OG description, and RSS)"\n---\n\nTODO write the post in markdown. `##` headings and `-` lists match the site styles.\n' "$(date +%Y-%m-%d)" > "src/content/devlog/{{slug}}.md"
     @echo "created src/content/devlog/{{slug}}.md - remember to add /assets/devlog/{{slug}}.png to public/"
+    @echo "also check SITE.currentFocus in src/lib/site.ts still matches what is being built"
 
 
 # Render the press factsheet PDF from promo/factsheet-source.html.

@@ -31,11 +31,17 @@ jobs:
           # links are fine; a truly dead page still returns 404.
           # Exclude dist/api/: the feedback form posts to /api/feedback, which
           # the Worker serves at runtime, so it never exists as a built file.
+          # Check the site's own absolute URLs (canonical, og:url, ...) against
+          # this build instead of the live site: on a push to main the check
+          # races the Cloudflare deploy, so a new page's URLs would 404. The
+          # html fallback mirrors Cloudflare serving /404/ from 404.html.
           args: >-
             --no-progress
             --root-dir ${{ github.workspace }}/dist
             --accept '200..=299,403,429'
             --remap 'https://discord.com/invite/(.*) https://discord.com/api/v10/invites/$1'
+            --remap 'https://veilkeepergame\.com/(.*) file://${{ github.workspace }}/dist/$1'
+            --fallback-extensions html
             --exclude '^file://.*/dist/api/'
             'dist/**/*.html'
           fail: true
