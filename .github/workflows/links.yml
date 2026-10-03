@@ -11,9 +11,9 @@ jobs:
   linkcheck:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -29,11 +29,14 @@ jobs:
           # instead of a 200 "invite invalid" page.
           # Accept 403/429: X/Twitter and some sites block bots but the
           # links are fine; a truly dead page still returns 404.
+          # Exclude dist/api/: the feedback form posts to /api/feedback, which
+          # the Worker serves at runtime, so it never exists as a built file.
           args: >-
             --no-progress
             --root-dir ${{ github.workspace }}/dist
             --accept '200..=299,403,429'
             --remap 'https://discord.com/invite/(.*) https://discord.com/api/v10/invites/$1'
+            --exclude '^file://.*/dist/api/'
             'dist/**/*.html'
           fail: true
           
