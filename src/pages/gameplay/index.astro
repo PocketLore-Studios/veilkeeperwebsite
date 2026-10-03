@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { UNITS } from '../../lib/units';
+import { SITE } from '../../lib/site';
+
+// What the alpha actually supports - grow this page with the game, not ahead
+// of it (no empty Heroes/Abilities/Terrain sections until they exist).
+const fundamentals = [
+    {
+        title: 'Positioning matters',
+        text: 'Attacking from the side or rear deals more damage, so movement and facing are part of your offense - not just a way to get into range.',
+    },
+    {
+        title: 'Counters have consequences',
+        text: 'Before you commit, you see whether the defender can answer back. Target selection and attack range decide who takes the hit.',
+    },
+    {
+        title: 'Units have distinct roles',
+        text: 'The roster is not a set of stat blocks. Range, durability, movement, and how each weapon meets armor change how you approach the board.',
+    },
+    {
+        title: 'Your force is temporary',
+        text: 'Even a clean win does not keep your squad intact - every expedition makes you leave units behind. A good squad has to work when pieces of it disappear.',
+    },
+];
+---
+<BaseLayout
+        title="Gameplay | Veilkeeper"
+        description="How Veilkeeper's combat plays: positioning and facing, counters, distinct unit roles, and a squad that shrinks as you go. Plus the current alpha roster."
+>
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h1>Gameplay</h1>
+                <p>
+                    Veilkeeper is turn-based tactics on a grid. The run structure decides who you lose;
+                    the fights decide whether losing them was worth it. Here is what makes an
+                    individual fight work.
+                </p>
+            </div>
+
+            <h2 class="gameplay-subhead">Combat fundamentals</h2>
+            <div class="feature-grid">
+                {fundamentals.map(item => (
+                    <article class="card surface">
+                        <h3>{item.title}</h3>
+                        <p>{item.text}</p>
+                    </article>
+                ))}
+            </div>
+
+            <figure class="gameplay-figure">
+                <img
+                        src="/assets/press/press-damage-preview.webp"
+                        alt="Attack confirmation showing 32 damage, the target dropping from 45 to 13 HP, and &quot;No counter&quot;, above a prompt reading &quot;Click again to confirm&quot;"
+                        width="1920"
+                        height="1080"
+                        loading="lazy"
+                >
+                <figcaption>
+                    Every attack previews its damage, the health it leaves, and whether it draws a
+                    counter - before you commit. From the v0.1 alpha build; artwork is placeholder.
+                </figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <section id="units" class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Current alpha roster</h2>
+                <p>
+                    The four unit types in the current alpha build. The roster will change as
+                    development continues.
+                </p>
+            </div>
+
+            {/* Data lives in src/lib/units.ts. */}
+            <div class="unit-grid">
+                {UNITS.map(unit => (
+                    <article class="card surface unit-card">
+                        <h3>{unit.name}</h3>
+                        <p class="unit-role">{unit.role}</p>
+                        <p>{unit.summary}</p>
+                        <dl class="unit-stats">
+                            <div>
+                                <dt>Range</dt>
+                                <dd>{unit.range}</dd>
+                            </div>
+                            <div>
+                                <dt>Role</dt>
+                                <dd>{unit.position}</dd>
+                            </div>
+                        </dl>
+                    </article>
+                ))}
+            </div>
+
+            <div class="actions gameplay-actions">
+                <a class="button button--primary" href={SITE.itchUrl} target="_blank" rel="noopener noreferrer">
+                    Play the alpha
+                </a>
+                <a class="button button--secondary" href="/roadmap/">
+                    See the roadmap
+                </a>
+            </div>
+        </div>
+    </section>
+</BaseLayout>

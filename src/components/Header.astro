@@ -3,6 +3,7 @@ import { SITE } from '../lib/site';
 
 const isDevlog = Astro.url.pathname.startsWith('/devlog');
 const isRoadmap = Astro.url.pathname.startsWith('/roadmap');
+const isGameplay = Astro.url.pathname.startsWith('/gameplay');
 ---
 <header class="topbar">
     <div class="container topbar-inner">
@@ -34,10 +35,10 @@ const isRoadmap = Astro.url.pathname.startsWith('/roadmap');
 
         <nav class="nav" id="site-nav" aria-label="Primary navigation">
             <a href="/">Home</a>
-            <a href="/#features">Gameplay</a>
             <a href="/#status">Status</a>
             <a href="/#about">About</a>
-            <a href="/devlog/" class="nav-break" aria-current={isDevlog ? 'page' : undefined}>Devlog</a>
+            <a href="/gameplay/" class="nav-break" aria-current={isGameplay ? 'page' : undefined}>Gameplay</a>
+            <a href="/devlog/" aria-current={isDevlog ? 'page' : undefined}>Devlog</a>
             <a href="/roadmap/" aria-current={isRoadmap ? 'page' : undefined}>Roadmap</a>
         </nav>
     </div>
