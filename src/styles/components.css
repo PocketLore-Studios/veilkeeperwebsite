@@ -259,16 +259,6 @@ button.button {
     border-color: var(--status-planned-border);
 }
 
-.mini-list {
-    margin: 0;
-    padding-left: var(--space-8);
-    color: var(--muted);
-}
-
-.mini-list li + li {
-    margin-top: var(--space-3);
-}
-
 .footer {
     padding: var(--space-14) 0 var(--space-15);
     border-top: 1px solid var(--border-soft);

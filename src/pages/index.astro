@@ -6,10 +6,44 @@ import { SITE } from '../lib/site';
 
 const devlogs = await getSortedDevlogs();
 const latest = devlogs[0];
+
+// The run, in the order a player meets it. Screenshots are the press captures
+// from the v0.1.0.0 alpha (see src/pages/press/index.astro); the copy matches
+// the press kit's "The demo run" so the two pages never disagree. The draft and
+// leave-behind screens are mostly empty frame around a small central menu, so
+// the homepage uses 800x450 crops of that menu (public/assets/home/):
+//   ffmpeg -i press-squad-draft.webp -vf crop=800:450:560:320 -c:v libwebp -lossless 1 -compression_level 6 loop-draft.webp
+//   ffmpeg -i press-leave-behind.webp -vf crop=800:450:560:315 -c:v libwebp -lossless 1 -compression_level 6 loop-leave-behind.webp
+const loop = [
+    {
+        title: 'Draft your squad',
+        text: 'Pick six units from a pool of twelve - Knights, Archers, Assassins and Maulers - with the first fight’s opposition shown up front.',
+        src: '/assets/home/loop-draft.webp',
+        width: 800,
+        height: 450,
+        alt: 'The draft screen reading "Squad: 6 / 6" above a grid of twelve unit choices, with a header noting the first fight has three enemies: 1 Knight, 1 Archer, 1 Mauler',
+    },
+    {
+        title: 'Fight on the grid',
+        text: 'Turn-based tactics with facing and positional damage. Every attack shows its damage, and whether it draws a counter, before you commit.',
+        src: '/assets/press/press-damage-preview.webp',
+        width: 1920,
+        height: 1080,
+        alt: 'Attack confirmation showing 32 damage, the target dropping from 45 to 13 HP, and "No counter", above a prompt reading "Click again to confirm"',
+    },
+    {
+        title: 'Leave one behind',
+        text: 'Between fights, one unit stays to hold the relay. Your force shrinks from six to four while the enemy grows from three to five.',
+        src: '/assets/home/loop-leave-behind.webp',
+        width: 800,
+        height: 450,
+        alt: 'A screen reading "The signal grows weak - Leave a Unit Behind to hold the connection", listing six surviving units, noting the next fight has four enemies, and "Leaving behind: 0 / 1"',
+    },
+];
 ---
 <BaseLayout
         title="Veilkeeper | Tactical RPG by PocketLore Studios"
-        description="Veilkeeper is a tactical RPG where your army shrinks the deeper you push. Build your shard, extend relay lines, and survive the cost of the rift."
+        description="Veilkeeper is a tactical RPG where your army shrinks the deeper you push. Draft a squad, fight, and choose who stays behind. Free alpha on itch.io for Windows and Linux."
 >
   <section class="hero">
     {/* Decorative: the hero's meaning is carried by the heading and logo beside it,
@@ -37,16 +71,15 @@ const latest = devlogs[0];
     </picture>
     <div class="container">
       <div class="hero-content">
-        <div class="eyebrow">Early development • Tactical RPG</div>
+        <div class="eyebrow">Public alpha • Tactical RPG</div>
 
         <h1>Your army shrinks the deeper you push.</h1>
         <p class="lead">
-          Build a world worth returning to.
+          Choose who stays behind. How far can you go before the connection breaks?
         </p>
         <p class="sublead">
-          Veilkeeper is a tactical RPG about dangerous expeditions, relay networks,
-          and the cost of pushing farther into the rift. Prove the tactics. Grow the shard.
-          Let the community layer come later.
+          Draft a squad, fight on a tactical grid, and after every battle leave one unit behind
+          to hold the relay. Each fight is bigger than the last - and your army only gets smaller.
         </p>
 
         <div class="actions">
@@ -61,61 +94,56 @@ const latest = devlogs[0];
           <a class="button button--discord" href={SITE.social.discord} target="_blank" rel="noopener noreferrer">
             Join Discord
           </a>
-
-          <a class="button button--secondary" href="#roadmap">
-            View roadmap
-          </a>
         </div>
 
+        <p class="availability">
+          Free on itch.io · Windows and Linux · Mouse, keyboard, or controller
+        </p>
+
         <p class="notice">
-          Veilkeeper is in active early development. Visuals, systems, and features shown here are
-          directional and may change as the tactical core gets proven.
+          Veilkeeper is in active early development. The alpha is the tactical combat layer;
+          art is placeholder and everything shown may change.
         </p>
       </div>
     </div>
   </section>
 
+  {/* id="features" rather than "gameplay": this replaced the old feature-card
+      section, and /#features links are already out in the wild. */}
   <section id="features" class="section">
     <div class="container">
       <div class="section-heading">
-        <h2>Core pillars</h2>
+        <h2>How a run plays</h2>
         <p>
-          The project is being built from the combat layer outward. Each new layer has to earn
-          the right to exist by reinforcing the one beneath it.
+          The alpha is a short expedition: three fights, about five minutes, and one hard
+          choice between each of them.
         </p>
       </div>
 
-      <div class="feature-grid">
-        <article class="card surface">
-          <h3>Tactical combat first</h3>
-          <p>
-            Tight positional play on a readable battlefield comes before spectacle,
-            stream tools, or long-term progression systems.
-          </p>
-        </article>
+      <ol class="loop-steps">
+        {loop.map((step, index) => (
+          <li class="card surface loop-step">
+            <img src={step.src} alt={step.alt} width={step.width} height={step.height} loading="lazy">
+            <div class="loop-step-body">
+              <span class="phase-kicker">Step {index + 1}</span>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
 
-        <article class="card surface">
-          <h3>Living home shard</h3>
-          <p>
-            Build, improve, and shape the place your people choose to call home.
-          </p>
-        </article>
+      <p class="loop-note">
+        Screens from the v0.1 alpha. Unit and terrain artwork is placeholder.
+      </p>
 
-        <article class="card surface">
-          <h3>Relay-based campaigns</h3>
-          <p>
-            Extend your reach through dangerous territory, hold the chain together,
-            and decide which nodes are worth defending.
-          </p>
-        </article>
-
-        <article class="card surface">
-          <h3>Community layer</h3>
-          <p>
-            Viewer characters, stream events, and shared involvement are planned as an
-            additive layer rather than a requirement.
-          </p>
-        </article>
+      <div class="actions loop-actions">
+        <a class="button button--primary" href={SITE.itchUrl} target="_blank" rel="noopener noreferrer">
+          Play the free alpha
+        </a>
+        <a class="button button--secondary" href="/press/#screenshots">
+          More screenshots
+        </a>
       </div>
     </div>
   </section>
@@ -154,84 +182,16 @@ const latest = devlogs[0];
     </div>
   </section>
 
-  <section id="current-layer" class="section section--tight">
-    <div class="container">
-      <div class="status-grid">
-        <div class="status-main">
-          <div class="status-copy">
-            <h2>Current layer</h2>
-            <p>
-              Veilkeeper is being built in layers. Each layer must stand on its own
-              before the next one is allowed to lean on it.
-            </p>
-          </div>
-
-          <div class="status-card surface">
-            <div class="status-list">
-              <div class="status-row">
-                <div>
-                  <div class="status-name">Combat core</div>
-                  <div class="text-muted">
-                    Grid combat, unit roles, and baseline turn flow
-                  </div>
-                </div>
-                <div class="status-tag tag--current">In Implementation</div>
-              </div>
-
-              <div class="status-row">
-                <div>
-                  <div class="status-name">Army attrition loop</div>
-                  <div class="text-muted">
-                    Relay pressure, losses, and expedition tension
-                  </div>
-                </div>
-                <div class="status-tag tag--iterating">Playable Prototype</div>
-              </div>
-
-              <div class="status-row">
-                <div>
-                  <div class="status-name">Home shard systems</div>
-                  <div class="text-muted">
-                    Persistent base growth and hero housing
-                  </div>
-                </div>
-                <div class="status-tag tag--planned">Planned Layer</div>
-              </div>
-
-              <div class="status-row">
-                <div>
-                  <div class="status-name">Stream integration</div>
-                  <div class="text-muted">
-                    Viewer characters, events, and shared shards
-                  </div>
-                </div>
-                <div class="status-tag tag--planned">Future Layer</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <aside class="status-card surface status-aside">
-          <h3>What this means</h3>
-          <ul class="mini-list">
-            <li>The tactics must be fun before anything else exists.</li>
-            <li>The shard only grows once combat proves itself.</li>
-            <li>Community features layer on top - never replace gameplay.</li>
-            <li>Each phase reinforces the one before it.</li>
-          </ul>
-        </aside>
-      </div>
-    </div>
-  </section>
-
+  {/* Replaces three overlapping sections (core pillars, current layer, roadmap)
+      that each restated the same four layers. */}
   <section id="roadmap" class="section">
     <div class="container">
       <div class="section-heading">
-        <h2>Development roadmap</h2>
+        <h2>Built in layers</h2>
         <p>
-          Veilkeeper grows in layers: first the tactical combat, then the shard,
-          then the wider campaign structure, and finally the community layer that
-          sits on top of the game instead of replacing it.
+          Veilkeeper grows from the combat outward. Each layer has to stand on its own before
+          the next is allowed to lean on it, and community features sit on top of the game -
+          they never replace it.
         </p>
       </div>
 
@@ -242,13 +202,13 @@ const latest = devlogs[0];
             <h3 class="phase-title">The Expedition</h3>
           </div>
           <div class="phase-meta">
-            <div class="phase-tag">Tactical Combat Layer</div>
-            <div class="phase-status">Current</div>
+            <div class="phase-tag">Tactical combat</div>
+            <div class="status-tag tag--current">Playable now</div>
           </div>
           <ul class="phase-list">
-            <li>Tactical combat</li>
-            <li>Unit types</li>
-            <li>Abilities and readable role identity</li>
+            <li>Grid combat with facing and positional damage across four unit roles</li>
+            <li>The shrinking army: one unit left behind to hold the relay after every fight</li>
+            <li>Mouse, keyboard, and controller support</li>
           </ul>
         </article>
 
@@ -258,11 +218,11 @@ const latest = devlogs[0];
             <h3 class="phase-title">The Shard</h3>
           </div>
           <div class="phase-meta">
-            <div class="phase-tag">Home Base Layer</div>
+            <div class="phase-tag">Home base</div>
             <div class="phase-status">Planned</div>
           </div>
           <ul class="phase-list">
-            <li>Home base growth</li>
+            <li>A settlement you build and return to, which keeps moving while you are away</li>
             <li>Hero housing</li>
             <li>Cosmetic and systemic upgrades</li>
           </ul>
@@ -274,12 +234,12 @@ const latest = devlogs[0];
             <h3 class="phase-title">The Campaign</h3>
           </div>
           <div class="phase-meta">
-            <div class="phase-tag">Rift Campaign Layer</div>
+            <div class="phase-tag">Rift campaign</div>
             <div class="phase-status">Planned</div>
           </div>
           <ul class="phase-list">
-            <li>Relay networks</li>
-            <li>Node defense</li>
+            <li>Relay networks stretched across the rift</li>
+            <li>Node defense - deciding which links are worth holding</li>
             <li>Strategic pressure across the rift map</li>
           </ul>
         </article>
@@ -290,13 +250,13 @@ const latest = devlogs[0];
             <h3 class="phase-title">The Community</h3>
           </div>
           <div class="phase-meta">
-            <div class="phase-tag">Stream Integration Layer</div>
+            <div class="phase-tag">Stream integration</div>
             <div class="phase-status">Future</div>
           </div>
           <ul class="phase-list">
-            <li>Viewer characters</li>
-            <li>Stream events</li>
+            <li>Viewer characters and stream events</li>
             <li>Community shards and audience participation</li>
+            <li>Optional by design - Veilkeeper stays fully playable offline</li>
           </ul>
         </article>
       </div>
@@ -319,27 +279,19 @@ const latest = devlogs[0];
       </div>
 
       <div class="panel surface">
-        <h3>Find the project</h3>
+        <h3>Follow the project</h3>
         <p>
-          Follow development, track public progress, and keep up with updates as the tactical core
-          takes shape.
+          Play the alpha, then tell us what worked and what did not - feedback from these early
+          builds shapes what comes next.
         </p>
 
         <div class="direct-links">
-          <a class="link-row" href={SITE.url} target="_blank" rel="noopener noreferrer">
+          <a class="link-row" href="/feedback/">
             <div>
-              <strong>Official site</strong>
-              <span>Project homepage and updates</span>
+              <strong>Send feedback</strong>
+              <span>Bugs, balance notes, and first impressions</span>
             </div>
-            <span>↗</span>
-          </a>
-
-          <a class="link-row" href={SITE.social.bluesky} target="_blank" rel="noopener noreferrer">
-            <div>
-              <strong>Bluesky</strong>
-              <span>Short-form development posts</span>
-            </div>
-            <span>↗</span>
+            <span aria-hidden="true">→</span>
           </a>
 
           <a class="link-row" href={SITE.social.discord} target="_blank" rel="noopener noreferrer">
@@ -347,7 +299,15 @@ const latest = devlogs[0];
               <strong>Discord</strong>
               <span>Community and project discussion</span>
             </div>
-            <span>↗</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+
+          <a class="link-row" href={SITE.social.bluesky} target="_blank" rel="noopener noreferrer">
+            <div>
+              <strong>Bluesky</strong>
+              <span>Short-form development posts</span>
+            </div>
+            <span aria-hidden="true">↗</span>
           </a>
         </div>
       </div>
