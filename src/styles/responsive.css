@@ -8,6 +8,14 @@
         grid-template-columns: 1fr;
     }
 
+    .unit-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .feature-grid--3 {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
     /* Three 16:9 screenshots are unreadable at a third of a tablet width. */
     .loop-steps {
         grid-template-columns: minmax(0, 1fr);
@@ -110,6 +118,10 @@
 }
 
 @media (max-width: 640px) {
+    .unit-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
     /* Too narrow for label, value and link on one line: stack them, and drop
        the separator dot that would otherwise dangle at a line end. */
     .current-focus {

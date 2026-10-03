@@ -70,6 +70,7 @@ smoke:
     test -f dist/feedback/index.html
     test -f dist/press/index.html
     test -f dist/roadmap/index.html
+    test -f dist/gameplay/index.html
     test -f dist/rss.xml
     test -f dist/devlog/post.html
     test -f dist/.well-known/security.txt
