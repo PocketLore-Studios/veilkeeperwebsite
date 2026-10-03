@@ -320,7 +320,9 @@
 
 .status-update {
     display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+    /* The image column matches .status-update-image's max-width; a fractional
+       column outgrew it and left a gap between image and text. */
+    grid-template-columns: minmax(0, 420px) minmax(280px, 1fr);
     gap: var(--space-11);
     align-items: center;
     padding: var(--space-11);
