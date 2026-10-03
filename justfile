@@ -47,9 +47,16 @@ clean:
 
 # ── Quality gates ───────────────────────────────────────────
 
-# Type-check .astro/.ts files and validate content frontmatter
+# Type-check .astro/.ts files, validate content frontmatter, and type-check the
+# Worker (its own tsconfig: it targets workerd, not the DOM)
 check:
     npx astro check
+    npx tsc -p worker
+
+# Feedback Worker tests: request validation and delivery failures, with
+# Turnstile and Resend stubbed (Node's built-in runner, no network)
+test-worker:
+    node --test worker/index.test.ts
 
 # Production build (also validates the devlog content schema)
 build:
@@ -81,7 +88,7 @@ smoke:
     @echo "smoke OK: all routes present, $(ls src/content/devlog/*.md | wc -l) devlog pages built"
 
 # Full pipeline as CI runs it
-ci: install check build smoke
+ci: install check test-worker build smoke
 
 # ── Deployment ──────────────────────────────────────────────
 
