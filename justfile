@@ -73,6 +73,7 @@ smoke:
     test -f dist/gameplay/index.html
     test -f dist/rss.xml
     test -f dist/devlog/post.html
+    test -f dist/devlog/post-redirect.js
     test -f dist/.well-known/security.txt
     test -f dist/favicon.png
     @ls dist/_astro/*.css >/dev/null || { echo "no hashed CSS bundle in dist/_astro"; exit 1; }
@@ -81,6 +82,8 @@ smoke:
     test -f dist/robots.txt
     test -f dist/_headers
     test -f dist/_redirects
+    @! grep -rlE '<script( type="module")?>|<style[ >]| style="' --include=*.html dist \
+        || { echo "inline script/style in the pages above - blocked by the CSP in public/_headers"; exit 1; }
     @steam=$(grep -o 'store\.steampowered\.com/app/[0-9]*' src/lib/site.ts | head -1); \
         grep -q "$steam" dist/_redirects \
         || { echo "_redirects /play target does not match SITE.steamUrl ($steam)"; exit 1; }

@@ -5,10 +5,8 @@
     <meta charset="utf-8">
     <title>Devlog | Veilkeeper</title>
     <meta name="robots" content="noindex">
-    <script>
-        var slug = new URLSearchParams(location.search).get('slug');
-        location.replace(slug ? '/devlog/' + encodeURIComponent(slug) + '/' : '/devlog/');
-    </script>
+    <!-- External rather than inline so the site CSP (script-src 'self') allows it. -->
+    <script src="/devlog/post-redirect.js"></script>
     <noscript><meta http-equiv="refresh" content="0; url=/devlog/"></noscript>
 </head>
 <body></body>
