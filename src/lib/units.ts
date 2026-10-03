@@ -8,7 +8,7 @@ export type UnitRange = 'Melee' | 'Ranged';
 
 export interface Unit {
     name: string;
-    /** Headline role, e.g. "Frontline Anchor". */
+    /** Headline role, e.g. "Frontline anchor" - sentence case, like every label. */
     role: string;
     /** One-word battlefield class for the card's stat row. */
     position: string;
@@ -19,7 +19,7 @@ export interface Unit {
 export const UNITS: Unit[] = [
     {
         name: 'Knight',
-        role: 'Frontline Anchor',
+        role: 'Frontline anchor',
         position: 'Frontline',
         range: 'Melee',
         summary:
@@ -27,7 +27,7 @@ export const UNITS: Unit[] = [
     },
     {
         name: 'Archer',
-        role: 'Ranged Pressure',
+        role: 'Ranged pressure',
         position: 'Backline',
         range: 'Ranged',
         summary:
@@ -35,7 +35,7 @@ export const UNITS: Unit[] = [
     },
     {
         name: 'Assassin',
-        role: 'Positional Striker',
+        role: 'Positional striker',
         position: 'Flanker',
         range: 'Melee',
         summary:
@@ -43,7 +43,7 @@ export const UNITS: Unit[] = [
     },
     {
         name: 'Mauler',
-        role: 'Armor Breaker',
+        role: 'Armor breaker',
         position: 'Bruiser',
         range: 'Melee',
         summary:

@@ -44,10 +44,8 @@
     border-radius: var(--radius-pill);
     background: var(--glass-pill);
     color: var(--ember);
-    font-size: var(--font-size-meta);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
 }
 
 /* The one paragraph under the headline: a step up from body text, but not
@@ -70,7 +68,7 @@
 .notice {
     max-width: 780px;
     color: var(--text-soft);
-    font-size: 0.93rem;
+    font-size: var(--font-size-sm);
 }
 
 .feature-grid {
@@ -112,7 +110,7 @@
 .gameplay-figure figcaption {
     margin-top: var(--space-4);
     color: var(--text-faint);
-    font-size: var(--font-size-meta);
+    font-size: var(--font-size-sm);
     text-align: center;
 }
 
@@ -134,10 +132,8 @@
 .card .unit-role {
     margin: 0 0 var(--space-5);
     color: var(--ember);
-    font-size: var(--font-size-label);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
 }
 
 /* Pinned to the card bottom so the rows line up across uneven summaries. */
@@ -154,14 +150,12 @@
     gap: var(--space-4);
     padding-top: var(--space-2);
     border-top: 1px solid var(--border-subtle);
-    font-size: var(--font-size-meta);
+    font-size: var(--font-size-sm);
 }
 
 .unit-stats dt {
     color: var(--text-faint);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-weight: 400;
 }
 
 .unit-stats dd {
@@ -178,7 +172,7 @@
 .availability {
     margin: 0 0 var(--space-6);
     color: var(--text-bright);
-    font-size: var(--font-size-body-md);
+    font-size: var(--font-size-body);
     font-weight: 600;
 }
 
@@ -221,7 +215,7 @@
     max-width: var(--measure);
     margin: var(--space-7) 0 0;
     color: var(--text-soft);
-    font-size: var(--font-size-meta);
+    font-size: var(--font-size-sm);
 }
 
 .loop-actions {
@@ -242,15 +236,13 @@
     gap: var(--space-2) var(--space-4);
     margin: 0;
     padding: var(--space-6) 0;
-    font-size: var(--font-size-body-md);
+    font-size: var(--font-size-body);
 }
 
 .current-focus-label {
     color: var(--ember);
-    font-size: var(--font-size-label);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
 }
 
 .current-focus-sep {
@@ -394,15 +386,6 @@
     min-width: 0;
 }
 
-.status-update-kicker {
-    margin: 0 0 var(--space-4);
-    color: var(--ember);
-    font-size: var(--font-size-meta);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
 .status-update-caption {
     margin: 0;
     line-height: 1.7;
@@ -460,10 +443,8 @@
 
 .phase-kicker {
     color: var(--text-faint);
-    font-size: var(--font-size-label);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
 }
 
 .phase-title {
@@ -487,7 +468,7 @@
     border-radius: var(--radius-pill);
     background: var(--surface-overlay-strong);
     color: var(--text-bright);
-    font-size: 0.84rem;
+    font-size: var(--font-size-sm);
 }
 
 .phase-list {
@@ -542,7 +523,7 @@
     margin-bottom: var(--space-7);
     color: var(--muted);
     text-align: center;
-    font-size: var(--font-size-body-sm);
+    font-size: var(--font-size-sm);
 }
 
 .devlog-entry h3 {
@@ -681,7 +662,7 @@
 }
 
 .footer-follow {
-    font-size: 0.9rem;
+    font-size: var(--font-size-sm);
     opacity: 0.65;
 }
 
@@ -733,7 +714,7 @@
 }
 
 .back-to-top {
-    font-size: 0.85rem;
+    font-size: var(--font-size-sm);
     opacity: 0.6;
     text-decoration: none;
     transition: opacity 0.2s ease;
@@ -907,7 +888,7 @@
     margin-top: var(--space-4);
     text-align: center;
     color: var(--muted);
-    font-size: var(--font-size-body-sm);
+    font-size: var(--font-size-sm);
 }
 
 .lightbox-close,
