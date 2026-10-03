@@ -1,49 +1,88 @@
 ---
 import type { DevlogEntry } from '../lib/devlog';
+import { getMediaSize } from '../lib/media';
 
 interface Props {
     entry: DevlogEntry;
     /** Wrap the media in a navigational link to this URL (homepage/archive thumbnails). */
     href?: string;
-    /** Link the image to its full-size file; Lightbox.astro upgrades it to a modal viewer. */
+    /** Link the media to its full-size file; Lightbox.astro upgrades it to a modal viewer. */
     lightbox?: boolean;
     class?: string;
 }
 
 const { entry, href, lightbox = false, class: className } = Astro.props;
 const { label, title, image, video, alt } = entry.data;
+
+// Every variant sits in a fixed 16:9 or 1:1 frame (see src/lib/media.ts), so
+// its space is reserved before the media loads; width/height give the browser
+// the true intrinsic size as well.
+const { width, height, frame } = await getMediaSize(image);
+const frameClass = ['media-frame', `media-frame--${frame}`];
 ---
 {video ? (
     // No `autoplay` attribute: the script below starts playback only when the
-    // visitor has not asked for reduced motion, so without JS or with reduced
-    // motion the poster frame is what shows. The toggle is a sibling of the
-    // link, not a child - a <button> inside an <a> is invalid and unreachable.
-    <div class:list={['video-frame', className]}>
+    // video is near the viewport and the visitor has not asked for reduced
+    // motion, so without JS or with reduced motion the poster frame shows. The
+    // toggle is a sibling of the link, not a child - a <button> inside an <a>
+    // is invalid and unreachable.
+    <div class:list={['video-frame', ...frameClass, className]}>
         {href ? (
             <a href={href} class="media-link" aria-label={`Read ${label} - ${title}`}>
-                <video muted loop playsinline preload="metadata" src={video} poster={image} aria-label={alt}></video>
+                <video muted loop playsinline preload="metadata" src={video} poster={image} width={width} height={height} aria-label={alt}></video>
+            </a>
+        ) : lightbox ? (
+            <a href={video} class="media-link lightbox-link" data-lightbox data-lightbox-video>
+                <video muted loop playsinline preload="metadata" src={video} poster={image} width={width} height={height} aria-label={alt}></video>
             </a>
         ) : (
-            <video muted loop playsinline preload="metadata" src={video} poster={image} aria-label={alt}></video>
+            <video muted loop playsinline preload="metadata" src={video} poster={image} width={width} height={height} aria-label={alt}></video>
         )}
         <button type="button" class="video-toggle" aria-label="Play video" hidden>
             <span class="video-toggle-icon" aria-hidden="true"></span>
         </button>
     </div>
 ) : href ? (
-    <a href={href} class:list={['media-link', className]} aria-label={`Read ${label} - ${title}`}>
-        <img src={image} alt={alt} loading="lazy">
+    <a href={href} class:list={['media-link', ...frameClass, className]} aria-label={`Read ${label} - ${title}`}>
+        <img src={image} alt={alt} width={width} height={height} loading="lazy">
     </a>
 ) : lightbox ? (
-    <a href={image} class:list={['media-link', 'lightbox-link', className]} data-lightbox>
-        <img src={image} alt={alt} loading="lazy">
+    <a href={image} class:list={['media-link', 'lightbox-link', ...frameClass, className]} data-lightbox>
+        <img src={image} alt={alt} width={width} height={height} loading="lazy">
     </a>
 ) : (
-    <img class={className} src={image} alt={alt} loading="lazy">
+    <div class:list={[...frameClass, className]}>
+        <img src={image} alt={alt} width={width} height={height} loading="lazy">
+    </div>
 )}
 
 <script>
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    // Videos the visitor paused with the toggle stay paused when they scroll
+    // back into view; only automatic pauses (offscreen) are undone.
+    const pausedByVisitor = new WeakSet<HTMLVideoElement>();
+
+    // play() rejects if the browser blocks it; the poster and toggle remain.
+    const play = (video: HTMLVideoElement) => video.play().catch(() => {});
+    const maybeAutoplay = (video: HTMLVideoElement) => {
+        if (!reducedMotion.matches && !pausedByVisitor.has(video)) play(video);
+    };
+
+    // Play only while on (or nearly on) screen - the archive alone has four
+    // looping videos, and nobody needs the offscreen ones decoding.
+    const observer =
+        'IntersectionObserver' in window
+            ? new IntersectionObserver(
+                  entries => {
+                      for (const entry of entries) {
+                          const video = entry.target.querySelector('video')!;
+                          if (entry.isIntersecting) maybeAutoplay(video);
+                          else video.pause();
+                      }
+                  },
+                  { rootMargin: '200px 0px' },
+              )
+            : null;
 
     document.querySelectorAll<HTMLElement>('.video-frame').forEach(frame => {
         const video = frame.querySelector('video')!;
@@ -54,16 +93,22 @@ const { label, title, image, video, alt } = entry.data;
             toggle.dataset.state = video.paused ? 'paused' : 'playing';
         };
 
-        // play() rejects if the browser blocks it; the poster and toggle remain.
-        const play = () => video.play().catch(() => {});
-
         video.addEventListener('play', sync);
         video.addEventListener('pause', sync);
-        toggle.addEventListener('click', () => (video.paused ? play() : video.pause()));
+        toggle.addEventListener('click', () => {
+            if (video.paused) {
+                pausedByVisitor.delete(video);
+                play(video);
+            } else {
+                pausedByVisitor.add(video);
+                video.pause();
+            }
+        });
 
         toggle.hidden = false;
         sync();
-        if (!reducedMotion.matches) play();
+        if (observer) observer.observe(frame);
+        else maybeAutoplay(video);
     });
 
     // Turning reduced motion on mid-visit stops everything; turning it off does

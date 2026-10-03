@@ -1,11 +1,13 @@
 ---
-// Full-size image viewer for devlog post images. Triggers are `a[data-lightbox]`
-// links (see DevlogMedia.astro); without JS they navigate to the image file instead.
+// Full-size viewer for devlog post media. Triggers are `a[data-lightbox]` links
+// (see DevlogMedia.astro); without JS they navigate to the image or video file
+// instead. Triggers marked `data-lightbox-video` open in the <video> element.
 ---
-<dialog class="lightbox" aria-label="Full-size image">
-    <button class="lightbox-close" type="button" aria-label="Close full-size image">✕</button>
+<dialog class="lightbox" aria-label="Full-size media">
+    <button class="lightbox-close" type="button" aria-label="Close full-size view">✕</button>
     <figure class="lightbox-figure">
         <img class="lightbox-image" alt="">
+        <video class="lightbox-image lightbox-video" muted loop playsinline controls hidden></video>
         <figcaption class="lightbox-caption"></figcaption>
     </figure>
     <div class="lightbox-nav" hidden>
@@ -18,7 +20,9 @@
     const dialog = document.querySelector<HTMLDialogElement>('.lightbox');
 
     if (dialog && typeof dialog.showModal === 'function') {
-        const image = dialog.querySelector<HTMLImageElement>('.lightbox-image')!;
+        const image = dialog.querySelector<HTMLImageElement>('img.lightbox-image')!;
+        const video = dialog.querySelector<HTMLVideoElement>('.lightbox-video')!;
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
         const caption = dialog.querySelector('.lightbox-caption')!;
         const closeButton = dialog.querySelector<HTMLButtonElement>('.lightbox-close')!;
         const nav = dialog.querySelector<HTMLElement>('.lightbox-nav')!;
@@ -40,13 +44,34 @@
         const triggers = [...document.querySelectorAll<HTMLAnchorElement>('a[data-lightbox]')];
         let current = -1;
 
+        // Pause only - resetting the source (removeAttribute + load) races the
+        // next open's play() and aborts it. A paused video stops buffering.
+        const stopVideo = () => video.pause();
+
         const show = (index: number) => {
             current = (index + triggers.length) % triggers.length;
             const trigger = triggers[current];
-            const alt = trigger.querySelector('img')?.alt ?? '';
-            image.src = trigger.href;
-            image.alt = alt;
+            const pageVideo = trigger.querySelector('video');
+            const alt = trigger.querySelector('img')?.alt ?? pageVideo?.getAttribute('aria-label') ?? '';
             caption.textContent = alt;
+
+            if (trigger.hasAttribute('data-lightbox-video')) {
+                image.hidden = true;
+                image.removeAttribute('src');
+                video.hidden = false;
+                video.poster = pageVideo?.poster ?? '';
+                video.setAttribute('aria-label', alt);
+                if (video.src !== trigger.href) video.src = trigger.href;
+                video.currentTime = 0;
+                // Native controls are always there; autoplay only without reduced motion.
+                if (!reducedMotion.matches) video.play().catch(() => {});
+            } else {
+                stopVideo();
+                video.hidden = true;
+                image.hidden = false;
+                image.src = trigger.href;
+                image.alt = alt;
+            }
         };
 
         triggers.forEach((trigger, index) => {
@@ -59,14 +84,25 @@
             });
         });
 
-        closeButton.addEventListener('click', () => dialog.close());
+        // Stop the video on every close path directly rather than only from the
+        // 'close' event, so a playing video can never keep running (and
+        // downloading) behind a closed dialog.
+        const closeDialog = () => {
+            stopVideo();
+            dialog.close();
+        };
+
+        closeButton.addEventListener('click', closeDialog);
         prevButton.addEventListener('click', () => show(current - 1));
         nextButton.addEventListener('click', () => show(current + 1));
 
         // Clicks on the backdrop are dispatched to the dialog element itself.
         dialog.addEventListener('click', event => {
-            if (event.target === dialog) dialog.close();
+            if (event.target === dialog) closeDialog();
         });
+
+        // Escape: the native dialog closes itself after this event.
+        dialog.addEventListener('cancel', stopVideo);
 
         dialog.addEventListener('keydown', event => {
             if (triggers.length < 2) return;
@@ -78,6 +114,9 @@
 
         // Native <dialog> handles Escape; return focus to the image that opened it.
         dialog.addEventListener('close', () => {
+            // Guarded: the event is queued, so a late one must not pause a video
+            // the dialog has since been reopened to play.
+            if (!dialog.open) stopVideo();
             triggers[current]?.focus();
         });
     }
