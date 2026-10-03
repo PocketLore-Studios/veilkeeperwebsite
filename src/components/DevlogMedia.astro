@@ -13,29 +13,27 @@ interface Props {
 const { entry, href, lightbox = false, class: className } = Astro.props;
 const { label, title, image, video, alt } = entry.data;
 ---
-{href ? (
-    <a href={href} class:list={['media-link', className]} aria-label={`Read ${label} - ${title}`}>
-        {video ? (
-            <video
-                    autoplay muted loop playsinline
-                    preload="metadata"
-                    src={video}
-                    poster={image}
-                    aria-label={alt}
-            ></video>
+{video ? (
+    // No `autoplay` attribute: the script below starts playback only when the
+    // visitor has not asked for reduced motion, so without JS or with reduced
+    // motion the poster frame is what shows. The toggle is a sibling of the
+    // link, not a child - a <button> inside an <a> is invalid and unreachable.
+    <div class:list={['video-frame', className]}>
+        {href ? (
+            <a href={href} class="media-link" aria-label={`Read ${label} - ${title}`}>
+                <video muted loop playsinline preload="metadata" src={video} poster={image} aria-label={alt}></video>
+            </a>
         ) : (
-            <img src={image} alt={alt} loading="lazy">
+            <video muted loop playsinline preload="metadata" src={video} poster={image} aria-label={alt}></video>
         )}
+        <button type="button" class="video-toggle" aria-label="Play video" hidden>
+            <span class="video-toggle-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+) : href ? (
+    <a href={href} class:list={['media-link', className]} aria-label={`Read ${label} - ${title}`}>
+        <img src={image} alt={alt} loading="lazy">
     </a>
-) : video ? (
-    <video
-            class={className}
-            autoplay muted loop playsinline
-            preload="metadata"
-            src={video}
-            poster={image}
-            aria-label={alt}
-    ></video>
 ) : lightbox ? (
     <a href={image} class:list={['media-link', 'lightbox-link', className]} data-lightbox>
         <img src={image} alt={alt} loading="lazy">
@@ -43,3 +41,35 @@ const { label, title, image, video, alt } = entry.data;
 ) : (
     <img class={className} src={image} alt={alt} loading="lazy">
 )}
+
+<script>
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    document.querySelectorAll<HTMLElement>('.video-frame').forEach(frame => {
+        const video = frame.querySelector('video')!;
+        const toggle = frame.querySelector<HTMLButtonElement>('.video-toggle')!;
+
+        const sync = () => {
+            toggle.setAttribute('aria-label', video.paused ? 'Play video' : 'Pause video');
+            toggle.dataset.state = video.paused ? 'paused' : 'playing';
+        };
+
+        // play() rejects if the browser blocks it; the poster and toggle remain.
+        const play = () => video.play().catch(() => {});
+
+        video.addEventListener('play', sync);
+        video.addEventListener('pause', sync);
+        toggle.addEventListener('click', () => (video.paused ? play() : video.pause()));
+
+        toggle.hidden = false;
+        sync();
+        if (!reducedMotion.matches) play();
+    });
+
+    // Turning reduced motion on mid-visit stops everything; turning it off does
+    // not restart anything, since the visitor may have paused deliberately.
+    reducedMotion.addEventListener('change', () => {
+        if (!reducedMotion.matches) return;
+        document.querySelectorAll<HTMLVideoElement>('.video-frame video').forEach(video => video.pause());
+    });
+</script>

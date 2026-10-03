@@ -302,7 +302,10 @@
     margin: 0 0 var(--space-8);
 }
 
-.devlog-entry .media-link {
+/* Direct children only: a video's link sits inside .video-frame, which takes
+   the sizing so the pause toggle lines up with the video's corner. */
+.devlog-entry > .media-link,
+.devlog-entry > .video-frame {
     width: 100%;
     max-width: 360px;
     display: block;
@@ -350,8 +353,8 @@
     margin: 0 0 var(--space-11);
 }
 
-.devlog-post-media .media-link,
-.devlog-post-media video {
+.devlog-post-media > .media-link,
+.devlog-post-media > .video-frame {
     width: 100%;
     max-width: 480px;
     display: block;
@@ -528,6 +531,52 @@
 
 .lightbox-link {
     cursor: zoom-in;
+}
+
+/* Devlog video plus its pause/play toggle (DevlogMedia.astro). */
+.video-frame {
+    position: relative;
+    display: block;
+    border-radius: var(--radius-lg);
+}
+
+.video-frame > video {
+    width: 100%;
+    display: block;
+    border-radius: inherit;
+}
+
+.video-toggle {
+    position: absolute;
+    right: var(--space-4);
+    bottom: var(--space-4);
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    color: #fff;
+    background: var(--glass-topbar);
+    border: 1px solid var(--border-heavy);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.video-toggle:hover {
+    border-color: var(--veil-2);
+}
+
+/* CSS-drawn icons: a play triangle while paused, two bars while playing. */
+.video-toggle-icon {
+    width: 12px;
+    height: 12px;
+    background: currentColor;
+    clip-path: polygon(15% 0, 100% 50%, 15% 100%);
+}
+
+.video-toggle[data-state="playing"] .video-toggle-icon {
+    clip-path: none;
+    background: linear-gradient(to right, currentColor 0 35%, transparent 35% 65%, currentColor 65%);
 }
 
 @media (prefers-reduced-motion: no-preference) {
