@@ -65,6 +65,11 @@
     margin-bottom: var(--space-8);
 }
 
+/* Inline style attributes are blocked by the CSP, so variants live here. */
+.actions--center {
+    justify-content: center;
+}
+
 .notice {
     max-width: 780px;
     color: var(--text-soft);

@@ -1,6 +1,15 @@
 # Interpreted by Cloudflare Workers static assets (Pages-style _headers file).
 # https://developers.cloudflare.com/workers/static-assets/headers/
 
+# Content-Security-Policy: everything is self-hosted, so the only outside
+# origin is Cloudflare Turnstile on /feedback, which needs script-src and
+# frame-src (https://developers.cloudflare.com/turnstile/reference/content-security-policy/).
+# Its pre-clearance fetch goes to this site's own /cdn-cgi/, covered by
+# connect-src 'self'. No 'unsafe-inline' anywhere: Astro is configured to emit
+# scripts and CSS as files (astro.config.mjs), and inline <script> or style=""
+# in a page fails `just smoke`. Adding a third-party embed, analytics, or
+# font host means adding its origin here first.
+
 # Default (HTML, feeds, sitemap): always revalidate so pages never go stale
 # and never reference retired hashed assets. ETags make revalidation a 304.
 /*
@@ -8,6 +17,7 @@
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; img-src 'self'; font-src 'self'; media-src 'self'; connect-src 'self'; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
   Cache-Control: public, max-age=0, must-revalidate
 
 # Astro's content-hashed output (includes the bundled site CSS) - cache forever.
