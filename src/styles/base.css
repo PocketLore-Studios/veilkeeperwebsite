@@ -215,7 +215,9 @@ h1,
 .brand-title,
 .phase-title,
 .panel h3,
-.card h3 {
+.card h3,
+.about-statement h2,
+.roadmap-teaser h2 {
     font-family: 'Cinzel', serif;
 }
 

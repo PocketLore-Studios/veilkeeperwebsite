@@ -76,34 +76,24 @@ const loop = [
 
         <h1>Your army shrinks the deeper you push.</h1>
         <p class="lead">
-          Choose who stays behind. How far can you go before the connection breaks?
-        </p>
-        <p class="sublead">
-          Draft a squad, fight on a tactical grid, and after every battle leave one unit behind
-          to hold the relay. Each fight is bigger than the last - and your army only gets smaller.
+          Draft a squad, fight on a tactical grid, and after every battle choose one unit to
+          stay behind and hold the relay. Each fight is bigger than the last. How far can you
+          push before the connection breaks?
         </p>
 
+        {/* One filled action. Discord lives in "Follow the project" below. */}
         <div class="actions">
           <a class="button button--primary" href={SITE.itchUrl} target="_blank" rel="noopener noreferrer">
             Play the alpha
           </a>
 
-          <a class="button button--ember" href={SITE.steamUrl} target="_blank" rel="noopener noreferrer">
+          <a class="button button--secondary" href={SITE.steamUrl} target="_blank" rel="noopener noreferrer">
             Wishlist on Steam
-          </a>
-
-          <a class="button button--discord" href={SITE.social.discord} target="_blank" rel="noopener noreferrer">
-            Join Discord
           </a>
         </div>
 
         <p class="availability">
           Free on itch.io · Windows and Linux · Mouse, keyboard, or controller
-        </p>
-
-        <p class="notice">
-          Veilkeeper is in active early development. The alpha is the tactical combat layer;
-          art is placeholder and everything shown may change.
         </p>
       </div>
     </div>
@@ -142,8 +132,12 @@ const loop = [
         ))}
       </ol>
 
+      {/* The early-development notice moved here from the hero: it is about what
+          these screens show, so it sits beside them. */}
       <p class="loop-note">
-        Screens from the v0.1 alpha build - work in progress. Unit and terrain artwork is placeholder.
+        Screens from the v0.1 alpha build. Veilkeeper is in active early development: the alpha
+        is the tactical combat layer, unit and terrain art is placeholder, and everything shown
+        may change.
       </p>
 
       <div class="actions loop-actions">
@@ -194,8 +188,10 @@ const loop = [
 
   <section id="about" class="section">
     <div class="container">
-      <div class="panel surface about-panel">
-        <h3>What Veilkeeper is aiming for</h3>
+      {/* Deliberately unboxed: cards on this page mark discrete things (steps,
+          combat ideas, the latest update), and this is the game's thesis. */}
+      <div class="about-statement">
+        <h2>What Veilkeeper is aiming for</h2>
         <p>
           Veilkeeper is built around the tension between presence and absence. You build
           something, you leave, the world keeps moving, and the choices you made before leaving
@@ -249,9 +245,9 @@ const loop = [
       src/lib/roadmap.ts and render on /roadmap. */}
   <section id="roadmap" class="section">
     <div class="container">
-      <div class="panel surface roadmap-teaser">
+      <div class="roadmap-teaser">
         <div>
-          <h3>Where Veilkeeper is going</h3>
+          <h2>Where Veilkeeper is going</h2>
           <p>
             Veilkeeper is being built outward from its tactical core, toward the Home Shard, the
             Rift Campaign, and optional community systems.
