@@ -26,7 +26,7 @@ just factsheet  # re-render the press factsheet PDF (needs a browser; not in ci)
 
 The only unit tests are for the feedback Worker (`worker/index.test.ts`, Node's built-in runner, Turnstile/Resend stubbed via global fetch); otherwise `just ci` (check + test-worker + build + smoke) is the verification path. The Worker has its own `worker/tsconfig.json` (workerd globals via `@cloudflare/workers-types`) because the root tsconfig excludes `worker/`; its imports use explicit `.ts` extensions so Node can load them directly. GitHub Actions (`.github/workflows/ci.yml`) runs `just ci` on pushes/PRs as a check only. Deployment is handled by Cloudflare's Workers Builds git integration (configured in the Cloudflare dashboard: build command `npm run build`, deploy command `npx wrangler deploy`), which deploys on pushes to `main`. `just deploy` exists as a manual escape hatch but note the two are independent - Cloudflare deploys even if GitHub checks fail.
 
-Work happens on `development`; `main` is the release/PR target and auto-deploys via Cloudflare.
+Work happens on short-lived branches cut from `main` (`feature/...`, `content/...`, `ci/...` - the prefix follows the Conventional Commit type, see `just commit-help`) and lands via PR; `main` auto-deploys via Cloudflare, so merge one PR at a time and check its deploy.
 
 ## Architecture
 
