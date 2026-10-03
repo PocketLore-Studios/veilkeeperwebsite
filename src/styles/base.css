@@ -1,4 +1,8 @@
-/* Self-hosted variable fonts (latin subset) - licenses in /assets/fonts/OFL-*.txt */
+/* Cinzel is the display face: hero and page titles, section headings, roadmap
+   phase names, and the wordmark. Everything else - including card and panel
+   titles - is Raleway, so Cinzel always marks a major heading.
+
+   Self-hosted variable fonts (latin subset) - licenses in /assets/fonts/OFL-*.txt */
 @font-face {
     font-family: 'Cinzel';
     font-style: normal;
@@ -111,13 +115,11 @@
     --measure: 68ch;
 
     /* Typography */
-    --font-size-label: 0.78rem;
-    --font-size-meta: 0.82rem;
-    --font-size-body-sm: 0.92rem;
-    --font-size-body-md: 0.95rem;
-    --font-size-body-lg: 1.04rem;
-    --font-size-card-title: 1.05rem;
-    --font-size-panel-title: 1.12rem;
+    /* Three text sizes below the display headings (which use fluid clamps).
+       Steps closer than this read as the same size on screen. */
+    --font-size-sm: 0.875rem;     /* labels, meta, captions, footnotes */
+    --font-size-body: 1rem;       /* body copy and interface text */
+    --font-size-title: 1.125rem;  /* card, panel, and form-group titles */
 
     /* Motion */
     --transition-fast: 0.15s ease;
@@ -220,8 +222,6 @@ h1,
 .gameplay-subhead,
 .brand-title,
 .phase-title,
-.panel h3,
-.card h3,
 .about-statement h2,
 .roadmap-teaser h2 {
     font-family: 'Cinzel', serif;
