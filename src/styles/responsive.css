@@ -4,9 +4,14 @@
     }
 
     .status-update,
-    .status-grid,
     .grid-2 {
         grid-template-columns: 1fr;
+    }
+
+    /* Three 16:9 screenshots are unreadable at a third of a tablet width. */
+    .loop-steps {
+        grid-template-columns: minmax(0, 1fr);
+        max-width: 640px;
     }
 
     .hero {

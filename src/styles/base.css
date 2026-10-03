@@ -211,12 +211,10 @@ button:focus-visible {
 
 h1,
 .section-heading h2,
-.status-copy h2,
 .brand-title,
 .phase-title,
 .panel h3,
-.card h3,
-.status-aside h3 {
+.card h3 {
     font-family: 'Cinzel', serif;
 }
 
