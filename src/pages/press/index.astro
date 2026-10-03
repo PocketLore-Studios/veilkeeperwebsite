@@ -5,7 +5,7 @@ import { SITE } from '../../lib/site';
 // Kept deliberately vague where the project genuinely is vague. Commercial
 // release and price are unset, and "TBA" is the honest form -- the internal
 // design docs carry two different price figures, so publishing either would be
-// a guess. The public alpha date is separate and confirmed.
+// a guess. The public alpha is separate: it shipped on itch.io on August 20, 2026.
 //
 // Screenshots are lossless WebP converted from the cleaned 1920x1080 PNGs in
 // /promo/screenshots-1920x1080-new/ with:
@@ -63,14 +63,14 @@ const factsheet = [
     { label: 'Platforms', value: 'PC - Windows and Linux' },
     { label: 'Genre', value: 'Tactical RPG' },
     { label: 'Players', value: 'Single-player' },
-    { label: 'Status', value: 'Pre-alpha, in active development', tag: 'iterating', note: 'Current tactical combat milestone v0.1' },
-    { label: 'Public alpha', value: 'August 20, 2026', tag: 'planned', note: 'Releasing on itch.io; the Steam page is live for wishlists now' },
+    { label: 'Status', value: 'Public alpha, in active development', tag: 'iterating', note: 'Current build v0.1.0.1 - tactical combat milestone' },
+    { label: 'Public alpha', value: 'Available now', tag: 'current', note: 'Free on itch.io since August 20, 2026; the Steam page is open for wishlists' },
     { label: 'Steam page', value: 'store.steampowered.com/app/4515130', href: SITE.steamUrl },
     { label: 'Commercial release', value: 'TBA' },
     { label: 'Price', value: 'TBA' },
 ];
 
-const lastUpdated = 'August 2026';
+const lastUpdated = 'October 2026';
 ---
 <BaseLayout
         title="Press Kit | Veilkeeper"
@@ -113,8 +113,8 @@ const lastUpdated = 'August 2026';
                     >
                     <figcaption>
                         Damage, the health it leaves behind, and whether the target can counter - all
-                        shown before the attack is committed, in the current Veilkeeper pre-alpha
-                        build. Unit and terrain artwork is placeholder.
+                        shown before the attack is committed, captured from the Veilkeeper press
+                        build shortly before the v0.1 alpha. Unit and terrain artwork is placeholder.
                     </figcaption>
                 </figure>
 
@@ -256,7 +256,7 @@ const lastUpdated = 'August 2026';
                 <div class="panel surface">
                     <h3>The demo run</h3>
                     <p>
-                        The current press and convention build is a scripted three-fight run that takes
+                        The press build shown at Play NYC 2026 is a scripted three-fight run that takes
                         about five minutes. You draft six units from a pool of twelve, then choose
                         exactly one unit to leave behind between each fight. Your force shrinks from six
                         to five to four while the opposition grows from three to four to five.
@@ -346,11 +346,12 @@ const lastUpdated = 'August 2026';
                         · Javits Center, New York
                     </p>
                     <p>
-                        Veilkeeper is exhibiting at Play NYC 2026, sharing a booth with Swiggins
-                        Studios. Attendees can play the three-fight build using a controller.
+                        Veilkeeper exhibited at Play NYC 2026, sharing a booth with Swiggins Studios.
+                        Attendees played the three-fight build on controller, and the v0.1 alpha went
+                        public on itch.io on the show's opening day.
                     </p>
                     <p>
-                        Press attending the show can arrange hands-on time or an interview in advance at
+                        Interview requests are still welcome at
                         <a href={`mailto:${SITE.pressEmail}`}>{SITE.pressEmail}</a>.
                     </p>
                 </div>
@@ -433,8 +434,8 @@ const lastUpdated = 'August 2026';
                 <div id="screenshots" class="panel surface">
                     <h3>Screenshots</h3>
                     <p>
-                        Captured from the three-fight press build described above, in the current
-                        pre-alpha. Unit and terrain artwork is placeholder. Full-resolution PNG
+                        Captured from the three-fight press build described above, shortly before
+                        the v0.1 alpha. Unit and terrain artwork is placeholder. Full-resolution PNG
                         originals are in the Drive folder.
                     </p>
                     <div class="press-shots">
@@ -557,9 +558,11 @@ const lastUpdated = 'August 2026';
                             coverage is available on request.
                         </p>
                         <p>
-                            The v0.1 alpha is set to release on itch.io on August 20, 2026. The
+                            The v0.1 alpha is
+                            <a href={SITE.itchUrl} target="_blank" rel="noopener noreferrer">out now on itch.io</a>,
+                            and the
                             <a href={SITE.steamUrl} target="_blank" rel="noopener noreferrer">Steam page</a>
-                            is live now and open for wishlists.
+                            is open for wishlists.
                         </p>
                     </div>
 

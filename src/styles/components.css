@@ -616,6 +616,7 @@ a[href^="mailto"] {
 .factsheet-value {
     color: var(--text-bright);
     font-weight: 600;
+    overflow-wrap: anywhere;
 }
 
 .press-page .status-row + .status-row {
@@ -755,8 +756,10 @@ a[href^="mailto"] {
 }
 
 @media (max-width: 720px) {
+    /* minmax(0, ...) rather than 1fr: a bare 1fr track's minimum is its content's
+       min-content width, so the unbreakable Steam URL pushed the page past 320px. */
     .press-page .status-row {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .press-studio {
