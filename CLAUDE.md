@@ -13,8 +13,9 @@ The dev machine is NixOS - Node is not on the PATH. Run `nix-shell` first (provi
 ```bash
 just            # list recipes
 just dev        # dev server with hot reload
-just ci         # what CI runs: npm ci + astro check + build + smoke test
-just check      # type-check and validate content frontmatter
+just ci         # what CI runs: npm ci + check + test-worker + build + smoke test
+just check      # type-check (site + Worker) and validate content frontmatter
+just test-worker  # feedback Worker tests (node --test, upstreams stubbed)
 just build      # production build to dist/
 just smoke      # assert all expected routes exist in dist/ (needs a prior build)
 just new-devlog devlog-09 "Title"   # scaffold a devlog entry
@@ -23,7 +24,7 @@ just factsheet  # re-render the press factsheet PDF (needs a browser; not in ci)
 
 **The press factsheet PDF** is generated, not hand-edited: `promo/factsheet-source.html` holds the markup with `__TOKEN__` placeholders, and `promo/build-factsheet.mjs` (via `just factsheet`) inlines the fonts and images as data URIs and prints it with headless Chromium to `veilkeeper-press-factsheet.pdf` in the repo root, which is the only copy. Two things to know before editing it: the factsheet table is duplicated from the `factsheet` array in `src/pages/press/index.astro` into `rows` in the build script, and `.page` is `overflow:hidden`, so content that no longer fits is silently clipped or collides with the footer instead of reflowing - always render both pages and look at them after a copy change.
 
-There is no unit test suite; `just ci` (check + build + smoke) is the verification path. GitHub Actions (`.github/workflows/ci.yml`) runs `just ci` on pushes/PRs as a check only. Deployment is handled by Cloudflare's Workers Builds git integration (configured in the Cloudflare dashboard: build command `npm run build`, deploy command `npx wrangler deploy`), which deploys on pushes to `main`. `just deploy` exists as a manual escape hatch but note the two are independent - Cloudflare deploys even if GitHub checks fail.
+The only unit tests are for the feedback Worker (`worker/index.test.ts`, Node's built-in runner, Turnstile/Resend stubbed via global fetch); otherwise `just ci` (check + test-worker + build + smoke) is the verification path. The Worker has its own `worker/tsconfig.json` (workerd globals via `@cloudflare/workers-types`) because the root tsconfig excludes `worker/`; its imports use explicit `.ts` extensions so Node can load them directly. GitHub Actions (`.github/workflows/ci.yml`) runs `just ci` on pushes/PRs as a check only. Deployment is handled by Cloudflare's Workers Builds git integration (configured in the Cloudflare dashboard: build command `npm run build`, deploy command `npx wrangler deploy`), which deploys on pushes to `main`. `just deploy` exists as a manual escape hatch but note the two are independent - Cloudflare deploys even if GitHub checks fail.
 
 Work happens on `development`; `main` is the release/PR target and auto-deploys via Cloudflare.
 

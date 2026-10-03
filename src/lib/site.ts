@@ -6,6 +6,8 @@ export const SITE = {
     studioUrl: 'https://pocketlorestudios.com',
     securityEmail: 'security@veilkeepergame.com',
     pressEmail: 'press@veilkeepergame.com',
+    // Where feedback lands; also FEEDBACK_DESTINATION in wrangler.jsonc.
+    supportEmail: 'support@veilkeepergame.com',
     // Shared Drive folder holding the logo pack, gameplay captures, and a plain-text
     // factsheet. Lives here because Drive share links change if the folder is moved.
     pressKitUrl: 'https://drive.google.com/drive/folders/1m0PQFAN_wZorhucjl0Aq6KH-WOprkFxw',

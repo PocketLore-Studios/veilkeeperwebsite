@@ -1,0 +1,20 @@
+{
+  // The root tsconfig (astro check) excludes worker/: it type-checks against the
+  // DOM lib, while the Worker runs on workerd and needs Cloudflare's globals
+  // (Fetcher, ExportedHandler, ...). `just check` runs this project separately.
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "lib": ["es2022"],
+    "types": ["@cloudflare/workers-types", "node"],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    // Imports carry .ts extensions so `node --test` can load the Worker and
+    // its tests directly (Node strips types but does not resolve extensions).
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true
+  },
+  "include": ["./**/*.ts", "../src/lib/feedback.ts"]
+}

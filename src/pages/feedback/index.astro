@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { CATEGORIES, EMAIL_FIELD, HONEYPOT_FIELD } from '../../lib/feedback';
+import { SITE } from '../../lib/site';
 
 // Cloudflare Turnstile site key (public - rendered into the page HTML).
 // Defaults to the real production widget so the git-driven Cloudflare build
@@ -29,7 +30,7 @@ const fields = [EMAIL_FIELD]; // shared, category-independent
                 <div class="panel surface">
                     <p>
                         This form needs JavaScript. You can email us directly at
-                        <a href="mailto:support@veilkeepergame.com">support@veilkeepergame.com</a>.
+                        <a href={`mailto:${SITE.supportEmail}`}>{SITE.supportEmail}</a>.
                     </p>
                 </div>
             </noscript>
@@ -39,6 +40,7 @@ const fields = [EMAIL_FIELD]; // shared, category-independent
                     class="panel surface feedback-form"
                     action="/api/feedback"
                     method="POST"
+                    data-support-email={SITE.supportEmail}
             >
                 <!-- Honeypot: real people never fill this in. -->
                 <div class="honeypot" aria-hidden="true">
@@ -184,8 +186,37 @@ const fields = [EMAIL_FIELD]; // shared, category-independent
             status.dataset.kind = kind;
         };
 
+        // Errors keep the server's specific message (they are written for
+        // visitors) and always offer email, so a submission is never a dead end.
+        const supportEmail = form.dataset.supportEmail ?? '';
+        const setError = (msg: string) => {
+            setStatus(`${msg} `, 'error');
+            if (!supportEmail) return;
+            const link = document.createElement('a');
+            link.href = `mailto:${supportEmail}`;
+            link.textContent = supportEmail;
+            status.append('If it keeps failing, email ', link, '.');
+        };
+
+        const serverError = async (res: Response) => {
+            try {
+                const data = (await res.json()) as { error?: unknown };
+                if (typeof data.error === 'string' && data.error) return data.error;
+            } catch {
+                // Not JSON (e.g. an edge error page) - fall through.
+            }
+            return 'Something went wrong sending that. Please try again.';
+        };
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            // The widget fills this hidden input once its check passes; without
+            // it the server can only answer "verification failed".
+            const token = new FormData(form).get('cf-turnstile-response');
+            if (!token) {
+                setError('Please wait for the verification check above to finish, then send again.');
+                return;
+            }
             setStatus('Sending…', '');
             if (submit) submit.disabled = true;
             try {
@@ -199,10 +230,10 @@ const fields = [EMAIL_FIELD]; // shared, category-independent
                     const checked = form.querySelector<HTMLInputElement>('input[name="category"]:checked');
                     activate(checked?.value ?? radios[0].value);
                 } else {
-                    setStatus('Something went wrong sending that. Please try again.', 'error');
+                    setError(await serverError(res));
                 }
             } catch {
-                setStatus('Could not reach the server. Please try again.', 'error');
+                setError('Could not reach the server. Please try again.');
             } finally {
                 if (submit) submit.disabled = false;
                 resetTurnstile();

@@ -13,7 +13,7 @@ import {
     MAX_BODY_BYTES,
     MAX_TOTAL_CHARS,
     getCategory,
-} from '../src/lib/feedback';
+} from '../src/lib/feedback.ts';
 
 interface Env {
     ASSETS: Fetcher;
@@ -93,24 +93,36 @@ export default {
 } satisfies ExportedHandler<Env>;
 
 async function handleFeedback(request: Request, env: Env): Promise<Response> {
+    // Error messages below are shown verbatim on /feedback, so they are written
+    // for visitors and say nothing about internals.
+
     // Same-origin only: exact-match the Origin header against the allowlist.
     const origin = request.headers.get('Origin');
     const allowedOrigins = toSet(env.ALLOWED_ORIGINS);
     if (!origin || !allowedOrigins.has(origin)) {
-        return json({ error: 'Forbidden' }, 403);
+        return json({ error: 'This form only accepts submissions from veilkeepergame.com.' }, 403);
     }
 
-    // Reject oversized bodies before parsing.
+    // Reject oversized bodies before parsing. Content-Length is a cheap early
+    // out, but it is optional (chunked uploads omit it), so the real limit is
+    // enforced on the bytes actually read.
+    const tooLarge = () => json({ error: 'That submission is too large to send.' }, 413);
     const contentLength = Number(request.headers.get('content-length') ?? '0');
     if (contentLength > MAX_BODY_BYTES) {
-        return json({ error: 'Payload too large' }, 413);
+        return tooLarge();
+    }
+    const body = await readBodyCapped(request, MAX_BODY_BYTES);
+    if (!body) {
+        return tooLarge();
     }
 
     let form: FormData;
     try {
-        form = await request.formData();
+        form = await new Response(body, {
+            headers: { 'content-type': request.headers.get('content-type') ?? '' },
+        }).formData();
     } catch {
-        return json({ error: 'Invalid form data' }, 400);
+        return json({ error: 'That submission could not be read. Please try again.' }, 400);
     }
 
     const getField = (name: string) => (form.get(name) ?? '').toString();
@@ -130,7 +142,7 @@ async function handleFeedback(request: Request, env: Env): Promise<Response> {
     // Category must be one of the known values.
     const category = getCategory(getField('category'));
     if (!category || !CATEGORY_VALUES.includes(category.value)) {
-        return json({ error: 'Invalid submission.' }, 400);
+        return json({ error: 'Please choose what kind of feedback this is.' }, 400);
     }
 
     // Allowlist + validate fields for the chosen category.
@@ -194,6 +206,35 @@ async function handleFeedback(request: Request, env: Env): Promise<Response> {
         });
     }
     return json({ ok: true });
+}
+
+/**
+ * Read the request body, giving up as soon as it exceeds `maxBytes`.
+ * Returns null when the cap is exceeded, so an oversized body is never fully
+ * buffered whatever the Content-Length header claims.
+ */
+async function readBodyCapped(request: Request, maxBytes: number): Promise<Uint8Array | null> {
+    if (!request.body) return new Uint8Array();
+    const reader = request.body.getReader();
+    const chunks: Uint8Array[] = [];
+    let total = 0;
+    for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        total += value.byteLength;
+        if (total > maxBytes) {
+            await reader.cancel();
+            return null;
+        }
+        chunks.push(value);
+    }
+    const out = new Uint8Array(total);
+    let offset = 0;
+    for (const chunk of chunks) {
+        out.set(chunk, offset);
+        offset += chunk.byteLength;
+    }
+    return out;
 }
 
 async function verifyTurnstile(token: string, request: Request, env: Env): Promise<boolean> {
