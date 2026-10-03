@@ -20,7 +20,7 @@ export const SITE = {
     // MAINTENANCE: whenever a new devlog is published, check this still matches
     // the actual focus and update it if not - a stale "currently" is worse than
     // none. Not a progress figure, ETA, or task list; one short phrase.
-    currentFocus: 'Isometric Battlefield + Cursor Navigation',
+    currentFocus: 'An isometric battlefield, with cursor controls to match',
     // itch.io page hosting the public alpha build.
     itchUrl: 'https://pocketlore-studios.itch.io/veilkeeper',
     social: {
