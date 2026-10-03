@@ -10,7 +10,10 @@
 @font-face {
     font-family: 'Raleway';
     font-style: normal;
-    font-weight: 300 600;
+    /* The file's wght axis runs 100-900; this range is what the CSS may ask
+       for. Anything above it is silently clamped, so it must cover the
+       heaviest weight in use (700). */
+    font-weight: 300 700;
     font-display: swap;
     src: url('/assets/fonts/raleway-latin.woff2') format('woff2');
 }
@@ -187,6 +190,9 @@ body {
     font-family: 'Raleway', sans-serif;
     color: var(--text);
     line-height: 1.6;
+    /* Raleway defaults to old-style figures, which bob above and below the
+       baseline ("Devlog 09", "v0.1", "6 / 6"). Lining figures sit level. */
+    font-variant-numeric: lining-nums;
     background:
             radial-gradient(circle at 50% 0%, rgba(158, 109, 255, 0.16), transparent 28%),
             radial-gradient(circle at 10% 20%, rgba(244, 192, 124, 0.06), transparent 20%),

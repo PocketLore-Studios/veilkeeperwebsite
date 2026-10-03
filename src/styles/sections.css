@@ -135,7 +135,7 @@
     margin: 0 0 var(--space-5);
     color: var(--ember);
     font-size: var(--font-size-label);
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
@@ -159,7 +159,7 @@
 
 .unit-stats dt {
     color: var(--text-faint);
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
@@ -248,7 +248,7 @@
 .current-focus-label {
     color: var(--ember);
     font-size: var(--font-size-label);
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
@@ -398,7 +398,7 @@
     margin: 0 0 var(--space-4);
     color: var(--ember);
     font-size: var(--font-size-meta);
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
@@ -461,7 +461,7 @@
 .phase-kicker {
     color: var(--text-faint);
     font-size: var(--font-size-label);
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }

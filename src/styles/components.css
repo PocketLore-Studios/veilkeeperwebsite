@@ -47,7 +47,7 @@
 .brand-title {
     display: block;
     font-size: 0.98rem;
-    font-weight: 800;
+    font-weight: 700;
     line-height: 1.1;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -110,7 +110,7 @@
     padding: 0 var(--space-8);
     border-radius: var(--radius-md);
     text-decoration: none;
-    font-weight: 800;
+    font-weight: 700;
     transition: transform var(--transition-fast), opacity var(--transition-fast), border-color var(--transition-fast);
 }
 
@@ -277,7 +277,7 @@ button.button {
     align-items: center;
     gap: var(--space-5);
     color: var(--text);
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .footer-brand img {
