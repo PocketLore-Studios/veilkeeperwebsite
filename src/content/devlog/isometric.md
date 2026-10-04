@@ -2,7 +2,7 @@
 label: "Devlog 10"
 title: "Building Veilkeeper’s Isometric Battlefield"
 date: 2026-10-03
-image: "/assets/devlog/isometric.png"
+image: "/assets/devlog/isometric.jpg"
 alt: "Veilkeeper combat running on the new isometric battlefield, with units positioned across the grid, a floating crystal cursor marking the selected space, and movement and targeting information displayed around the battle."
 summary: "Veilkeeper’s battlefield has been rebuilt in isometric perspective, bringing the combat presentation closer to its intended direction alongside a completely reworked cursor and directional-input system."
 draft: false
